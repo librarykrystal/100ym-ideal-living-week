@@ -19,8 +19,12 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
-
+import CreateWeekPage from '../CreateWeekPage/CreateWeekPage';
+import QuestionsPage from '../QuestionsPage/QuestionsPage';
+import PrioritiesPage from '../PrioritiesPage/PrioritiesPage';
+import AdminPage from '../AdminPage/AdminPage';
 import './App.css';
+
 
 function App() {
   const dispatch = useDispatch();
@@ -39,12 +43,8 @@ function App() {
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
           <Redirect exact from="/" to="/home" />
 
-          {/* Visiting localhost:3000/about will show the about page. */}
-          <Route
-            // shows AboutPage at all times (logged in or not)
-            exact
-            path="/about"
-          >
+          <Route exact path="/about">
+            {/* NOT PROTECTED: shows AboutPage at all times (logged in or not) */}
             <AboutPage />
           </Route>
 
@@ -52,61 +52,58 @@ function App() {
             Visiting localhost:3000/user will show the UserPage if the user is logged in.
             If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
             Even though it seems like they are different pages, the user is always on localhost:3000/user */}
-          <ProtectedRoute
-            // logged in shows UserPage else shows LoginPage
-            exact
-            path="/user"
-          >
+
+          <ProtectedRoute exact path="/user">
+            {/* logged in shows UserPage else shows LoginPage */}
             <UserPage />
           </ProtectedRoute>
 
-          <ProtectedRoute
-            // logged in shows InfoPage else shows LoginPage
-            exact
-            path="/info"
-          >
+          <ProtectedRoute exact path="/info">
+            {/* logged in shows InfoPage else shows LoginPage */}
             <InfoPage />
           </ProtectedRoute>
 
-          <Route
-            exact
-            path="/login"
-          >
+          <ProtectedRoute exact path="/week">
+            {/* logged in shows CreateWeekPage else shows LoginPage */}
+            <CreateWeekPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/questions">
+            {/* logged in shows QuestionsPage else shows LoginPage */}
+            <QuestionsPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/priorities">
+            {/* logged in shows PrioritiesPage else shows LoginPage */}
+            <PrioritiesPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/admin">
+            {/* logged in shows AdminPage else shows LoginPage */}
+            <AdminPage />
+          </ProtectedRoute>
+
+          <Route exact path="/login">
             {user.id ?
-              // If the user is already logged in, 
-              // redirect to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/user" />  // If the user is already logged in, redirect to /user
               :
-              // Otherwise, show the login page
-              <LoginPage />
+              <LoginPage />  // Otherwise, show the login page
             }
           </Route>
 
-          <Route
-            exact
-            path="/registration"
-          >
+          <Route exact path="/registration">
             {user.id ?
-              // If the user is already logged in, 
-              // redirect them to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/user" />  // If the user is already logged in, redirect to /user
               :
-              // Otherwise, show the registration page
-              <RegisterPage />
+              <RegisterPage />  // Otherwise, show the registration page
             }
           </Route>
 
-          <Route
-            exact
-            path="/home"
-          >
+          <Route exact path="/home">
             {user.id ?
-              // If the user is already logged in, 
-              // redirect them to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/user" />  // If the user is already logged in, redirect to /user
               :
-              // Otherwise, show the Landing page
-              <LandingPage />
+              <LandingPage />  // Otherwise, show the Landing page
             }
           </Route>
 
@@ -114,6 +111,7 @@ function App() {
           <Route>
             <h1>404</h1>
           </Route>
+
         </Switch>
         <Footer />
       </div>
