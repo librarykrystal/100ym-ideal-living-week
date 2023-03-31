@@ -14,6 +14,11 @@ CREATE TABLE "user" (
     "admin" BOOLEAN DEFAULT false
 );
 
+CREATE TABLE "category" (
+    "id" SERIAL PRIMARY KEY,
+    "name" VARCHAR (100)
+);
+
 CREATE TABLE "question" (
     "id" SERIAL PRIMARY KEY,
     "category_id" INT REFERENCES "category",
@@ -25,11 +30,6 @@ CREATE TABLE "answer" (
     "user_id" INT REFERENCES "user",
     "question_id" INT REFERENCES "question",
     "response" VARCHAR (1000)
-);
-
-CREATE TABLE "category" (
-    "id" SERIAL PRIMARY KEY,
-    "name" VARCHAR (100)
 );
 
 CREATE TABLE "priority" (
