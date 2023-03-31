@@ -16,6 +16,7 @@ CREATE TABLE "user" (
 
 CREATE TABLE "question" (
     "id" SERIAL PRIMARY KEY,
+    "category_id" INT REFERENCES "category",
     "question" VARCHAR (1000)
 );
 
