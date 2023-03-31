@@ -1,18 +1,36 @@
-import React from "react";
+import React, { useEffect, useState, useLayoutEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
-//This page requires a dispatch to retrieve the unranked categories (sends to a reducer which sends to a saga, which makes a GET request),
-//and their associated  questions. I think it might be wise to consider modifying the
-//DB slightly so that the questions are connected to the categories
-//This page will need save your progress buttons underneath each set of questions,
-//and text fields for the user to answer the questions.
+// Needs to GET questions, categories, and any previous answers from current user
 
-//another potential solution is to just hardcode the categories, to simplify, and then GET the questions
+// Drop down lets user select a category, and this selection is used to filter which q's show
+// since the user is not leaving the page, they can hop between categories all they want
+// without losing any unsaved answers
 
-//the text fields will require an onChange which sends to the redux store blah blah blah, makes a POST request
+// Needs text field paired with each question
+// the text fields will require an onChange which sends to the redux store, makes POST request
 
-//Required Routes -
-//GET questions POST answers
+// BUTTONS: save, save & continue, save & go home
+// STRETCH GOAL BUTTON: discard changes (would reset local state to match database)
+
+
 function QuestionsPage() {
+
+  const user = useSelector((store) => store.user);
+  const questions = useSelector(store => store.questions);
+  const categories = useSelector(store => store.categories);
+  const answers = useSelector(store => store.answers);
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  // Dispatches (on page load) to GET all the questions and GET the list of unordered categories
+  useEffect(() => {
+    dispatch({ type: 'FETCH_ALL_CATEGORIES' });
+    dispatch({ type: 'FETCH_ALL_QUESTIONS' });
+  }, []);
+
+
   return (
     <div className="container">
       <div>
