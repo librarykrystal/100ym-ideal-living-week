@@ -4,6 +4,8 @@
 -- ex. SELECT * FROM "user";
 -- Otherwise you will have errors!
 
+-- create a database called "100ym-ideal-week"
+
 CREATE TABLE "user" (
     "id" SERIAL PRIMARY KEY,
     "username" VARCHAR (80) UNIQUE NOT NULL,

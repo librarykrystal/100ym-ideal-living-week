@@ -32,7 +32,28 @@ function Nav() {
               Info Page
             </Link>
 
+            <Link className="navLink" to="/week">
+              Week
+            </Link>
+
+            <Link className="navLink" to="/priorities">
+              Priorities
+            </Link>
+
+            <Link className="navLink" to="/questions">
+              Questions
+            </Link>
+
             <LogOutButton className="navLink" />
+          </>
+        )}
+
+        {/* If a user is admin, show this link - UNTESTED */}
+        {user.admin && (
+          <>
+            <Link className="navLink" to="/admin">
+              Admin
+            </Link>
           </>
         )}
 
