@@ -1,15 +1,15 @@
 import React from 'react';
 
 
-function CreateWeekPage() {
+function WeekPage() {
 
   return (
     <div className="container">
       <div>
-        <p>CREATE WEEK PAGE</p>
+        <p>WEEK PAGE</p>
       </div>
     </div>
   );
 }
 
-export default CreateWeekPage;
+export default WeekPage;

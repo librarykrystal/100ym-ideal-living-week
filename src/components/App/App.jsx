@@ -19,7 +19,7 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
-import CreateWeekPage from '../CreateWeekPage/CreateWeekPage';
+import WeekPage from '../WeekPage/WeekPage';
 import QuestionsPage from '../QuestionsPage/QuestionsPage';
 import PrioritiesPage from '../PrioritiesPage/PrioritiesPage';
 import AdminPage from '../AdminPage/AdminPage';
@@ -65,7 +65,7 @@ function App() {
 
           <ProtectedRoute exact path="/week">
             {/* logged in shows CreateWeekPage else shows LoginPage */}
-            <CreateWeekPage />
+            <WeekPage />
           </ProtectedRoute>
 
           <ProtectedRoute exact path="/questions">
