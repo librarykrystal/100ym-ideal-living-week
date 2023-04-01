@@ -14,6 +14,8 @@ import { useHistory } from 'react-router-dom';
 // BUTTONS: save, save & continue, save & go home
 // STRETCH GOAL BUTTON: discard changes (would reset local state to match database)
 
+// QUESTION: is this both the initial setup page AND the editing page?
+
 
 function QuestionsPage() {
 
@@ -30,8 +32,7 @@ function QuestionsPage() {
 
   // ???  
   // TO DO: local state variable for EACH answer?  30 of them???  Something lke this:
-  const [answer1, setAnswer1] = useState(answers[1]);   // where 1 references the question_id
-  // ...
+  const [answer1, setAnswer1] = useState(answers[1]);   // where [1] matches the question_id
 
 
   // Dispatches (on page load) to GET all the questions and GET the list of unordered categories
@@ -48,6 +49,36 @@ function QuestionsPage() {
       return item;
     }
   }
+
+  // Handles SAVE - - - submits ALL answers/changes to database at once
+  const saveAnswers = () => {
+    console.log('SAVE clicked');
+    dispatch({
+        type: 'SET_ANSWERS',
+        // payload: ???
+      });
+  }
+
+  // Handles SAVE & CONTINUE - - - submits all changes AND routes to PRIORITIZAION
+  const saveAndContinue = () => {
+    console.log('SAVE & CONTINUE clicked');
+    dispatch({
+        type: 'SET_ANSWERS',
+        // payload: ???
+      });
+    history.push(`/prioritize`);
+  }
+
+    // Handles SAVE & GO HOME - - - submits all changes AND routes to HOME
+    const saveAndGoHome = () => {
+      console.log('SAVE & CONTINUE clicked');
+      dispatch({
+        type: 'SET_ANSWERS',
+        // payload: ???
+      });
+    history.push(`/home`);
+  }
+  
 
 
   return (
