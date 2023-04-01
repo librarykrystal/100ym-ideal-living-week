@@ -9,7 +9,7 @@ import { useHistory } from 'react-router-dom';
 // without losing any unsaved answers
 
 // Needs text field paired with each question
-// the text fields will require an onChange which sends to the redux store, makes POST request
+// text fields will require onChange which dispatches to redux store, which makes POST request
 
 // BUTTONS: save, save & continue, save & go home
 // STRETCH GOAL BUTTON: discard changes (would reset local state to match database)
@@ -24,11 +24,30 @@ function QuestionsPage() {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  // this will be assigned the category selected by the user from a drop-down list
+  // and then used by categoryFilterHandler function to filter the questions
+  const [categoryFilter, setCategoryFilter] = useState('');
+
+  // ???  
+  // TO DO: local state variable for EACH answer?  30 of them???  Something lke this:
+  const [answer1, setAnswer1] = useState(answers[1]);   // where 1 references the question_id
+  // ...
+
+
   // Dispatches (on page load) to GET all the questions and GET the list of unordered categories
   useEffect(() => {
     dispatch({ type: 'FETCH_ALL_CATEGORIES' });
     dispatch({ type: 'FETCH_ALL_QUESTIONS' });
   }, []);
+
+  // Handles filtering to show only questions from the user-selected category
+  const categoryFilterHandler = (item) => {
+    if (!categoryFilter) {
+      return item;
+    } else if (item.category == categoryFilter) {
+      return item;
+    }
+  }
 
 
   return (
