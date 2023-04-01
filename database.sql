@@ -19,7 +19,7 @@ CREATE TABLE "category" (
     "name" VARCHAR (100)
 );
 
-INSERT INTO "categories" ("name") VALUES 
+INSERT INTO "category" ("name") VALUES 
 ('Sleep'),
 ('Self-Care'),
 ('Family and Relationships'),
