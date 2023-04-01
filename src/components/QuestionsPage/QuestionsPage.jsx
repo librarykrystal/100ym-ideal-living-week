@@ -32,6 +32,8 @@ function QuestionsPage() {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  // when a selection is made, this flips to false and the initial message goes away
+  const [noneChosen, setNoneChosen] = useState(true);
 
   // this will be assigned the category selected by the user from a drop-down list
   // and then used by categoryFilterHandler function to filter the questions
@@ -39,7 +41,8 @@ function QuestionsPage() {
 
   // ???  
   // TO DO: local state variable for EACH answer?  30 of them???  Something lke this:
-  // const [answer1, setAnswer1] = useState(answers[1]);
+  const [answer1, setAnswer1] = useState('');
+  // or     const [answer1, setAnswer1] = useState(answers[1]);
   // where [1] matches the question_id ?
   // ...
 
@@ -96,36 +99,43 @@ function QuestionsPage() {
         {/* ADD: Instructions for user to browse questions belonging to various categories using drop-down */}
 
 
-          {/* DROPDOWN input for FILTERING by CATEGORY — temporarily hardcoded */}
-          <FormControl fullWidth>
-            <InputLabel id="category">Category</InputLabel>
-            <Select
-              // sx={{width: "220px", color: "white"}}
-              labelId="category"
-              id="category"
-              value={categoryFilter}
-              label="Category"
-              onChange={(e) => setCategoryFilter(e.target.value)}
-            >
-              {/* <MenuItem value="">All Types</MenuItem> */}
-              <MenuItem value="Sleep">Sleep</MenuItem>
-              <MenuItem value="Self-Care">Self-Care</MenuItem>
-              <MenuItem value="Family and Relationships">Family and Relationships</MenuItem>
-              <MenuItem value="Personal Development">Personal Development</MenuItem>
-              <MenuItem value="Nutrition">Nutrition</MenuItem>
-              <MenuItem value="Leisure Time">Leisure Time</MenuItem>
-              <MenuItem value="Community Involvement">Community Involvement</MenuItem>
-              <MenuItem value="Creativity">Creativity</MenuItem>
-              <MenuItem value="Work">Work</MenuItem>
-              <MenuItem value="Measure What Matters">Measure What Matters</MenuItem>
-            </Select>
-          </FormControl>
-          <br/><br/>
+        {/* DROPDOWN input for FILTERING by CATEGORY — temporarily hardcoded */}
+        <FormControl fullWidth>
+          <InputLabel id="category">Category</InputLabel>
+          <Select
+            sx={{width: "300px"}}
+            labelId="category"
+            id="category"
+            value={categoryFilter}
+            label="Category"
+            onChange={(e) => setCategoryFilter(e.target.value)}
+          >
+            {/* <MenuItem value="">All Types</MenuItem> */}
+            <MenuItem value="Sleep">Sleep</MenuItem>
+            <MenuItem value="Self-Care">Self-Care</MenuItem>
+            <MenuItem value="Family and Relationships">Family and Relationships</MenuItem>
+            <MenuItem value="Personal Development">Personal Development</MenuItem>
+            <MenuItem value="Nutrition">Nutrition</MenuItem>
+            <MenuItem value="Leisure Time">Leisure Time</MenuItem>
+            <MenuItem value="Community Involvement">Community Involvement</MenuItem>
+            <MenuItem value="Creativity">Creativity</MenuItem>
+            <MenuItem value="Work">Work</MenuItem>
+            <MenuItem value="Measure What Matters">Measure What Matters</MenuItem>
+          </Select>
+        </FormControl>
+        <br/><br/>
 
-
+        {noneChosen == true &&
+          <p>Please choose a category.</p>
+        }
 
         {/* Loop through questions, showing those which match category */}
 
+        
+
+
+
+      
         {/* For each match, show question and text box with onChange that sets local state */}
 
             {/* can we do something like:
