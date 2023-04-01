@@ -6,6 +6,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import TextField from '@mui/material/TextField';
 
 
 // Need to GET questions, categories, and any previous answers from current user
@@ -15,8 +16,7 @@ import Select from '@mui/material/Select';
 // without losing any unsaved answers
 
 // Need to have text field paired with each question
-// text fields will require onChange which dispatches to redux store, which makes POST request
-
+// text fields will require onChange which updates local state, will go in dispatches to redux store
 // BUTTONS: save, save & continue, save & go home
 // STRETCH GOAL BUTTON: discard changes (would reset local state to match database)
 
@@ -25,15 +25,20 @@ import Select from '@mui/material/Select';
 
 function QuestionsPage() {
 
+  // TEMPORARY questions to use for building .map, until router is available
+  const questions = [
+    {id: 1, category: 'Sleep', question_text: 'Question id 1, (category: Sleep)'},
+    {id: 2, category: 'Sleep', question_text: 'Question id 2, (category: Sleep)'},
+    {id: 3, category: 'Work', question_text: 'Question id 3, (category: Work)'},
+    {id: 4, category: 'Self-Care', question_text: 'Question id 4, (category: Self-Care)'}
+  ];
+
   // const user = useSelector((store) => store.user);
   // const questions = useSelector(store => store.questions);
   // const categories = useSelector(store => store.categories);
   // const answers = useSelector(store => store.answers);
   const history = useHistory();
   const dispatch = useDispatch();
-
-  // when a selection is made, this flips to false and the initial message goes away
-  const [noneChosen, setNoneChosen] = useState(true);
 
   // this will be assigned the category selected by the user from a drop-down list
   // and then used by categoryFilterHandler function to filter the questions
@@ -55,8 +60,9 @@ function QuestionsPage() {
   // Handles filtering to show only questions from the user-selected category
   const categoryFilterHandler = (item) => {
     if (!categoryFilter) {
-      setNoneChosen(false);
+      return 'BLAH';
     } else if (item.category == categoryFilter) {
+      // setNoneChosen(false);
       return item;
     }
   }
@@ -98,7 +104,6 @@ function QuestionsPage() {
 
         {/* ADD: Instructions for user to browse questions belonging to various categories using drop-down */}
 
-
         {/* DROPDOWN input for FILTERING by CATEGORY — temporarily hardcoded */}
         <FormControl fullWidth>
           <InputLabel id="category">Category</InputLabel>
@@ -125,17 +130,37 @@ function QuestionsPage() {
         </FormControl>
         <br/><br/>
 
-        {noneChosen == true &&
-          <p>Please choose a category.</p>
-        }
 
         {/* Loop through questions, showing those which match category */}
+        <div className="questionsTrioContainer">
+          {questions.length > 0 &&
+            <div>
+              {categoryFilter ?
+                <div>
+                  {questions
+                    .filter(categoryFilterHandler)
+                    .map(item => {
+                      return (
+                        <div key={item.id}>
+                          <div className="qAndAContainer">
+                            <p>{item.question_text}</p>
+                            <TextField id="answer" label="Your Response" fullWidth multiline rows={3} variant="outlined"
+                            // value={answer}
+                            // onChange={(e) => set???(e.target.value)}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })
+                  }
+                </div>
+              :
+                <p>Please select a category to view questions.</p>
+              }
+            </div>
+          }
+        </div>
 
-        
-
-
-
-      
         {/* For each match, show question and text box with onChange that sets local state */}
 
             {/* can we do something like:
