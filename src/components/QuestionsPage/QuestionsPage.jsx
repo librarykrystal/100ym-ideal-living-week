@@ -2,11 +2,13 @@ import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
+import Typography from '@mui/material/Typography';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 // Need to GET questions, categories from DB on load
   // (and any prev answers for current user, if this is also to be the EDIT page)
@@ -14,11 +16,10 @@ import TextField from '@mui/material/TextField';
 // Drop-down lets user select a category, and this selection is used to filter which q's show.
 // Since the user is not leaving the page, they can hop between categories all they want
 // without losing any unsaved answers
-// local state answers will go in dispatch(es) to redux store, which will POST to DB
+// local state answers go in dispatch to redux saga, which will POST them to DB
 // BUTTONS: save, save & continue, save & go home
-      // BRAINSTORM: if zero answers in DB, show button that triggers POST
-      // if user has any answers in DB, show button that triggers PUT
-// STRETCH GOAL BUTTON: discard changes (would reset local state to match database)
+      // If there is a separate EditQuestionsPage, save & go home will be the btn on that page
+// STRETCH GOAL BUTTON: discard changes (would reset local state to match database using FETCH)
 
 function QuestionsPage() {
 
@@ -83,7 +84,7 @@ function QuestionsPage() {
     console.log('SAVE clicked');
     dispatch({
         type: 'SET_ANSWERS',
-        // payload: TBD
+        payload: stateAnswers
       });
   }
 
@@ -92,17 +93,17 @@ function QuestionsPage() {
     console.log('SAVE & CONTINUE clicked');
     dispatch({
         type: 'SET_ANSWERS',
-        // payload: TBD
+        payload: stateAnswers
       });
     history.push(`/prioritize`);
   }
 
-    // Handles SAVE & GO HOME - - - submits all answers AND routes to HOME
+    // Handles SAVE & GO HOME - - - submits all answers AND routes to HOME (for EDITING page)
     const saveAndGoHome = () => {
       console.log('SAVE & CONTINUE clicked');
       dispatch({
         type: 'SET_ANSWERS',
-        // payload: TBD
+        payload: stateAnswers
       });
     history.push(`/home`);
   }
@@ -117,10 +118,12 @@ function QuestionsPage() {
         {/* <p>Q2 RESPONSE: {stateAnswers.q2A}</p> */}
         {/* <br/> */}
 
+        <center>
         <h3>QUESTIONS PAGE</h3>
 
         <p>Intro goes here, if there is one.</p>
         <br/>
+        </center>
 
         {/* DROPDOWN input for FILTERING by CATEGORY — temporarily hardcoded */}
         <FormControl fullWidth>
@@ -146,6 +149,7 @@ function QuestionsPage() {
           </Select>
         </FormControl>
         <br/><br/>
+        
 
         {/* Loop through questions, showing those which match category */}
         <div className="questionsTrioContainer">
@@ -180,11 +184,32 @@ function QuestionsPage() {
             </div>
           }
         </div>
+        <br /><br />
 
-        {/* TO DO: Button(s) */}
-        {/* SAVE button which triggers saveAnswers function */}
-        {/* SAVE & CONTINUE button which triggers saveAndContinue function */}
-        {/* SAVE & GO HOME button - only visible if setup process has been prev completed */}
+        <center>
+          {/* SAVE button */}
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={saveAnswers}>SAVE CHANGES
+          </Button>
+          <br/><br/>
+
+          {/* SAVE & GO PRIORITIZE button */}
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={saveAndContinue}>SAVE and CONTINUE
+          </Button>
+
+          {/* BRAINSTORM: SAVE & GO HOME button - ? - 
+          conditional render, only visible if this is acting as the go-back-and-edit page */}
+
+        </center>
 
       </div>
     </div>
