@@ -10,16 +10,6 @@ import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-// Need to GET questions, categories from DB on load
-  // (and any prev answers for current user, if this is also to be the EDIT page)
-
-// Drop-down lets user select a category, and this selection is used to filter which q's show.
-// Since the user is not leaving the page, they can hop between categories all they want
-// without losing any unsaved answers
-// local state answers go in dispatch to redux saga, which will POST them to DB
-// BUTTONS: save, save & continue, save & go home
-      // If there is a separate EditQuestionsPage, save & go home will be the btn on that page
-// STRETCH GOAL BUTTON: discard changes (would reset local state to match database using FETCH)
 
 function QuestionsPage() {
 
@@ -30,6 +20,8 @@ function QuestionsPage() {
     {id: 3, category: 'Work', question_text: 'Question id 3, (category: Work)'},
     {id: 4, category: 'Self-Care', question_text: 'Question id 4, (category: Self-Care)'}
   ];
+
+  const categories = ['Sleep', 'Self-Care', 'Family and Relationships', 'Personal Development', 'Nutrition', 'Leisure Time', 'Community Involvement', 'Creativity', 'Work', 'Measure What Matters'];
 
   // const user = useSelector((store) => store.user);
   // const questions = useSelector(store => store.questions);
@@ -116,6 +108,9 @@ function QuestionsPage() {
         {/* DOM READ-OUTS for TESTING */}
         {/* <p>Q1 RESPONSE: {stateAnswers.q1A}</p> */}
         {/* <p>Q2 RESPONSE: {stateAnswers.q2A}</p> */}
+        <p>QUESTIONS TEST: {JSON.stringify(questions)}</p>
+        <br/>
+        <p>CATEGORIES TEST: {JSON.stringify(categories)}</p>
         {/* <br/> */}
 
         <center>
@@ -136,20 +131,15 @@ function QuestionsPage() {
             label="Category"
             onChange={(e) => setCategoryFilter(e.target.value)}
           >
-            <MenuItem value="Sleep">Sleep</MenuItem>
-            <MenuItem value="Self-Care">Self-Care</MenuItem>
-            <MenuItem value="Family and Relationships">Family and Relationships</MenuItem>
-            <MenuItem value="Personal Development">Personal Development</MenuItem>
-            <MenuItem value="Nutrition">Nutrition</MenuItem>
-            <MenuItem value="Leisure Time">Leisure Time</MenuItem>
-            <MenuItem value="Community Involvement">Community Involvement</MenuItem>
-            <MenuItem value="Creativity">Creativity</MenuItem>
-            <MenuItem value="Work">Work</MenuItem>
-            <MenuItem value="Measure What Matters">Measure What Matters</MenuItem>
+            {categories.map((cat, index) =>
+              <MenuItem key={index} value={cat}>
+                {cat}
+              </MenuItem>
+            )}
           </Select>
         </FormControl>
         <br/><br/>
-        
+
 
         {/* Loop through questions, showing those which match category */}
         <div className="questionsTrioContainer">
