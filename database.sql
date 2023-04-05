@@ -89,7 +89,7 @@ CREATE TABLE "ideal_week" (
     "id" SERIAL PRIMARY KEY,
     "user_id" INT REFERENCES "user",
     "day" VARCHAR (20),
-    "start_time" time (6),
-    "end_time" time (6),
+    "start_time" time (4),
+    "end_time" time (4)
     "category_id" INT REFERENCES "category"
 );
