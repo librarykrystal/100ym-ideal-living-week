@@ -1,4 +1,5 @@
 import React from "react";
+import WeekTable from '../WeekTable/WeekTable';
 import LogOutButton from "../LogOutButton/LogOutButton";
 import { useSelector } from "react-redux";
 //we will need some copy here "welcome to your ideal week, to begin please go to the reflection
@@ -15,6 +16,7 @@ function UserPage() {
     <div className="container">
       <h2>Welcome, {user.username}!</h2>
       <p>Your ID is: {user.id}</p>
+      <WeekTable />
       <LogOutButton className="btn" />
     </div>
   );
