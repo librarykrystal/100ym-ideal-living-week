@@ -3,7 +3,7 @@ import { takeEvery, put } from "redux-saga/effects";
 
 function* fetchQuestions() {
   try {
-    const questions = yield axios.get("/api/questions");
+    const questions = yield axios.get("/api/question");
     console.log("get all:", questions.data);
     yield put({ type: "SET_QUESTIONS", payload: questions.data });
   } catch {

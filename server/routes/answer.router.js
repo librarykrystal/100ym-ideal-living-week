@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
       })
   });
   
-//// post still in works
+// post still in works
 // router.post('/', (req, res) => {
 //     const userId = req.user.id;
 //     entry = req.body;
@@ -36,5 +36,5 @@ router.get('/', (req, res) => {
 //         res.sendStatus(500);
 //       })
 //   });
-//   
+  
   module.exports = router;
