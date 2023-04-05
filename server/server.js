@@ -13,7 +13,7 @@ const answerRouter = require('./routes/answer.router');
 const categoryRouter = require('./routes/category.router');
 const priorityRouter = require('./routes/priority.router');
 const questionRouter = require('./routes/question.router');
-const idealWeek = require('./routes/idealWeek.router');
+const idealWeekRouter = require('./routes/idealWeek.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -30,9 +30,9 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/api/answer', answerRouter);
 app.use('/api/category', categoryRouter);
-app.use('/api/questions', questionRouter);
+app.use('/api/question', questionRouter);
 app.use('/api/priority', priorityRouter);
-app.use('/api/idealWeek', idealWeek);
+app.use('/api/idealWeek', idealWeekRouter);
 
 // Serve static files
 app.use(express.static('build'));
