@@ -11,22 +11,16 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
 
+// TO DO: Styling
+
+// MUI theme will go here
+
+
 function QuestionsPage() {
 
-  // TEMPORARY questions to use for building .map, until router is available
-  const questions = [
-    {id: 1, category: 'Sleep', question_text: 'Question id 1, (category: Sleep)'},
-    {id: 2, category: 'Sleep', question_text: 'Question id 2, (category: Sleep)'},
-    {id: 3, category: 'Work', question_text: 'Question id 3, (category: Work)'},
-    {id: 4, category: 'Self-Care', question_text: 'Question id 4, (category: Self-Care)'}
-  ];
-
-  const categories = ['Sleep', 'Self-Care', 'Family and Relationships', 'Personal Development', 'Nutrition', 'Leisure Time', 'Community Involvement', 'Creativity', 'Work', 'Measure What Matters'];
-
   // const user = useSelector((store) => store.user);
-  // const questions = useSelector(store => store.questions);
-  // const categories = useSelector(store => store.categories);
-  // const storeAnswers = useSelector(store => store.answers);
+  const questions = useSelector(store => store.questions);
+  const categories = useSelector(store => store.categories);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -35,7 +29,7 @@ function QuestionsPage() {
 
   // Getter/setter hook for holding local state of all 30 user answers:
   const [stateAnswers, setStateAnswers] = useState({
-    q1A: 'DB entry for Q1.', q2A: '', q3A: '',
+    q1A: '', q2A: '', q3A: '',
     q4A: '', q5A: '', q6A: '',
     q7A: '', q8A: '', q9A: '',
     q10A: '', q11A: '', q12A: '',
@@ -47,17 +41,20 @@ function QuestionsPage() {
     q28A: '', q29A: '', q30A: ''
   });
 
+  console.log('#9 answer:', stateAnswers.q9A);
+  console.log('#7 answer:', stateAnswers.q7A);
+
   // Dispatches (on page load) to GET all the questions and GET the list of unordered categories
   useEffect(() => {
-    // dispatch({ type: 'FETCH_CATEGORIES' });
-    // dispatch({ type: 'FETCH_QUESTIONS' });
+    dispatch({ type: 'FETCH_CATEGORIES' });
+    dispatch({ type: 'FETCH_QUESTIONS' });
   }, []);
 
   // Handles filtering to show only questions from the user-selected category
   const categoryFilterHandler = (item) => {
     if (!categoryFilter) {
       return;
-    } else if (item.category == categoryFilter) {
+    } else if (item.category_id == categoryFilter) {
       return item;
     }
   }
@@ -87,37 +84,17 @@ function QuestionsPage() {
         type: 'SET_ANSWERS',
         payload: stateAnswers
       });
-    history.push(`/prioritize`);
+    history.push(`/priorities`);
   }
 
-    // Handles SAVE & GO HOME - - - submits all answers AND routes to HOME (for EDITING page)
-    const saveAndGoHome = () => {
-      console.log('SAVE & CONTINUE clicked');
-      dispatch({
-        type: 'SET_ANSWERS',
-        payload: stateAnswers
-      });
-    history.push(`/home`);
-  }
-  
 
   return (
     <div className="container">
       <div>
 
-        {/* DOM READ-OUTS for TESTING */}
-        {/* <p>Q1 RESPONSE: {stateAnswers.q1A}</p> */}
-        {/* <p>Q2 RESPONSE: {stateAnswers.q2A}</p> */}
-        <p>QUESTIONS TEST: {JSON.stringify(questions)}</p>
-        <br/>
-        <p>CATEGORIES TEST: {JSON.stringify(categories)}</p>
-        {/* <br/> */}
-
         <center>
-        <h3>QUESTIONS PAGE</h3>
-
-        <p>Intro goes here, if there is one.</p>
-        <br/>
+        <Typography variant="h4" mt={0} mb={1} gutterBottom>QUESTIONS PAGE</Typography>
+        <Typography variant="body1" mb={9} gutterBottom>Intro goes here, if there is one.</Typography>
         </center>
 
         {/* DROPDOWN input for FILTERING by CATEGORY — temporarily hardcoded */}
@@ -132,14 +109,13 @@ function QuestionsPage() {
             onChange={(e) => setCategoryFilter(e.target.value)}
           >
             {categories.map((cat, index) =>
-              <MenuItem key={index} value={cat}>
-                {cat}
+              <MenuItem key={index} value={cat.id}>
+                {cat.name}
               </MenuItem>
             )}
           </Select>
         </FormControl>
         <br/><br/>
-
 
         {/* Loop through questions, showing those which match category */}
         <div className="questionsTrioContainer">
@@ -169,25 +145,24 @@ function QuestionsPage() {
                   }
                 </div>
               :
-                <p>Please select a category to view questions.</p>
+                <Typography variant="body1" gutterBottom>Please select a category to view questions.</Typography>
               }
             </div>
           }
         </div>
         <br /><br />
 
-        <center>
           {/* SAVE button */}
           <Button
             type="submit"
             variant="contained"
             color="primary"
             size="large"
-            onClick={saveAnswers}>SAVE CHANGES
+            onClick={saveAnswers}>SAVE PROGRESS
           </Button>
           <br/><br/>
 
-          {/* SAVE & GO PRIORITIZE button */}
+          {/* SAVE & NEXT button */}
           <Button
             type="submit"
             variant="contained"
@@ -195,11 +170,6 @@ function QuestionsPage() {
             size="large"
             onClick={saveAndContinue}>SAVE and CONTINUE
           </Button>
-
-          {/* BRAINSTORM: SAVE & GO HOME button - ? - 
-          conditional render, only visible if this is acting as the go-back-and-edit page */}
-
-        </center>
 
       </div>
     </div>
