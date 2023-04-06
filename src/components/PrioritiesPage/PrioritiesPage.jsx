@@ -4,13 +4,27 @@ import { useHistory } from 'react-router-dom';
 // import "./styles.css";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
+import Typography from '@mui/material/Typography';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+
+
+// TO DO: Styling
+
+// MUI theme will go here
+
+
 function PrioritiesPage() {
 
   const categories = useSelector(store => store.categories);
   const history = useHistory();
   const dispatch = useDispatch();
 
-  // Dispatch to GET the list of unordered categories happens back in app.jsx
+  // Dispatch to GET the list of unordered categories happens in app.jsx
 
   // React state to track order of items
   const [itemList, setItemList] = useState(categories);
@@ -44,39 +58,65 @@ function PrioritiesPage() {
 
   console.log('RANKED:', rankedList);
 
+  // Handles SAVE - - - submits ranked priorities to database
+  const saveAnswers = () => {
+    console.log('SAVE clicked');
+    dispatch({
+        type: 'SET_PRIORITIES',
+        payload: rankedList
+      });
+  }
+
 
   return (
-    <div className="priority-container">
+    <div>
+      <center>
+        <Typography variant="h4" mt={0} mb={1} gutterBottom>PRIORITIES PAGE</Typography>
+        <Typography variant="body1" mb={6} gutterBottom>Drag and drop the categories below to prioritize them, highest priority to lowest.</Typography>
+        
+      <div className="priority-container">
+        <DragDropContext onDragEnd={handleDrop}>
+          <Droppable droppableId="list-container">
+            {(provided) => (
+              <div
+                className="list-container"
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {itemList.map((item, index) => (
+                  <Draggable key={item.name} draggableId={item.name} index={index}>
+                    {(provided) => (
+                      <div
+                        className="item-container"
+                        ref={provided.innerRef}
+                        {...provided.dragHandleProps}
+                        {...provided.draggableProps}
+                      >
+                        {item.name}
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </div>
+      <br/><br/>
 
+      {/* SAVE button */}
+      <Button
+      type="submit"
+      variant="contained"
+      color="primary"
+      size="large"
+      onClick={saveAnswers}>SAVE PRIORITIES
+    </Button>
+    <br/><br/>
+    </center>
 
-      <DragDropContext onDragEnd={handleDrop}>
-        <Droppable droppableId="list-container">
-          {(provided) => (
-            <div
-              className="list-container"
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
-              {itemList.map((item, index) => (
-                <Draggable key={item.name} draggableId={item.name} index={index}>
-                  {(provided) => (
-                    <div
-                      className="item-container"
-                      ref={provided.innerRef}
-                      {...provided.dragHandleProps}
-                      {...provided.draggableProps}
-                    >
-                      {item.name}
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-    </div>
+  </div>
   );
 }
 
