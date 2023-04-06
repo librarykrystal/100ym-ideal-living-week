@@ -12,27 +12,8 @@ function PrioritiesPage() {
 
   // Dispatch to GET the list of unordered categories happens back in app.jsx
 
-  // console.log('CATEGORIES FROM DB:', categories);
-
-  // const hardcodedTest = [
-  //   {id: 1, name: 'Sleep'},
-  //   {id: 2, name: 'Self-Care'},
-  //   {id: 3, name: 'Family and Relationships'},
-  //   {id: 4, name: 'Personal Development'},
-  //   {id: 5, name: 'Nutrition'},
-  //   {id: 6, name: 'Leisure Time'},
-  //   {id: 7, name: 'Community Involvement'},
-  //   {id: 8, name: 'Creativity'},
-  //   {id: 9, name: 'Work'},
-  //   {id: 10, name: 'Measure What Matters'}
-
-  // ]
-
   // React state to track order of items
   const [itemList, setItemList] = useState(categories);
-
-  // console.log('LIST:', itemList);
-  // console.log('DATA for i[0]:', itemList[0]);
 
   // Function to update list on drop
   const handleDrop = (droppedItem) => {
@@ -47,9 +28,18 @@ function PrioritiesPage() {
     setItemList(updatedList);
   };
 
+  // bundling of ranked user input:
   const rankedList = [
     {rank: 1, category_id: parseInt(`${itemList[0].id}`)},
-    {rank: 2, category_id: parseInt(`${itemList[1].id}`)}
+    {rank: 2, category_id: parseInt(`${itemList[1].id}`)},
+    {rank: 3, category_id: parseInt(`${itemList[2].id}`)},
+    {rank: 4, category_id: parseInt(`${itemList[3].id}`)},
+    {rank: 5, category_id: parseInt(`${itemList[4].id}`)},
+    {rank: 6, category_id: parseInt(`${itemList[5].id}`)},
+    {rank: 7, category_id: parseInt(`${itemList[6].id}`)},
+    {rank: 8, category_id: parseInt(`${itemList[7].id}`)},
+    {rank: 9, category_id: parseInt(`${itemList[8].id}`)},
+    {rank: 10, category_id: parseInt(`${itemList[9].id}`)}
   ]
 
   console.log('RANKED:', rankedList);
