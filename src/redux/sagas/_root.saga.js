@@ -3,6 +3,8 @@ import loginSaga from "./login.saga";
 import registrationSaga from "./registration.saga";
 import userSaga from "./user.saga";
 import questionsSaga from "./fetchQuestions.saga";
+import newActivitySaga from "./newActivity.saga";
+import fetchActivitiesSaga from "./fetchActivities.saga";
 import categoriesSaga from "./fetchCategories.saga";
 
 // rootSaga is the primary saga.
@@ -18,6 +20,8 @@ export default function* rootSaga() {
     registrationSaga(),
     userSaga(),
     questionsSaga(),
+    newActivitySaga(),
+    fetchActivitiesSaga(),
     categoriesSaga(),
   ]);
 }
