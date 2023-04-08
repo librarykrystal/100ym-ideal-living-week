@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from "react";
 import "./weekpage.css";
 import { useDispatch, useSelector } from "react-redux";
-
+import TextField from "@mui/material/TextField";
+import Select from "@mui/material/Select";
+import Typography from "@mui/material/Typography";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
+import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
 function WeekPage() {
   // const [activities, setActivities] = useState([]);
   const dispatch = useDispatch();
@@ -26,36 +35,48 @@ function WeekPage() {
   ];
 
   return (
-    <div className="weekApp">
-      <h1>Weekly Planner</h1>
-      <div className="wgrid-container">
-        {daysOfWeek.map((day) => (
-          <div key={day} className="wgrid-item">
-            <h2>{day}</h2>
-            <ul>
-              {activities
-                .filter((activity) => activity.day === day)
-                .map((activity) => (
-                  <li key={activity.id}>
-                    <span>{activity.category_name}</span>
-                    <span>
-                      {activity.start_time} - {activity.end_time}
-                    </span>
-                  </li>
-                ))}
-            </ul>
-          </div>
-        ))}
-      </div>
+    <div>
+      <center>
+        <Typography variant="h4" mt={0} mb={1} gutterBottom>
+          Weekly Planner
+        </Typography>
+      </center>
       <AddActivityForm
         onAddActivity={handleAddActivity}
         activities={activities}
+        daysOfWeek={daysOfWeek}
       />
+
+      <br />
+      <br />
+      <Stack direction="row" spacing={2}>
+        {daysOfWeek.map((day) => (
+          <Stack direction="row" spacing={2}>
+            <FormControl fullWidth>
+              <center>
+                <Typography variant="h6">{day}</Typography>
+              </center>
+              <ul>
+                {activities
+                  .filter((activity) => activity.day === day)
+                  .map((activity) => (
+                    <li key={activity.id}>
+                      <Typography>{activity.category_name}</Typography>
+                      <Typography>
+                        {activity.start_time} - {activity.end_time}
+                      </Typography>
+                    </li>
+                  ))}
+              </ul>
+            </FormControl>
+          </Stack>
+        ))}
+      </Stack>
     </div>
   );
 }
 
-function AddActivityForm({ onAddActivity, activities }) {
+function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
   const [activity, setActivity] = useState({
     category_id: 0,
     day: "",
@@ -91,56 +112,103 @@ function AddActivityForm({ onAddActivity, activities }) {
   };
 
   return (
-    <form className="weekForm" onSubmit={handleSubmit}>
-      <label>
-        Activity Name:
-        <input
-          type="number"
-          name="category_id"
-          value={activity.category_id}
-          onChange={handleChange}
-        />
-      </label>
-      <label>
-        Day of Week:
-        <select name="day" value={activity.day} onChange={handleChange}>
-          <option value=""></option>
-          <option value="Sunday">Sunday</option>
-          <option value="Monday">Monday</option>
-          <option value="Tuesday">Tuesday</option>
-          <option value="Wednesday">Wednesday</option>
-          <option value="Thursday">Thursday</option>
-          <option value="Friday">Friday</option>
-          <option value="Saturday">Saturday</option>
-        </select>
-      </label>
-      <label>
-        Start Time:
-        <input
-          type="time"
-          name="start_time"
-          value={activity.start_time}
-          onChange={handleChange}
-        />
-      </label>
-      <label>
-        End Time:
-        <input
-          type="time"
-          name="end_time"
-          value={activity.end_time}
-          onChange={handleChange}
-        />
-      </label>
+    <form onSubmit={handleSubmit}>
+      <Typography variant="h5" gutterBottom>
+        Add an Activity
+      </Typography>
+      <Grid container spacing={1}>
+        <Grid item xs={12} md={2}>
+          <FormControl fullWidth>
+            <Typography>Select Category</Typography>
+            <Select
+              name="category_id"
+              value={activity.category_id}
+              onChange={handleChange}
+              // className={classes.input}
+            >
+              <MenuItem value={0}></MenuItem>
+              <MenuItem value={1}>Sleep</MenuItem>
+              <MenuItem value={2}>Self-Care</MenuItem>
+              <MenuItem value={3}>Family and Relationships</MenuItem>
+              <MenuItem value={4}>Personal Development</MenuItem>
+              <MenuItem value={5}>Nutrition</MenuItem>
+              <MenuItem value={6}>Leisure Time</MenuItem>
+              <MenuItem value={7}>Community Involvement</MenuItem>
+              <MenuItem value={8}>Creativity</MenuItem>
+              <MenuItem value={9}>Work</MenuItem>
+              <MenuItem value={10}>Measure What Matters</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12} md={2}>
+          <FormControl fullWidth>
+            <Typography>Select Day</Typography>
+            <Select
+              name="day"
+              value={activity.day}
+              onChange={handleChange}
+              // label="Select Day"
+              // className={classes.input}
+            >
+              <MenuItem value="0">Select Day</MenuItem>
+              {daysOfWeek.map((day) => (
+                <MenuItem key={day} value={day}>
+                  {day}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12} md={2}>
+          <FormControl fullWidth>
+            <Typography>Start Time</Typography>
+            <TextField
+              type="time"
+              name="start_time"
+              value={activity.start_time}
+              onChange={handleChange}
+              // className={classes.input}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              inputProps={{
+                step: 300, // 5 min
+              }}
+            />
+          </FormControl>
+        </Grid>
+        <Grid item xs={12} md={2}>
+          <FormControl fullWidth>
+            <Typography>End Time</Typography>
+            <TextField
+              type="time"
+              name="end_time"
+              value={activity.end_time}
+              onChange={handleChange}
+              // className={classes.input}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              inputProps={{
+                step: 300, // 5 min
+              }}
+            />
+          </FormControl>
+        </Grid>
+      </Grid>
       {overlapError && (
-        <div className="error">
-          There is an overlap in scheduling. Please adjust the times and try
-          again.
-        </div>
+        <Typography variant="body2">
+          There is an overlap with another activity on this day and time.
+        </Typography>
       )}
-      <button type="submit">Add Activity</button>
+
+      <br />
+      <FormControl>
+        <Button type="submit" variant="contained" color="primary">
+          Add Activity
+        </Button>
+      </FormControl>
     </form>
   );
 }
-
 export default WeekPage;
