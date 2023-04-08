@@ -6,7 +6,7 @@ router.get("/", (req, res) => {
   const query = `SELECT "ideal_week".*, "category"."name" AS "category_name"
                    FROM "ideal_week"
                    JOIN "category" ON "ideal_week"."category_id" = "category"."id"
-                   WHERE "ideal_week"."user_id" = $1`;
+                   WHERE "ideal_week"."user_id" = $1 ORDER BY "start_time" ASC`;
   const sqlParams = [req.user.id];
 
   pool

@@ -168,12 +168,6 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
               value={activity.start_time}
               onChange={handleChange}
               // className={classes.input}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              inputProps={{
-                step: 300, // 5 min
-              }}
             />
           </FormControl>
         </Grid>
@@ -186,12 +180,6 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
               value={activity.end_time}
               onChange={handleChange}
               // className={classes.input}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              inputProps={{
-                step: 300, // 5 min
-              }}
             />
           </FormControl>
         </Grid>
