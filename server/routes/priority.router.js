@@ -14,5 +14,24 @@ router.get('/', (req, res) => {
     });
   });
 
+  router.post('/', (req, res) => {
+    const user_id = req.body.user_id;
+    const category_id = req.body.category_id;
+    const rank = req.body.rank;
+    const sqlText = `INSERT INTO "priority"  ("category_id", "rank")
+                     VALUES ($1, $2)
+                     RETURNING "id";`;
+    const sqlParams = [category_id, rank];
+    pool.query(sqlText, sqlParams)
+      .then(result => {
+        console.log(`Added priority to the database`, result.rows[0].id);
+        res.sendStatus(201);
+      })
+      .catch(error => {
+        console.log(`Error making database query ${sqlText}`, error);
+        res.sendStatus(500);
+      })
+  });
+
 
   module.exports = router;
