@@ -28,25 +28,45 @@ function QuestionsPage() {
   const [categoryFilter, setCategoryFilter] = useState('');
 
   // Getter/setter hook for holding local state of all 30 user answers:
-  const [stateAnswers, setStateAnswers] = useState({
-    q1A: '', q2A: '', q3A: '',
-    q4A: '', q5A: '', q6A: '',
-    q7A: '', q8A: '', q9A: '',
-    q10A: '', q11A: '', q12A: '',
-    q13A: '', q14A: '', q15A: '',
-    q16A: '', q17A: '', q18A: '',
-    q19A: '', q20A: '', q21A: '',
-    q22A: '', q23A: '', q24A: '',
-    q25A: '', q26A: '', q27A: '',
-    q28A: '', q29A: '', q30A: ''
-  });
+  const [stateAnswers, setStateAnswers] = useState([
+    {question_id: 1, q1A: ''},
+    {question_id: 2, q2A: ''},
+    {question_id: 3, q3A: ''},
+    {question_id: 4, q4A: ''},
+    {question_id: 5, q5A: ''},
+    {question_id: 6, q6A: ''},
+    {question_id: 7, q7A: ''},
+    {question_id: 8, q8A: ''},
+    {question_id: 9, q9A: ''},
+    {question_id: 10, q10A: ''},
+    {question_id: 11, q11A: ''},
+    {question_id: 12, q12A: ''},
+    {question_id: 13, q13A: ''},
+    {question_id: 14, q14A: ''},
+    {question_id: 15, q15A: ''},
+    {question_id: 16, q16A: ''},
+    {question_id: 17, q17A: ''},
+    {question_id: 18, q18A: ''},
+    {question_id: 19, q19A: ''},
+    {question_id: 20, q20A: ''},
+    {question_id: 21, q21A: ''},
+    {question_id: 22, q22A: ''},
+    {question_id: 23, q23A: ''},
+    {question_id: 24, q24A: ''},
+    {question_id: 25, q25A: ''},
+    {question_id: 26, q26A: ''},
+    {question_id: 27, q27A: ''},
+    {question_id: 28, q28A: ''},
+    {question_id: 29, q29A: ''},
+    {question_id: 30, q30A: ''},
+  ]);
 
-  console.log('#9 answer:', stateAnswers.q9A);
-  console.log('#7 answer:', stateAnswers.q7A);
+  // console.log('#1 answer:', stateAnswers.q1A);
+  // console.log('#2 answer:', stateAnswers.q2A);
 
-  // Dispatches (on page load) to GET all the questions and GET the list of unordered categories
+  // Dispatch (on page load) to GET all the questions
+  // (Categories are fetched in app.jsx)
   useEffect(() => {
-    dispatch({ type: 'FETCH_CATEGORIES' });
     dispatch({ type: 'FETCH_QUESTIONS' });
   }, []);
 
