@@ -33,6 +33,7 @@ function Nav() {
               Info Page
             </Link> */}
 
+            {/* These links only show up once setupComplete for user is TRUE in DB */}
             {user.setupComplete &&
               <>
                 <Link className="navLink" to="/week">
