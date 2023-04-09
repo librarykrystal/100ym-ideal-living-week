@@ -23,7 +23,10 @@ function WeekPage() {
     const activityWithTime = { ...activity, total_hours: timeDiff };
     dispatch({ type: "POST_ACTIVITY", payload: activityWithTime });
   };
-
+  const handleClick = (event, activity) => {
+    // event.preventDefault();
+    console.log(`one of the things got clicked, ${activity}`);
+  };
   // dispatch({ type: "POST_ACTIVITY", payload: activity });
   // setActivities([...activities, activity]);
 
@@ -67,7 +70,12 @@ function WeekPage() {
                 {activities
                   .filter((activity) => activity.day === day)
                   .map((activity) => (
-                    <li key={activity.id}>
+                    <li
+                      key={activity.id}
+                      onClick={() =>
+                        console.log("Clicked on activity:", activity)
+                      }
+                    >
                       <Typography>{activity.category_name}</Typography>
                       <Typography>
                         {activity.start_time} - {activity.end_time}
