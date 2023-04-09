@@ -92,5 +92,6 @@ CREATE TABLE "ideal_week" (
     "day" VARCHAR (20),
     "start_time" time (4),
     "end_time" time (4),
-    "category_id" INT REFERENCES "category"
+    "category_id" INT REFERENCES "category",
+    "total_hours" numeric
 );

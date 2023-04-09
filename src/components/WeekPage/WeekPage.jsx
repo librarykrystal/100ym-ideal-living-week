@@ -17,9 +17,16 @@ function WeekPage() {
   const activities = useSelector((store) => store.activities);
 
   const handleAddActivity = (activity) => {
-    dispatch({ type: "POST_ACTIVITY", payload: activity });
-    // setActivities([...activities, activity]);
+    const start = new Date(`1970-01-01T${activity.start_time}:00.000Z`);
+    const end = new Date(`1970-01-01T${activity.end_time}:00.000Z`);
+    const timeDiff = ((end - start) / (1000 * 60 * 60)).toFixed(2);
+    const activityWithTime = { ...activity, total_hours: timeDiff };
+    dispatch({ type: "POST_ACTIVITY", payload: activityWithTime });
   };
+
+  // dispatch({ type: "POST_ACTIVITY", payload: activity });
+  // setActivities([...activities, activity]);
+
   useEffect(() => {
     dispatch({ type: "FETCH_ACTIVITIES" });
   }, []);
@@ -82,6 +89,7 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
     day: "",
     start_time: "",
     end_time: "",
+    total_hours: "",
   });
   const [overlapError, setOverlapError] = useState(false);
 
@@ -102,7 +110,13 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
       setOverlapError(true);
     } else {
       onAddActivity({ ...activity });
-      setActivity({ category_id: 0, day: "", start_time: "", end_time: "" });
+      setActivity({
+        category_id: 0,
+        day: "",
+        start_time: "",
+        end_time: "",
+        total_hours: "",
+      });
       setOverlapError(false);
     }
   };
