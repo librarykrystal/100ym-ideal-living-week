@@ -70,6 +70,10 @@ function QuestionsPage() {
     dispatch({ type: 'FETCH_QUESTIONS' });
   }, []);
 
+  useEffect(() => {
+    dispatch({ type: 'FETCH_ANSWERS' });
+  }, []);
+
   // Handles filtering to show only questions from the user-selected category
   const categoryFilterHandler = (item) => {
     if (!categoryFilter) {

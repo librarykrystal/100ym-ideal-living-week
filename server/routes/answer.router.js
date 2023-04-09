@@ -14,7 +14,8 @@ router.get('/', (req, res) => {
         console.log(`Error making database query ${query}`, error);
         res.sendStatus(500);
       })
-  });
+});
+
   
 // post still in works
 // router.post('/', (req, res) => {
