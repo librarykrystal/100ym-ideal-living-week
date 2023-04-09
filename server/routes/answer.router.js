@@ -38,26 +38,21 @@ router.get('/', (req, res) => {
 //   });
 
 router.post('/', (req, res) => {
-    const userId = req.user.id
-    const answers = req.body.answers;
-  
-    // Loop through the answers and insert them into the database
-    Promise.all(
-      answers.map(answer => {
-        const sqlParams = [userId, answer.question_id, answer.response];
-        const sqlText = `INSERT INTO "answer" ("user_id", "question_id", "response") VALUES ($1, $2, $3) RETURNING "id";`
-        return pool.query(sqlText, sqlParams);
+    const userId = req.user.id;
+    const entries = req.body;
+    const sqlText = `INSERT INTO "answer" ("user_id", "question_id", "response") 
+                     VALUES ($1, $2, $3);`;
+    const sqlParams = entries.map(entry => [userId, entry.question_id, entry.response]);
+    pool.query(sqlText, sqlParams)
+      .then(() => {
+        console.log(`Added answers to the database`);
+        res.sendStatus(201);
       })
-    )
-    .then(results => {
-      console.log(`Added ${results.length} answers to the database`);
-      res.sendStatus(201);
-    })
-    .catch(error => {
-      console.log(`Error making database query`, error);
-      res.sendStatus(500);
-    })
-  })
+      .catch(error => {
+        console.log(`Error making database query ${sqlText}`, error);
+        res.sendStatus(500);
+      })
+  });
   
   
   module.exports = router;
