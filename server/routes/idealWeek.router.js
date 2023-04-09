@@ -6,7 +6,7 @@ router.get("/", (req, res) => {
   const query = `SELECT "ideal_week".*, "category"."name" AS "category_name"
                    FROM "ideal_week"
                    JOIN "category" ON "ideal_week"."category_id" = "category"."id"
-                   WHERE "ideal_week"."user_id" = $1`;
+                   WHERE "ideal_week"."user_id" = $1 ORDER BY "start_time" ASC`;
   const sqlParams = [req.user.id];
 
   pool
@@ -23,8 +23,8 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
   const userId = req.user.id;
   const entry = req.body;
-  const sqlText = `INSERT INTO "ideal_week" ("user_id", "day", "start_time", "end_time", "category_id")
-                     VALUES ($1, $2, $3, $4, $5)
+  const sqlText = `INSERT INTO "ideal_week" ("user_id", "day", "start_time", "end_time", "category_id", "total_hours")
+                     VALUES ($1, $2, $3, $4, $5, $6)
                      RETURNING "id";`;
   const sqlParams = [
     userId,
@@ -32,6 +32,7 @@ router.post("/", (req, res) => {
     entry.start_time,
     entry.end_time,
     entry.category_id,
+    entry.total_hours,
   ];
   pool
     .query(sqlText, sqlParams)
