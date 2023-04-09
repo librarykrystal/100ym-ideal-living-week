@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
 import { useSelector } from 'react-redux';
+import Logo from './100YM-ILY_logo_white.png';
 
 function Nav() {
   const user = useSelector((store) => store.user);
@@ -10,7 +11,7 @@ function Nav() {
   return (
     <div className="nav">
       <Link to="/home">
-        <h2 className="nav-title">Prime Solo Project</h2>
+        <img className="logo" src={Logo} alt="logo"/>
       </Link>
       <div>
         {/* If no user is logged in, show these links */}
@@ -28,21 +29,25 @@ function Nav() {
               Home
             </Link>
 
-            <Link className="navLink" to="/info">
+            {/* <Link className="navLink" to="/info">
               Info Page
-            </Link>
+            </Link> */}
 
-            <Link className="navLink" to="/week">
-              Week
-            </Link>
+            {user.setupComplete &&
+              <>
+                <Link className="navLink" to="/week">
+                  Week
+                </Link>
 
-            <Link className="navLink" to="/priorities">
-              Priorities
-            </Link>
+                <Link className="navLink" to="/priorities">
+                  Priorities
+                </Link>
 
-            <Link className="navLink" to="/questions">
-              Questions
-            </Link>
+                <Link className="navLink" to="/questions">
+                  Questions
+                </Link>
+              </>
+            }
 
             <LogOutButton className="navLink" />
           </>
@@ -57,9 +62,9 @@ function Nav() {
           </>
         )}
 
-        <Link className="navLink" to="/about">
+        {/* <Link className="navLink" to="/about">
           About
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

@@ -5,8 +5,9 @@
   align-items: center;
 
   margin: 0 0 30px;
-  background-color: #00acb0;
+  background-color: #475473;
   overflow: hidden;
+  border-bottom: black 2px solid;
 }
 
 .nav a {
@@ -23,10 +24,10 @@
 
 .navLink {
   display: inline-block;
-  color: #f2f2f2;
-  background-color: #00acb0;
+  color: white;
+  background-color: #475473;
   text-align: center;
-  padding: 24px 10px;
+  padding: 12px 10px;
   text-decoration: none;
   font-size: 15px;
 
@@ -38,5 +39,10 @@
 }
 
 .navLink:hover {
-  background-color: #008183;
+  background-color: #475473;
+  color: #bdbfbf;
+}
+
+.logo {
+  height: 100px;
 }
