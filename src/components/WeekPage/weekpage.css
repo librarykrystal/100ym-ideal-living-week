@@ -50,36 +50,37 @@ h1 {
 .weekForm {
   margin-top: 20px;
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
 }
 
-.weekForm label {
+/* .weekForm label {
   display: block;
   width: 100%;
   margin-bottom: 10px;
-}
+} */
 
-.weekForm input,
+/* .weekForm input,
 .weekForm select {
   display: block;
   width: 100%;
   padding: 5px;
   margin-top: 5px;
   border: 1px solid #ccc;
-}
+} */
 
-.weekForm button[type="submit"] {
+/* .weekForm button[type="submit"] {
   margin-top: 10px;
   padding: 5px 10px;
   background-color: #4caf50;
   color: #fff;
   border: none;
   cursor: pointer;
-}
+} */
 
-.weekForm button[type="submit"]:hover {
+/* .weekForm button[type="submit"]:hover {
   background-color: #3e8e41;
-}
+} */
 
 @media screen and (max-width: 600px) {
   .wgrid-container {
