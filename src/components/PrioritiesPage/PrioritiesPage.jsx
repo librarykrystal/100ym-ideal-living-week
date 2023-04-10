@@ -6,6 +6,7 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 
 
 // TO DO: Styling
@@ -50,7 +51,7 @@ function PrioritiesPage() {
     {rank: 10, category_id: parseInt(`${itemList[9].id}`)}
   ]
 
-  // console.log('RANKED:', rankedList);
+  console.log('RANKED:', rankedList);
 
   // Handles SAVE - - - submits ranked priorities to database
   const saveAnswers = () => {
@@ -79,14 +80,27 @@ function PrioritiesPage() {
                   {itemList.map((item, index) => (
                     <Draggable key={item.name} draggableId={item.name} index={index}>
                       {(provided) => (
-                        <div
+                        <Box
                           className="item-container"
+                          sx={{
+                            width: 220,
+                            height: 34,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            m: 1,
+                            backgroundColor: '#bdbfbf',
+                            '&:hover': {
+                              backgroundColor: '#bdbfbf',
+                              opacity: [0.9, 0.8, 0.7],
+                            },
+                          }}
                           ref={provided.innerRef}
                           {...provided.dragHandleProps}
                           {...provided.draggableProps}
                         >
-                          {item.name}
-                        </div>
+                          <Typography>{item.name}</Typography>
+                        </Box>
                       )}
                     </Draggable>
                   ))}
