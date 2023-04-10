@@ -16,43 +16,32 @@ router.get('/', (req, res) => {
       })
   });
   
-// post still in works
-// router.post('/', (req, res) => {
-//     const userId = req.user.id;
-//     entry = req.body;
-    
-//     const sqlText = `INSERT INTO "answer" ("user_id", "question_id", "response") 
-//                      VALUES ($1, $2, $3)
-//                      RETURNING "id";`;
-//     const sqlParams = [userId, entry.question_id, entry.response];
-    
-//     pool.query(sqlText, sqlParams)
-//       .then(result => {
-//         console.log(`Added answer to the database`, result.rows[0].id);
-//         res.sendStatus(201);
-//       })
-//       .catch(error => {
-//         console.log(`Error making database query ${sqlText}`, error);
-//         res.sendStatus(500);
-//       })
-//   });
-
-router.post('/', (req, res) => {
-    const userId = req.user.id;
+  router.post('/', async (req, res) => {
+    console.log(req.body);
     const entries = req.body;
-    const sqlText = `INSERT INTO "answer" ("user_id", "question_id", "response") 
-                     VALUES ($1, $2, $3);`;
-    const sqlParams = entries.map(entry => [userId, entry.question_id, entry.response]);
-    pool.query(sqlText, sqlParams)
-      .then(() => {
-        console.log(`Added answers to the database`);
-        res.sendStatus(201);
-      })
-      .catch(error => {
-        console.log(`Error making database query ${sqlText}`, error);
-        res.sendStatus(500);
-      })
+    const client = await pool.connect();
+  
+    try {
+      await client.query('BEGIN');
+      let queryText = `INSERT INTO "answer" ("user_id", "question_id", "response") 
+                       VALUES ($1, $2, $3) RETURNING "id";`;
+      for(let entry of entries) {
+        const values = [req.user_id, entry.question_id, entry.response];
+        await client.query(queryText, values);
+      }
+  
+      await client.query('COMMIT');
+      console.log(`Added answers to the database`);
+      res.sendStatus(201);
+    } catch (e) {
+      console.log('ROLLBACK', e);
+      await client.query('ROLLBACK');
+      res.sendStatus(500);
+    } finally {
+      client.release();
+    }
   });
+  
   
   
   module.exports = router;
