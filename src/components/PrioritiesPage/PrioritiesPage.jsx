@@ -18,6 +18,17 @@ const theme = createTheme({
       'Roboto Slab',
     ],
   },
+  palette: {
+    primary: {
+      main: '#475473',
+    },
+    secondary: {
+      main: '#1c4bd9',
+    },
+    info: {
+      main: '#bdbfbf',
+    },
+  },
 });
 
 
@@ -60,19 +71,6 @@ function PrioritiesPage() {
 
   console.log('RANKED:', rankedList);
 
-  let sat;
-
-  const saturation = (item) => {
-    if (item.id == 1){
-      sat == 100;
-      return item;
-    } else if (item.id == 2) {
-      sat == 90;
-      return item;
-    }
-    console.log('SAT:', sat);
-  }
-
   // Handles SAVE - - - submits ranked priorities to database
   const saveAnswers = () => {
     console.log('SAVE clicked');
@@ -86,39 +84,43 @@ function PrioritiesPage() {
     <ThemeProvider theme={theme}>
     <div>
       <center>
-        <Typography variant="h4" mt={0} mb={1} gutterBottom>PRIORITIES PAGE</Typography>
-        <Typography variant="body1" mb={6} gutterBottom>Drag and drop the categories below to prioritize them, highest priority to lowest.</Typography>
+        <Typography variant="h4" mt={5} mb={1} gutterBottom>PRIORITIES</Typography>
+        <Typography variant="body1" mb={4} gutterBottom>Drag and drop the categories below to prioritize them, highest priority to lowest.</Typography>
         
         <div className="priority-container">
           <DragDropContext onDragEnd={handleDrop}>
             <Droppable droppableId="list-container">
               {(provided) => (
-                <div
+                <Box
+                  sx={{
+                    width: 280,
+                    padding: '12px 12px 12px 12px',
+                    m: 1,
+                    border: `2px solid #bdbfbf`,
+                    borderRadius: 2,
+                  }}
                   className="list-container"
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                 >
-                  {itemList
-                  // .filter(saturation)
-                  .map((item, index) => (
+                  {itemList.map((item, index) => (
                     <Draggable key={item.name} draggableId={item.name} index={index}>
                       {(provided) => (
                         <Box
                           className="item-container"
                           sx={{
                             width: 250,
-                            height: 36,
+                            padding: '2px 0px 2px 0px',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            m: 1,
-                            // backgroundColor: '#7895ed',
-                            backgroundColor: `hsl(225, ${80-index*10}%, 65%)`,
-                            // backgroundColor: `hsl(225, ${item.id*5}%, 65%)`,
-                            // opacity: `0.${index}`,
+                            m: 1.2,
+                            border: `3.5px solid hsl(225, ${80-index*10}%, 64%)`,
+                            boxShadow: 2,
+                            borderRadius: 1,
+                            backgroundColor: `hsl(225, ${80-index*10}%, 92%)`,
                             '&:hover': {
-                              backgroundColor: '#bdbfbf',
-                              opacity: [0.9, 0.8, 0.7],
+                              opacity: [0.8, 0.7, 0.6],
                             },
                           }}
                           ref={provided.innerRef}
@@ -131,7 +133,7 @@ function PrioritiesPage() {
                     </Draggable>
                   ))}
                   {provided.placeholder}
-                </div>
+                </Box>
               )}
             </Droppable>
           </DragDropContext>
@@ -144,7 +146,7 @@ function PrioritiesPage() {
           variant="contained"
           color="primary"
           size="large"
-          onClick={saveAnswers}>SAVE PRIORITIES
+          onClick={saveAnswers}>SAVE
         </Button>
       <br/><br/>
 
