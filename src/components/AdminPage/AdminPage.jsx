@@ -30,12 +30,23 @@ const theme = createTheme({
 
 function AdminPage() {
 
+  const dispatch = useDispatch();
+  const userList = useSelector(store => store.userList);
+
+  // Dispatch (on page load) to GET all the questions
+  useEffect(() => {
+    dispatch({ type: 'FETCH_USERLIST' });
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
     <div className="container">
       <div>
         <Typography variant="h4" mt={0} mb={1} gutterBottom>ADMIN PAGE</Typography>
       </div>
+      {userList &&
+        <p>{JSON.stringify(userList)}</p>
+      }
     </div>
     </ThemeProvider>
   );
