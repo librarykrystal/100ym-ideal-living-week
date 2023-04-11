@@ -42,29 +42,47 @@ const rows = [
 ];
 
 const daysOfWeek = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
-
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
 
 export default function BasicTable() {
-    const dispatch = useDispatch();
-    const activities = useSelector((store) => store.activities);
-    const categories = useSelector((store) => store.categories);
+  const dispatch = useDispatch();
+  const activities = useSelector((store) => store.activities);
+  const categories = useSelector((store) => store.categories);
 
-    useEffect(() => {
-        dispatch({ type: "FETCH_ACTIVITIES" });
-        dispatch({ type: "FETCH_CATEGORIES" });
-      }, []);
+  useEffect(() => {
+    dispatch({ type: "FETCH_ACTIVITIES" });
+    dispatch({ type: "FETCH_CATEGORIES" });
+  }, []);
 
-      console.log('activities', activities);
-      console.log('categories', categories);
-    
+  console.log("activities", activities);
+  console.log("categories", categories);
+
+  const categoriesSorted = categories.sort((a, b) =>
+    a.name.localeCompare(b.name)
+  );
+  console.log("categoriesSorted", categoriesSorted);
+
+  const activitiesSorted = activities.sort((a, b) =>
+    a.start_time.localeCompare(b.start_time)
+  );
+  console.log("activitiesSorted", activitiesSorted);
+
+  const categoriesWithActivities = categoriesSorted.map((category) => {
+    category.activities = activitiesSorted.filter(
+      ({ category_name }) => category_name === category.name
+    );
+    return category;
+  });
+
+  console.log("categoriesWithActivities", categoriesWithActivities);
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -82,22 +100,22 @@ export default function BasicTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {categoriesWithActivities.map(({ id, name, activities }) => (
             <TableRow
-              key={row.Categories}
+              key={id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.Categories}
+                {name}
               </TableCell>
-              <TableCell align="right">{row.Monday}</TableCell>
-              <TableCell align="right">{row.Tuesday}</TableCell>
-              <TableCell align="right">{row.Wednesday}</TableCell>
-              <TableCell align="right">{row.Thursday}</TableCell>
-              <TableCell align="right">{row.Friday}</TableCell>
-              <TableCell align="right">{row.Saturday}</TableCell>
-              <TableCell align="right">{row.Sunday}</TableCell>
-              <TableCell align="right">{row.Total}</TableCell>
+              {/* <TableCell align="right">{category.Monday}</TableCell>
+              <TableCell align="right">{category.Tuesday}</TableCell>
+              <TableCell align="right">{category.Wednesday}</TableCell>
+              <TableCell align="right">{category.Thursday}</TableCell>
+              <TableCell align="right">{category.Friday}</TableCell>
+              <TableCell align="right">{category.Saturday}</TableCell>
+              <TableCell align="right">{category.Sunday}</TableCell>
+              <TableCell align="right">{category.Total}</TableCell> */}
             </TableRow>
           ))}
         </TableBody>
