@@ -103,6 +103,7 @@ function PrioritiesPage() {
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                 >
+          {/* Mapping through the priorities, displayed in styled MUI Boxes */}
                   {itemList.map((item, index) => (
                     <Draggable key={item.name} draggableId={item.name} index={index}>
                       {(provided) => (
