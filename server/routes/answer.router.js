@@ -25,14 +25,41 @@ router.get('/', (req, res) => {
     try {
       await client.query('BEGIN');
       let queryText = `INSERT INTO "answer" ("user_id", "question_id", "response") 
-                       VALUES ($1, $2, $3) RETURNING "id";`;
-      for(let entry of entries) {
-        const values = [req.user_id, entry.question_id, entry.response];
+                       VALUES ($1, $2, $3) RETURNING "id";`;                  
+      for(let id in entries) {
+        const values = [req.user.id, id, entries[`${id}`]];
         await client.query(queryText, values);
       }
   
       await client.query('COMMIT');
       console.log(`Added answers to the database`);
+      res.sendStatus(201);
+    } catch (e) {
+      console.log('ROLLBACK', e);
+      await client.query('ROLLBACK');
+      res.sendStatus(500);
+    } finally {
+      client.release();
+    }
+  });
+
+  router.put('/', async (req, res) => {
+    console.log("the req.body", req.body);
+    const entries = req.body;
+    const client = await pool.connect();
+    
+  
+    try {
+        await client.query('BEGIN');
+        let queryText = `UPDATE  "answer" SET "response" = $3
+                       WHERE ("user_id" = $1 AND "question_id" = $2)`;
+        for(let id in entries) {
+        const values = [req.user.id, id, entries[`${id}`]];
+        await client.query(queryText, values);
+      }
+  
+      await client.query('COMMIT');
+      console.log(`updated answers to the database`);
       res.sendStatus(201);
     } catch (e) {
       console.log('ROLLBACK', e);

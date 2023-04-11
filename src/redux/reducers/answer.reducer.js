@@ -1,9 +1,9 @@
 const answersReducer = (state = [], action) => {
     switch (action.type) {
-      case "SET_ANSWERS":
+      case "UPDATE_ANSWERS":
         return action.payload;
       default:
-        return state;
+        return null;
     }
    };
    

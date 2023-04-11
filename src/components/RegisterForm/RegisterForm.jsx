@@ -19,7 +19,15 @@ function RegisterForm() {
         email: email
       },
     });
+    dispatch({
+      type: 'POST_ANSWERS',
+      payload: {
+        
+      },
+    });
   }; // end registerUser
+
+ 
 
   return (
     <form className="formPanel" onSubmit={registerUser}>
