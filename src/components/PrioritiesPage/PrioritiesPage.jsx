@@ -4,14 +4,21 @@ import { useHistory } from 'react-router-dom';
 // import "./styles.css";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import "@fontsource/roboto-slab";
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 
 
-// TO DO: Styling
-
-// MUI theme will go here
+// Material UI Font Theming
+const theme = createTheme({
+  typography: {
+    fontFamily: [
+      'Roboto Slab',
+    ],
+  },
+});
 
 
 function PrioritiesPage() {
@@ -53,6 +60,19 @@ function PrioritiesPage() {
 
   console.log('RANKED:', rankedList);
 
+  let sat;
+
+  const saturation = (item) => {
+    if (item.id == 1){
+      sat == 100;
+      return item;
+    } else if (item.id == 2) {
+      sat == 90;
+      return item;
+    }
+    console.log('SAT:', sat);
+  }
+
   // Handles SAVE - - - submits ranked priorities to database
   const saveAnswers = () => {
     console.log('SAVE clicked');
@@ -63,6 +83,7 @@ function PrioritiesPage() {
   }
 
   return (
+    <ThemeProvider theme={theme}>
     <div>
       <center>
         <Typography variant="h4" mt={0} mb={1} gutterBottom>PRIORITIES PAGE</Typography>
@@ -77,19 +98,24 @@ function PrioritiesPage() {
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                 >
-                  {itemList.map((item, index) => (
+                  {itemList
+                  // .filter(saturation)
+                  .map((item, index) => (
                     <Draggable key={item.name} draggableId={item.name} index={index}>
                       {(provided) => (
                         <Box
                           className="item-container"
                           sx={{
-                            width: 220,
-                            height: 34,
+                            width: 250,
+                            height: 36,
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             m: 1,
-                            backgroundColor: '#bdbfbf',
+                            // backgroundColor: '#7895ed',
+                            backgroundColor: `hsl(225, ${80-index*10}%, 65%)`,
+                            // backgroundColor: `hsl(225, ${item.id*5}%, 65%)`,
+                            // opacity: `0.${index}`,
                             '&:hover': {
                               backgroundColor: '#bdbfbf',
                               opacity: [0.9, 0.8, 0.7],
@@ -124,6 +150,7 @@ function PrioritiesPage() {
 
     </center>
   </div>
+  </ThemeProvider>
   );
 }
 
