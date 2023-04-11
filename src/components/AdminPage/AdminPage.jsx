@@ -6,6 +6,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import "@fontsource/roboto-slab";
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 
 // Material UI Font Theming
 const theme = createTheme({
@@ -33,7 +34,7 @@ function AdminPage() {
   const dispatch = useDispatch();
   const userList = useSelector(store => store.userList);
 
-  // Dispatch (on page load) to GET all the questions
+  // Dispatch (on page load) to GET all the users
   useEffect(() => {
     dispatch({ type: 'FETCH_USERLIST' });
   }, []);
@@ -42,11 +43,23 @@ function AdminPage() {
     <ThemeProvider theme={theme}>
     <div className="container">
       <div>
-        <Typography variant="h4" mt={0} mb={1} gutterBottom>ADMIN PAGE</Typography>
+        <Typography variant="h4" mt={0} mb={5} gutterBottom>ADMIN PAGE</Typography>
       </div>
-      {userList &&
-        <p>{JSON.stringify(userList)}</p>
-      }
+      <Typography variant="h5" mt={0} mb={1} gutterBottom>USERS</Typography>
+      <Box>
+        {/* Conditional to avoid rendering before users array arrives from Redux store */}
+        {userList.length > 0 &&
+          <>
+            {/* Looping over array of users */}
+            {userList.map(person => {
+              return(
+              <div key={person.id}>
+                <Typography variant="body1" mt={0} mb={0} gutterBottom>{person.username} — {person.email}</Typography>
+              </div>
+            )})}
+          </>
+        }
+      </Box>
     </div>
     </ThemeProvider>
   );
