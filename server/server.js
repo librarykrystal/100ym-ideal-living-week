@@ -14,6 +14,7 @@ const categoryRouter = require('./routes/category.router');
 const priorityRouter = require('./routes/priority.router');
 const questionRouter = require('./routes/question.router');
 const idealWeekRouter = require('./routes/idealWeek.router');
+const userListRouter = require('./routes/userlist.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -33,6 +34,7 @@ app.use('/api/category', categoryRouter);
 app.use('/api/question', questionRouter);
 app.use('/api/priority', priorityRouter);
 app.use('/api/idealWeek', idealWeekRouter);
+app.use('/api/userlist', userListRouter);
 
 // Serve static files
 app.use(express.static('build'));
