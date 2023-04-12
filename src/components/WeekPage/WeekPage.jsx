@@ -45,13 +45,13 @@ function WeekPage() {
   }, []);
 
   const daysOfWeek = [
-    "Sunday",
     "Monday",
     "Tuesday",
     "Wednesday",
     "Thursday",
     "Friday",
     "Saturday",
+    "Sunday",
   ];
 
   return (
@@ -71,7 +71,7 @@ function WeekPage() {
       <br />
       <Stack direction="row" spacing={2}>
         {daysOfWeek.map((day) => (
-          <Stack direction="row" spacing={2}>
+          <Stack key={day} direction="row" spacing={2}>
             <FormControl fullWidth>
               <center>
                 <Typography variant="h6">{day}</Typography>
