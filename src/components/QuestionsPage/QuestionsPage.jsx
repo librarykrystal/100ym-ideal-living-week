@@ -20,6 +20,7 @@ function QuestionsPage() {
 
   // const user = useSelector((store) => store.user);
   const questions = useSelector(store => store.questions);
+  const answers = useSelector(store => store.answers);
   const categories = useSelector(store => store.categories);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -30,14 +31,16 @@ function QuestionsPage() {
   // Getter/setter hook for holding local state of all 30 user answers:
   const [stateAnswers, setStateAnswers] = useState({});
 
-  console.log('#1 answer:', stateAnswers);
+  console.log('#1 answer:', answers);
   // console.log('#2 answer:', stateAnswers.q2A);
 
   // Dispatch (on page load) to GET all the questions
   // (Categories are fetched in app.jsx)
   useEffect(() => {
     dispatch({ type: 'FETCH_QUESTIONS' });
+    dispatch({ type: 'FETCH_ANSWERS' });
   }, []);
+
 
   // Handles filtering to show only questions from the user-selected category
   const categoryFilterHandler = (item) => {

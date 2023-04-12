@@ -19,12 +19,7 @@ function RegisterForm() {
         email: email
       },
     });
-    dispatch({
-      type: 'POST_ANSWERS',
-      payload: {
-        
-      },
-    });
+   
   }; // end registerUser
 
  
