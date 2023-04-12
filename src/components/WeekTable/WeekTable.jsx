@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { intervalToDuration } from 'date-fns';
+import { formatDuration } from 'date-fns';
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,6 +10,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { duration } from "@mui/material";
 
 function createData(
   Categories,
@@ -69,9 +72,9 @@ export default function BasicTable() {
   );
   console.log("categoriesSorted", categoriesSorted);
 
-  const activitiesSorted = activities.sort((a, b) =>
-    a.start_time.localeCompare(b.start_time)
-  );
+  const activitiesSorted = activities
+    .sort((a, b) => a.start_time.localeCompare(b.start_time));
+
   console.log("activitiesSorted", activitiesSorted);
 
   const categoriesWithActivities = categoriesSorted.map((category) => {
@@ -109,88 +112,93 @@ export default function BasicTable() {
                 {name}
               </TableCell>
               <TableCell align="right">
-                {activities.filter((activity) => activity.day === "Monday").map(activity => {
+                {activities
+                  .filter((activity) => activity.day === "Monday")
+                  .map((activity) => {
                     return (
-                        <li key={activity.id}>
-                            {activity.start_time} -
-                            {activity.end_time}
-                        </li>
-                        );
-                    })}
+                      <li key={activity.id}>
+                        {activity.total_hours}
+                      </li>
+                    );
+                  })}
               </TableCell>
               <TableCell align="right">
-                {activities.filter((activity) => activity.day === "Tuesday").map(activity => {
+                {activities
+                  .filter((activity) => activity.day === "Tuesday")
+                  .map((activity) => {
                     return (
-                        <li key={activity.id}>
-                            {activity.start_time} -
-                            {activity.end_time}
-                        </li>
-                        );
-                    })}
+                      <li key={activity.id}>
+                        {activity.total_hours}
+                      </li>
+                    );
+                  })}
               </TableCell>
               <TableCell align="right">
-                {activities.filter((activity) => activity.day === "Wednesday").map(activity => {
+                {activities
+                  .filter((activity) => activity.day === "Wednesday")
+                  .map((activity) => {
                     return (
-                        <li key={activity.id}>
-                            {activity.start_time} -
-                            {activity.end_time}
-                        </li>
-                        );
-                    })}
+                      <li key={activity.id}>
+                        {activity.total_hours}
+                      </li>
+                    );
+                  })}
               </TableCell>
               <TableCell align="right">
-                {activities.filter((activity) => activity.day === "Thursday").map(activity => {
+                {activities
+                  .filter((activity) => activity.day === "Thursday")
+                  .map((activity) => {
                     return (
-                        <li key={activity.id}>
-                            {activity.start_time} -
-                            {activity.end_time}
-                        </li>
-                        );
-                    })}
+                      <li key={activity.id}>
+                        {activity.total_hours}
+                      </li>
+                    );
+                  })}
               </TableCell>
               <TableCell align="right">
-                {activities.filter((activity) => activity.day === "Friday").map(activity => {
+                {activities
+                  .filter((activity) => activity.day === "Friday")
+                  .map((activity) => {
                     return (
-                        <li key={activity.id}>
-                            {activity.start_time} -
-                            {activity.end_time}
-                        </li>
-                        );
-                    })}
+                      <li key={activity.id}>
+                        {activity.total_hours}
+                      </li>
+                    );
+                  })}
               </TableCell>
               <TableCell align="right">
-                {activities.filter((activity) => activity.day === "Saturday").map(activity => {
+                {activities
+                  .filter((activity) => activity.day === "Saturday")
+                  .map((activity) => {
                     return (
-                        <li key={activity.id}>
-                            {activity.start_time} -
-                            {activity.end_time}
-                        </li>
-                        );
-                    })}
+                      <li key={activity.id}>
+                        {activity.total_hours}
+                      </li>
+                    );
+                  })}
               </TableCell>
               <TableCell align="right">
-                {activities.filter((activity) => activity.day === "Sunday").map(activity => {
+                {activities
+                  .filter((activity) => activity.day === "Sunday")
+                  .map((activity) => {
                     return (
-                        <li key={activity.id}>
-                            {activity.start_time} -
-                            {activity.end_time}
-                        </li>
-                        );
-                    })}
+                      <li key={activity.id}>
+                        {activity.total_hours}
+                      </li>
+                    );
+                  })}
               </TableCell>
               <TableCell align="right">
                 <ul>
-
-                {activities.map(activity => {
+                  {activities.map((activity) => {
                     return (
-                        <li key={activity.id}>
-                            {activity.start_time} -
-                            {activity.end_time}
-                        </li>
-                        );
-                    })}
-                    </ul>
-                </TableCell>
+                      <li key={activity.id}>
+                        {activity.total_hours}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
