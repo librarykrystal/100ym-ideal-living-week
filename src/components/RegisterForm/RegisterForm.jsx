@@ -19,7 +19,10 @@ function RegisterForm() {
         email: email
       },
     });
+   
   }; // end registerUser
+
+ 
 
   return (
     <form className="formPanel" onSubmit={registerUser}>
