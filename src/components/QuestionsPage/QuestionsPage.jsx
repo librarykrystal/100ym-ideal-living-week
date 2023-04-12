@@ -20,6 +20,7 @@ function QuestionsPage() {
 
   // const user = useSelector((store) => store.user);
   const questions = useSelector(store => store.questions);
+  const answers = useSelector(store => store.answers);
   const categories = useSelector(store => store.categories);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -28,47 +29,18 @@ function QuestionsPage() {
   const [categoryFilter, setCategoryFilter] = useState('');
 
   // Getter/setter hook for holding local state of all 30 user answers:
-  const [stateAnswers, setStateAnswers] = useState([
-    {question_id: 1, q1A: ''},
-    {question_id: 2, q2A: ''},
-    {question_id: 3, q3A: ''},
-    {question_id: 4, q4A: ''},
-    {question_id: 5, q5A: ''},
-    {question_id: 6, q6A: ''},
-    {question_id: 7, q7A: ''},
-    {question_id: 8, q8A: ''},
-    {question_id: 9, q9A: ''},
-    {question_id: 10, q10A: ''},
-    {question_id: 11, q11A: ''},
-    {question_id: 12, q12A: ''},
-    {question_id: 13, q13A: ''},
-    {question_id: 14, q14A: ''},
-    {question_id: 15, q15A: ''},
-    {question_id: 16, q16A: ''},
-    {question_id: 17, q17A: ''},
-    {question_id: 18, q18A: ''},
-    {question_id: 19, q19A: ''},
-    {question_id: 20, q20A: ''},
-    {question_id: 21, q21A: ''},
-    {question_id: 22, q22A: ''},
-    {question_id: 23, q23A: ''},
-    {question_id: 24, q24A: ''},
-    {question_id: 25, q25A: ''},
-    {question_id: 26, q26A: ''},
-    {question_id: 27, q27A: ''},
-    {question_id: 28, q28A: ''},
-    {question_id: 29, q29A: ''},
-    {question_id: 30, q30A: ''},
-  ]);
+  const [stateAnswers, setStateAnswers] = useState({});
 
-  // console.log('#1 answer:', stateAnswers.q1A);
+  console.log('#1 answer:', answers);
   // console.log('#2 answer:', stateAnswers.q2A);
 
   // Dispatch (on page load) to GET all the questions
   // (Categories are fetched in app.jsx)
   useEffect(() => {
     dispatch({ type: 'FETCH_QUESTIONS' });
+    dispatch({ type: 'FETCH_ANSWERS' });
   }, []);
+
 
   // Handles filtering to show only questions from the user-selected category
   const categoryFilterHandler = (item) => {
@@ -81,7 +53,7 @@ function QuestionsPage() {
 
   // handles changes to answers being set in local state object
   const handleAnswerChange = (id, value) => {
-    const key = `q${id}A`
+    const key = `${id}`
     setStateAnswers({
       ...stateAnswers,
       [key]: value
@@ -101,7 +73,7 @@ function QuestionsPage() {
   const saveAndContinue = () => {
     console.log('SAVE & CONTINUE clicked');
     dispatch({
-        type: 'SET_ANSWERS',
+        type: 'POST_ANSWERS',
         payload: stateAnswers
       });
     history.push(`/priorities`);
@@ -155,7 +127,7 @@ function QuestionsPage() {
                               label="Your Response"
                               fullWidth multiline rows={3}
                               variant="outlined"
-                              value={stateAnswers[`q${item.id}A`]}
+                              value={stateAnswers[`${item.id}`]}
                               onChange={(e) => handleAnswerChange(item.id, e.target.value)}
                             />
                           </div>

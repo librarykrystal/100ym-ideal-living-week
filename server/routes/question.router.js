@@ -14,4 +14,23 @@ router.get('/', (req, res) => {
     });
   });
 
+
+  router.post('/', (req, res) => {
+    const category_id = req.body.category_id;
+    const question_text = req.body.question_text;
+    const sqlText = `INSERT INTO "question" ("category_id", "question_text")
+                     VALUES ($1, $2)
+                     RETURNING "id";`;
+    const sqlParams = [category_id, question_text];
+    pool.query(sqlText, sqlParams)
+      .then(result => {
+        console.log(`Added question to the database`, result.rows[0].id);
+        res.sendStatus(201);
+      })
+      .catch(error => {
+        console.log(`Error making database query ${sqlText}`, error);
+        res.sendStatus(500);
+      })
+  });
+
   module.exports = router;
