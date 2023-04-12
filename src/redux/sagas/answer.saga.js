@@ -5,7 +5,7 @@ function* fetchAnswers() {
   try {
     const answers = yield axios.get("/api/answer");
     console.log("get all answers:", answers.data);
-    yield put({ type: "SET_ANSWERS", payload: answers.data });
+    yield put({ type: "UPDATE_ANSWERS", payload: answers.data });
   } catch {
     console.log("get all categories error");
   }
@@ -27,9 +27,10 @@ function* updateAnswers(action) {
   console.log("put answers sagas action payload", action.payload)
   try {
     yield axios.put('/api/answer', action.payload); 
+    yield put({ type: 'FETCH_ANSWERS' });
   } catch (error) {
    console.log('Error with creating family:', error);
-    yield put({ type: 'UPDATE_ANSWERS' });
+    // yield put({ type: 'UPDATE_ANSWERS' });
   };
 };
 function* answerSaga() {
