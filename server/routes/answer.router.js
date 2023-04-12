@@ -14,27 +14,62 @@ router.get('/', (req, res) => {
         console.log(`Error making database query ${query}`, error);
         res.sendStatus(500);
       })
+});
+
+  
+  router.post('/', async (req, res) => {
+    console.log(req.body);
+    const entries = req.body;
+    const client = await pool.connect();
+  
+    try {
+      await client.query('BEGIN');
+      let queryText = `INSERT INTO "answer" ("user_id", "question_id", "response") 
+                       VALUES ($1, $2, $3) RETURNING "id";`;                  
+      for(let id in entries) {
+        const values = [req.user.id, id, entries[`${id}`]];
+        await client.query(queryText, values);
+      }
+  
+      await client.query('COMMIT');
+      console.log(`Added answers to the database`);
+      res.sendStatus(201);
+    } catch (e) {
+      console.log('ROLLBACK', e);
+      await client.query('ROLLBACK');
+      res.sendStatus(500);
+    } finally {
+      client.release();
+    }
+  });
+
+  router.put('/', async (req, res) => {
+    console.log("the req.body", req.body);
+    const entries = req.body;
+    const client = await pool.connect();
+    
+  
+    try {
+        await client.query('BEGIN');
+        let queryText = `UPDATE  "answer" SET "response" = $3
+                       WHERE ("user_id" = $1 AND "question_id" = $2)`;
+        for(let id in entries) {
+        const values = [req.user.id, id, entries[`${id}`]];
+        await client.query(queryText, values);
+      }
+  
+      await client.query('COMMIT');
+      console.log(`updated answers to the database`);
+      res.sendStatus(201);
+    } catch (e) {
+      console.log('ROLLBACK', e);
+      await client.query('ROLLBACK');
+      res.sendStatus(500);
+    } finally {
+      client.release();
+    }
   });
   
-// post still in works
-// router.post('/', (req, res) => {
-//     const userId = req.user.id;
-//     entry = req.body;
-    
-//     const sqlText = `INSERT INTO "answer" ("user_id", "question_id", "response") 
-//                      VALUES ($1, $2, $3)
-//                      RETURNING "id";`;
-//     const sqlParams = [entry.user_id, entry.question_id, entry.response];
-    
-//     pool.query(sqlText, sqlParams)
-//       .then(result => {
-//         console.log(`Added answer to the database`, result.rows[0].id);
-//         res.sendStatus(201);
-//       })
-//       .catch(error => {
-//         console.log(`Error making database query ${sqlText}`, error);
-//         res.sendStatus(500);
-//       })
-//   });
+  
   
   module.exports = router;

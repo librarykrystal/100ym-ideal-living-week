@@ -7,6 +7,7 @@ import newActivitySaga from "./newActivity.saga";
 import fetchActivitiesSaga from "./fetchActivities.saga";
 import categoriesSaga from "./fetchCategories.saga";
 import userListSaga from "./userlist.saga";
+import answerSagas from "./answer.saga"
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -25,5 +26,6 @@ export default function* rootSaga() {
     fetchActivitiesSaga(),
     categoriesSaga(),
     userListSaga(),
+    answerSagas()
   ]);
 }

@@ -4,13 +4,32 @@ import { useHistory } from 'react-router-dom';
 // import "./styles.css";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import "@fontsource/roboto-slab";
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 
 
-// TO DO: Styling
-
-// MUI theme will go here
+// Material UI Font Theming
+const theme = createTheme({
+  typography: {
+    fontFamily: [
+      'Roboto Slab',
+    ],
+  },
+  palette: {
+    primary: {
+      main: '#475473',
+    },
+    secondary: {
+      main: '#1c4bd9',
+    },
+    info: {
+      main: '#bdbfbf',
+    },
+  },
+});
 
 
 function PrioritiesPage() {
@@ -50,7 +69,7 @@ function PrioritiesPage() {
     {rank: 10, category_id: parseInt(`${itemList[9].id}`)}
   ]
 
-  // console.log('RANKED:', rankedList);
+  console.log('RANKED:', rankedList);
 
   // Handles SAVE - - - submits ranked priorities to database
   const saveAnswers = () => {
@@ -62,36 +81,60 @@ function PrioritiesPage() {
   }
 
   return (
+    <ThemeProvider theme={theme}>
     <div>
       <center>
-        <Typography variant="h4" mt={0} mb={1} gutterBottom>PRIORITIES PAGE</Typography>
-        <Typography variant="body1" mb={6} gutterBottom>Drag and drop the categories below to prioritize them, highest priority to lowest.</Typography>
+        <Typography variant="h4" mt={5} mb={1} gutterBottom>PRIORITIES</Typography>
+        <Typography variant="body1" mb={4} gutterBottom>Drag and drop the categories below to prioritize them, highest priority to lowest.</Typography>
         
         <div className="priority-container">
           <DragDropContext onDragEnd={handleDrop}>
             <Droppable droppableId="list-container">
               {(provided) => (
-                <div
+                <Box
+                  sx={{
+                    width: 280,
+                    padding: '12px 12px 12px 12px',
+                    m: 1,
+                    border: `2px solid #bdbfbf`,
+                    borderRadius: 2,
+                  }}
                   className="list-container"
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                 >
+          {/* Mapping through the priorities, displayed in styled MUI Boxes */}
                   {itemList.map((item, index) => (
                     <Draggable key={item.name} draggableId={item.name} index={index}>
                       {(provided) => (
-                        <div
+                        <Box
                           className="item-container"
+                          sx={{
+                            width: 250,
+                            padding: '2px 0px 2px 0px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            m: 1.2,
+                            border: `3.5px solid hsl(225, ${80-index*10}%, 64%)`,
+                            boxShadow: 2,
+                            borderRadius: 1,
+                            backgroundColor: `hsl(225, ${80-index*10}%, 92%)`,
+                            '&:hover': {
+                              opacity: [0.8, 0.7, 0.6],
+                            },
+                          }}
                           ref={provided.innerRef}
                           {...provided.dragHandleProps}
                           {...provided.draggableProps}
                         >
-                          {item.name}
-                        </div>
+                          <Typography>{item.name}</Typography>
+                        </Box>
                       )}
                     </Draggable>
                   ))}
                   {provided.placeholder}
-                </div>
+                </Box>
               )}
             </Droppable>
           </DragDropContext>
@@ -104,12 +147,13 @@ function PrioritiesPage() {
           variant="contained"
           color="primary"
           size="large"
-          onClick={saveAnswers}>SAVE PRIORITIES
+          onClick={saveAnswers}>SAVE
         </Button>
       <br/><br/>
 
     </center>
   </div>
+  </ThemeProvider>
   );
 }
 
