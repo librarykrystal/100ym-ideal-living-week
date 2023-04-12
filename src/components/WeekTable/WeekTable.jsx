@@ -108,14 +108,89 @@ export default function BasicTable() {
               <TableCell component="th" scope="row">
                 {name}
               </TableCell>
-              {/* <TableCell align="right">{category.Monday}</TableCell>
-              <TableCell align="right">{category.Tuesday}</TableCell>
-              <TableCell align="right">{category.Wednesday}</TableCell>
-              <TableCell align="right">{category.Thursday}</TableCell>
-              <TableCell align="right">{category.Friday}</TableCell>
-              <TableCell align="right">{category.Saturday}</TableCell>
-              <TableCell align="right">{category.Sunday}</TableCell>
-              <TableCell align="right">{category.Total}</TableCell> */}
+              <TableCell align="right">
+                {activities.filter((activity) => activity.day === "Monday").map(activity => {
+                    return (
+                        <li key={activity.id}>
+                            {activity.start_time} -
+                            {activity.end_time}
+                        </li>
+                        );
+                    })}
+              </TableCell>
+              <TableCell align="right">
+                {activities.filter((activity) => activity.day === "Tuesday").map(activity => {
+                    return (
+                        <li key={activity.id}>
+                            {activity.start_time} -
+                            {activity.end_time}
+                        </li>
+                        );
+                    })}
+              </TableCell>
+              <TableCell align="right">
+                {activities.filter((activity) => activity.day === "Wednesday").map(activity => {
+                    return (
+                        <li key={activity.id}>
+                            {activity.start_time} -
+                            {activity.end_time}
+                        </li>
+                        );
+                    })}
+              </TableCell>
+              <TableCell align="right">
+                {activities.filter((activity) => activity.day === "Thursday").map(activity => {
+                    return (
+                        <li key={activity.id}>
+                            {activity.start_time} -
+                            {activity.end_time}
+                        </li>
+                        );
+                    })}
+              </TableCell>
+              <TableCell align="right">
+                {activities.filter((activity) => activity.day === "Friday").map(activity => {
+                    return (
+                        <li key={activity.id}>
+                            {activity.start_time} -
+                            {activity.end_time}
+                        </li>
+                        );
+                    })}
+              </TableCell>
+              <TableCell align="right">
+                {activities.filter((activity) => activity.day === "Saturday").map(activity => {
+                    return (
+                        <li key={activity.id}>
+                            {activity.start_time} -
+                            {activity.end_time}
+                        </li>
+                        );
+                    })}
+              </TableCell>
+              <TableCell align="right">
+                {activities.filter((activity) => activity.day === "Sunday").map(activity => {
+                    return (
+                        <li key={activity.id}>
+                            {activity.start_time} -
+                            {activity.end_time}
+                        </li>
+                        );
+                    })}
+              </TableCell>
+              <TableCell align="right">
+                <ul>
+
+                {activities.map(activity => {
+                    return (
+                        <li key={activity.id}>
+                            {activity.start_time} -
+                            {activity.end_time}
+                        </li>
+                        );
+                    })}
+                    </ul>
+                </TableCell>
             </TableRow>
           ))}
         </TableBody>
