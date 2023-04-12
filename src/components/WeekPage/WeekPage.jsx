@@ -79,18 +79,38 @@ function WeekPage() {
               <ul>
                 {activities
                   .filter((activity) => activity.day === day)
-                  .map((activity) => (
-                    <li
-                      key={activity.id}
-                      onClick={() => handleActivityClick(activity)}
-                    >
-                      <Typography>{activity.category_name}</Typography>
-                      <Typography>
-                        {activity.start_time} - {activity.end_time}
-                      </Typography>
-                    </li>
-                  ))}
+                  .map((activity) => {
+                    const start = new Date(
+                      `1971-01-01T${activity.start_time}-06:00`
+                    );
+
+                    const end = new Date(
+                      `1970-01-01T${activity.end_time}-06:00`
+                    );
+                    const startTime = start.toLocaleString("en-US", {
+                      hour: "numeric",
+                      minute: "numeric",
+                      hour12: true,
+                    });
+                    const endTime = end.toLocaleString("en-US", {
+                      hour: "numeric",
+                      minute: "numeric",
+                      hour12: true,
+                    });
+                    return (
+                      <li
+                        key={activity.id}
+                        onClick={() => handleActivityClick(activity)}
+                      >
+                        <Typography>{activity.category_name}</Typography>
+                        <Typography>
+                          {startTime} - {endTime}
+                        </Typography>
+                      </li>
+                    );
+                  })}
               </ul>
+
               <ActivityModal
                 activity={selectedActivity}
                 open={modalOpen}
