@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
   console.log('is authenticated?', req.isAuthenticated());
   console.log('user', req.user);
   // only do GET if authenticated:
-  if (req.isAuthenticated()){
+  if (req.isAuthenticated() && req.user.admin){
       let queryText = `SELECT * FROM "user";`;
       pool.query(queryText).then((result) => {
           res.send(result.rows);
