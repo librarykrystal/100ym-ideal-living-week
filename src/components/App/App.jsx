@@ -55,13 +55,21 @@ function App() {
             Even though it seems like they are different pages, the user is always on localhost:3000/user */}
 
           <ProtectedRoute exact path="/user">
-            {/* logged in shows UserPage else shows LoginPage */}
-            <UserPage />
+            {/* logged in shows Intro OR UserPage, else shows LoginPage */}
+            {!user.setupComplete ?
+              <Redirect to="/intro" />  // If setupComplete is falsy, redirect to IntroPage
+              :
+              <UserPage />  // else, go to userPage
+            }
           </ProtectedRoute>
 
           <ProtectedRoute exact path="/intro">
             {/* logged in shows InfoPage else shows LoginPage */}
-            <IntroPage />
+            {user.setupComplete ?
+              <Redirect to="/user" />  // If setupComplete is truthy, redirect to UserPage
+              :
+              <IntroPage />  // else, go to IntroPage
+            }
           </ProtectedRoute>
 
           <ProtectedRoute exact path="/week">
