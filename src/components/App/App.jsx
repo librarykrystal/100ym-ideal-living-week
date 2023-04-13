@@ -55,13 +55,21 @@ function App() {
             Even though it seems like they are different pages, the user is always on localhost:3000/user */}
 
           <ProtectedRoute exact path="/user">
-            {/* logged in shows UserPage else shows LoginPage */}
-            <UserPage />
+            {/* logged in shows UserPage (OR IntroPage), else shows LoginPage */}
+            {!user.introComplete ?
+              <Redirect to="/intro" />  // If introComplete is falsy, redirect to IntroPage
+              :
+              <UserPage />  // else, go to userPage
+            }
           </ProtectedRoute>
 
           <ProtectedRoute exact path="/intro">
-            {/* logged in shows InfoPage else shows LoginPage */}
-            <IntroPage />
+            {/* logged in shows IntroPage (OR UserPage), else shows LoginPage */}
+            {user.introComplete ?
+              <Redirect to="/user" />  // If introComplete is truthy, redirect to UserPage
+              :
+              <IntroPage />  // else, go to IntroPage
+            }
           </ProtectedRoute>
 
           <ProtectedRoute exact path="/week">
@@ -70,13 +78,21 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute exact path="/questions">
-            {/* logged in shows QuestionsPage else shows LoginPage */}
-            <QuestionsPage />
+            {/* logged in shows QuestionsPage (OR IntroPage) else shows LoginPage */}
+            {!user.introComplete ?
+              <Redirect to="/intro" />  // If introComplete is falsy, redirect to IntroPage
+              :
+              <QuestionsPage />  // else, go to QuestionsPage
+            }
           </ProtectedRoute>
 
           <ProtectedRoute exact path="/priorities">
-            {/* logged in shows PrioritiesPage else shows LoginPage */}
-            <PrioritiesPage />
+            {/* logged in shows PrioritiesPage (OR IntroPage) else shows LoginPage */}
+            {!user.introComplete ?
+              <Redirect to="/intro" />  // If introComplete is falsy, redirect to IntroPage
+              :
+              <PrioritiesPage />  // else, go to PrioritiesPage
+            }
           </ProtectedRoute>
 
           <ProtectedRoute exact path="/admin">
