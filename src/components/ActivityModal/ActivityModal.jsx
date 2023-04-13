@@ -17,7 +17,8 @@ const style = {
   p: 2,
 };
 
-const ActivityModal = ({ activity, open, onClose }) => {
+const ActivityModal = ({ activities, activity, open, onClose }) => {
+  const [overlapError, setOverlapError] = useState(false);
   const dispatch = useDispatch();
   const [formValues, setFormValues] = useState({
     // activityName: "",
@@ -62,6 +63,7 @@ const ActivityModal = ({ activity, open, onClose }) => {
     }
   };
 
+  const handleDelete = () => {};
   const handleUpdate = () => {
     const start = new Date(`1970-01-01T${formValues.start_time}:00.001Z`);
     const end = new Date(`1970-01-01T${formValues.end_time}:00.001Z`);
@@ -87,22 +89,33 @@ const ActivityModal = ({ activity, open, onClose }) => {
     console.log("this is start", start);
     console.log("this is end", end);
 
-    const updatedActivity = {
-      ...formValues,
-      id: activity.id,
-      total_hours,
-    };
-    dispatch({ type: "UPDATE_ACTIVITY", payload: updatedActivity });
+    const overlappingActivities = activities.filter(
+      (a) =>
+        a.day === activity.day &&
+        a !== activity &&
+        ((a.start_time >= formValues.start_time &&
+          a.start_time < formValues.end_time) ||
+          (formValues.start_time >= a.start_time &&
+            formValues.start_time < a.end_time))
+    );
 
-    setModifiedFields({
-      start_time: false,
-      end_time: false,
-    });
-    onClose();
-  };
+    if (overlappingActivities.length > 0) {
+      setOverlapError(true);
+    } else {
+      const updatedActivity = {
+        ...formValues,
+        id: activity.id,
+        total_hours,
+      };
+      dispatch({ type: "UPDATE_ACTIVITY", payload: updatedActivity });
 
-  const handleDelete = () => {
-    // handle deleting activity
+      setModifiedFields({
+        start_time: false,
+        end_time: false,
+      });
+      onClose();
+      setOverlapError(false);
+    }
   };
 
   return (
@@ -161,6 +174,11 @@ const ActivityModal = ({ activity, open, onClose }) => {
             variant="outlined"
             fullWidth
           />
+          {overlapError && (
+            <Typography variant="body2">
+              There is an overlap with another activity on this day and time.
+            </Typography>
+          )}
           <Button onClick={handleUpdate} variant="contained" color="primary">
             Update
           </Button>
