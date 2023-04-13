@@ -46,4 +46,30 @@ router.post("/", (req, res) => {
     });
 });
 
+router.put("/", (req, res) => {
+  const userId = req.user.id;
+  const entry = req.body;
+  const sqlText = `UPDATE "ideal_week" SET "user_id" = $1, "day" = $2, "start_time" = $3, "end_time" =$4, "category_id" = $5, "total_hours" = $6 WHERE "id" = $7
+                     RETURNING "id";`;
+  const sqlParams = [
+    userId,
+    entry.day,
+    entry.start_time,
+    entry.end_time,
+    entry.category_id,
+    entry.total_hours,
+    entry.id,
+  ];
+  pool
+    .query(sqlText, sqlParams)
+    .then((result) => {
+      console.log(`Added entry to the database`, result.rows[0].id);
+      res.sendStatus(201);
+    })
+    .catch((error) => {
+      console.log(`Error making database query ${sqlText}`, error);
+      res.sendStatus(500);
+    });
+});
+
 module.exports = router;
