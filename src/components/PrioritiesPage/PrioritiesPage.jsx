@@ -35,7 +35,6 @@ const theme = createTheme({
 function PrioritiesPage() {
 
   const categories = useSelector(store => store.categories);
-  const priorities = useSelector(store => store.priorities);
     // Dispatch to GET the list of unordered categories happens in app.jsx
   const history = useHistory();
   const dispatch = useDispatch();
@@ -77,7 +76,7 @@ function PrioritiesPage() {
     console.log('SAVE clicked');
     dispatch({
         type: 'SET_PRIORITIES',
-        payload: priorities
+        payload: rankedList
       });
   }
 

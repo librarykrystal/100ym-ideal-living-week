@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
 
-  const queryText = 'SELECT * FROM "priority" ;';
+  const queryText = 'SELECT * FROM "priority" ORDER BY RANK;';
     pool.query(queryText ).then((result) => {
       console.log(result.rows);
       res.send(result.rows);
