@@ -78,13 +78,21 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute exact path="/questions">
-            {/* logged in shows QuestionsPage else shows LoginPage */}
-            <QuestionsPage />
+            {/* logged in shows QuestionsPage (OR IntroPage) else shows LoginPage */}
+            {!user.introComplete ?
+              <Redirect to="/intro" />  // If introComplete is falsy, redirect to IntroPage
+              :
+              <QuestionsPage />  // else, go to QuestionsPage
+            }
           </ProtectedRoute>
 
           <ProtectedRoute exact path="/priorities">
-            {/* logged in shows PrioritiesPage else shows LoginPage */}
-            <PrioritiesPage />
+            {/* logged in shows PrioritiesPage (OR IntroPage) else shows LoginPage */}
+            {!user.introComplete ?
+              <Redirect to="/intro" />  // If introComplete is falsy, redirect to IntroPage
+              :
+              <PrioritiesPage />  // else, go to PrioritiesPage
+            }
           </ProtectedRoute>
 
           <ProtectedRoute exact path="/admin">
