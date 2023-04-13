@@ -56,7 +56,7 @@ function App() {
 
           <ProtectedRoute exact path="/user">
             {/* logged in shows UserPage (OR IntroPage), else shows LoginPage */}
-            {!user.setupComplete ?
+            {!user.introComplete ?
               <Redirect to="/intro" />  // If setupComplete is falsy, redirect to IntroPage
               :
               <UserPage />  // else, go to userPage
@@ -65,7 +65,7 @@ function App() {
 
           <ProtectedRoute exact path="/intro">
             {/* logged in shows IntroPage (OR UserPage), else shows LoginPage */}
-            {user.setupComplete ?
+            {user.introComplete ?
               <Redirect to="/user" />  // If setupComplete is truthy, redirect to UserPage
               :
               <IntroPage />  // else, go to IntroPage
