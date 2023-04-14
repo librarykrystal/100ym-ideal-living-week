@@ -72,4 +72,18 @@ router.put("/", (req, res) => {
     });
 });
 
+router.delete("/:id", (req, res) => {
+  console.log("hello from delete request!", req.params.id);
+  const queryText = `DELETE from "ideal_week" WHERE id = ${req.params.id};`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      console.log(result);
+      res.sendStatus(204);
+    })
+    .catch((error) => {
+      console.log("error making a query", error);
+    });
+});
+
 module.exports = router;

@@ -21,7 +21,6 @@ const ActivityModal = ({ activities, activity, open, onClose }) => {
   const [overlapError, setOverlapError] = useState(false);
   const dispatch = useDispatch();
   const [formValues, setFormValues] = useState({
-    // activityName: "",
     start_time: "",
     end_time: "",
     category_id: "",
@@ -36,13 +35,14 @@ const ActivityModal = ({ activities, activity, open, onClose }) => {
     if (activity) {
       setFormValues({
         day: activity?.day || "",
-        // activityName: activity?.category_name || "",
-        start_time: activity?.start_time || "",
-        end_time: activity?.end_time || "",
+        start_time: activity?.start_time?.slice(0, -3) || "", // trim last 3 characters
+        end_time: activity?.end_time?.slice(0, -3) || "", // trim last 3 characters
         category_id: activity?.category_id || "",
       });
     }
   }, [activity]);
+  const [startTimeError, setStartTimeError] = useState(false);
+  const [endTimeError, setEndTimeError] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -63,31 +63,21 @@ const ActivityModal = ({ activities, activity, open, onClose }) => {
     }
   };
 
-  const handleDelete = () => {};
+  const handleDelete = () => {
+    dispatch({ type: "DELETE_ACTIVITY", payload: activity.id });
+    onClose();
+  };
+
   const handleUpdate = () => {
     const start = new Date(`1970-01-01T${formValues.start_time}:00.001Z`);
     const end = new Date(`1970-01-01T${formValues.end_time}:00.001Z`);
-    const modifiedStart = modifiedFields.start_time;
-    const modifiedEnd = modifiedFields.end_time;
 
-    let total_hours;
-
-    if (modifiedStart && modifiedEnd) {
-      total_hours = ((end - start) / (1000 * 60 * 60)).toFixed(2);
-    } else if (modifiedStart) {
-      const originalEnd = new Date(`1970-01-01T${activity.end_time}.001Z`);
-      console.log("this is original end", originalEnd);
-      total_hours = ((originalEnd - start) / (1000 * 60 * 60)).toFixed(2);
-    } else if (modifiedEnd) {
-      const originalStart = new Date(`1970-01-01T${activity.start_time}.001Z`);
-      console.log("this is original start", originalStart);
-      total_hours = ((end - originalStart) / (1000 * 60 * 60)).toFixed(2);
-      console.log(end - originalStart);
-    } else {
-      total_hours = activity.total_hours;
+    if (end <= start) {
+      setStartTimeError(true);
+      return;
     }
-    console.log("this is start", start);
-    console.log("this is end", end);
+
+    let total_hours = ((end - start) / (1000 * 60 * 60)).toFixed(2);
 
     const overlappingActivities = activities.filter(
       (a) =>
@@ -109,10 +99,6 @@ const ActivityModal = ({ activities, activity, open, onClose }) => {
       };
       dispatch({ type: "UPDATE_ACTIVITY", payload: updatedActivity });
 
-      setModifiedFields({
-        start_time: false,
-        end_time: false,
-      });
       onClose();
       setOverlapError(false);
     }
@@ -148,14 +134,7 @@ const ActivityModal = ({ activities, activity, open, onClose }) => {
               <MenuItem value={10}>Measure What Matters</MenuItem>
             </Select>
           </FormControl>
-          {/* <TextField
-            name="activityName"
-            value={formValues.activityName}
-            onChange={handleChange}
-            margin="normal"
-            variant="outlined"
-            fullWidth
-          /> */}
+
           <TextField
             name="start_time"
             type="time"
@@ -177,6 +156,16 @@ const ActivityModal = ({ activities, activity, open, onClose }) => {
           {overlapError && (
             <Typography variant="body2">
               There is an overlap with another activity on this day and time.
+            </Typography>
+          )}
+          {startTimeError && (
+            <Typography variant="body2">
+              Start time must come before end time.
+            </Typography>
+          )}
+          {endTimeError && (
+            <Typography variant="body2">
+              Start time must come before end time.
             </Typography>
           )}
           <Button onClick={handleUpdate} variant="contained" color="primary">
