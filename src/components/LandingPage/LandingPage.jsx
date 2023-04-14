@@ -5,6 +5,32 @@ import './LandingPage.css';
 // CUSTOM COMPONENTS
 import RegisterForm from '../RegisterForm/RegisterForm';
 
+// MUI 
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import "@fontsource/roboto-slab";
+import Button from '@mui/material/Button';
+
+// Material UI Font Theming
+const theme = createTheme({
+  typography: {
+    fontFamily: [
+      'Roboto Slab',
+    ],
+  },
+  palette: {
+    primary: {
+      main: '#475473',
+    },
+    secondary: {
+      main: '#1c4bd9',
+    },
+    info: {
+      main: '#bdbfbf',
+    },
+  },
+});
+
 function LandingPage() {
   const [heading, setHeading] = useState('Welcome');
   const history = useHistory();
@@ -14,55 +40,52 @@ function LandingPage() {
   };
 
   return (
-    <div className="container">
-      <h2>{heading}</h2>
+    <ThemeProvider theme={theme}>
+      <div className="container">
+        <Typography variant="h4" mt={4} mb={2}>{heading}</Typography>
 
-      <div className="grid">
-        <div className="grid-col grid-col_8">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
-            id felis metus. Vestibulum et pulvinar tortor. Morbi pharetra lacus
-            ut ex molestie blandit. Etiam et turpis sit amet risus mollis
-            interdum. Suspendisse et justo vitae metus bibendum fringilla sed
-            sed justo. Aliquam sollicitudin dapibus lectus, vitae consequat odio
-            elementum eget. Praesent efficitur eros vitae nunc interdum, eu
-            interdum justo facilisis. Sed pulvinar nulla ac dignissim efficitur.
-            Quisque eget eros metus. Vestibulum bibendum fringilla nibh a
-            luctus. Duis a sapien metus.
-          </p>
+        <div className="grid">
+          <div className="grid-col grid-col_8">
+            <Typography>
+            The Ideal Living Week app is designed to help individuals create their
+            ideal week based on their personal values and priorities (after completing
+            their 100 Year Manifesto).
+            </Typography>
+            <br/>
 
-          <p>
-            Praesent consectetur orci dui, id elementum eros facilisis id. Sed
-            id dolor in augue porttitor faucibus eget sit amet ante. Nunc
-            consectetur placerat pharetra. Aenean gravida ex ut erat commodo, ut
-            finibus metus facilisis. Nullam eget lectus non urna rhoncus
-            accumsan quis id massa. Curabitur sit amet dolor nisl. Proin
-            euismod, augue at condimentum rhoncus, massa lorem semper lacus, sed
-            lobortis augue mi vel felis. Duis ultrices sapien at est convallis
-            congue.
-          </p>
+            <Typography>
+            The app encourages users to prioritize their well-being and relationships
+            before work or other commitments. By designing a week that prioritizes
+            self-care and quality time with loved ones, users can achieve a healthier,
+            more fulfilled life.
+            </Typography>
+            <br/>
 
-          <p>
-            Fusce porta diam ac tortor elementum, ut imperdiet metus volutpat.
-            Suspendisse posuere dapibus maximus. Aliquam vitae felis libero. In
-            vehicula sapien at semper ultrices. Vivamus sed feugiat libero. Sed
-            sagittis neque id diam euismod, ut egestas felis ultricies. Nullam
-            non fermentum mauris. Sed in enim ac turpis faucibus pretium in sit
-            amet nisi.
-          </p>
-        </div>
-        <div className="grid-col grid-col_4">
-          <RegisterForm />
+            <Typography>
+            The Ideal Living Week app empowers individuals to take control of their
+            lives and create the week they truly want. By allocating time for
+            activities that align with their values and priorities, users can achieve
+            a sense of balance and fulfillment.
+            </Typography>
+            <br/>
+          </div>
 
-          <center>
-            <h4>Already a Member?</h4>
-            <button className="btn btn_sizeSm" onClick={onLogin}>
-              Login
-            </button>
-          </center>
+          <div className="grid-col grid-col_4">
+            <RegisterForm />
+            <center>
+              <h4>Already a Member?</h4>
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                onClick={onLogin}>LOG IN
+              </Button>
+            </center>
+          </div>
+          
         </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 }
 
