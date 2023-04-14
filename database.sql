@@ -12,7 +12,8 @@ CREATE TABLE "user" (
     "password" VARCHAR (1000) NOT NULL,
     "email" VARCHAR (1000) NOT NULL,
     "admin" BOOLEAN DEFAULT false,
-    "setupComplete" BOOLEAN DEFAULT false
+    "setupComplete" BOOLEAN DEFAULT false,
+    "introComplete" BOOLEAN DEFAULT false
 );
 
 CREATE TABLE "category" (

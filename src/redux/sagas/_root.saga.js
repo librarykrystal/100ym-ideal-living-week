@@ -10,7 +10,9 @@ import userListSaga from "./userlist.saga";
 import answerSagas from "./answer.saga";
 import editActivitySaga from "./editActivity.saga";
 import deleteActivitySaga from "./deleteActivity.saga";
+import prioritiesSaga from "./priorities.saga";
 
+prioritiesSaga;
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
 // This is imported in index.js as rootSaga
@@ -31,5 +33,6 @@ export default function* rootSaga() {
     answerSagas(),
     editActivitySaga(),
     deleteActivitySaga(),
+    prioritiesSaga(),
   ]);
 }
