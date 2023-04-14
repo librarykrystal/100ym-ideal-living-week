@@ -106,6 +106,9 @@ function WeekPage() {
                         <Typography>
                           {startTime} - {endTime}
                         </Typography>
+                        <div
+                          style={{ height: `${activity.total_hours * 20}px` }}
+                        ></div>
                       </li>
                     );
                   })}
