@@ -42,7 +42,6 @@ const ActivityModal = ({ activities, activity, open, onClose }) => {
     }
   }, [activity]);
   const [startTimeError, setStartTimeError] = useState(false);
-  const [endTimeError, setEndTimeError] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -163,11 +162,7 @@ const ActivityModal = ({ activities, activity, open, onClose }) => {
               Start time must come before end time.
             </Typography>
           )}
-          {endTimeError && (
-            <Typography variant="body2">
-              Start time must come before end time.
-            </Typography>
-          )}
+
           <Button onClick={handleUpdate} variant="contained" color="primary">
             Update
           </Button>
