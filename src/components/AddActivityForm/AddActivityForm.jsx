@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import "./weekpage.css";
+// gi
 import { useDispatch, useSelector } from "react-redux";
 import TextField from "@mui/material/TextField";
 import Select from "@mui/material/Select";
@@ -21,9 +21,18 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
     total_hours: "",
   });
   const [overlapError, setOverlapError] = useState(false);
-
+  const [invalidTimeError, setInvalidTimeError] = useState(false);
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    const start = new Date(`1970-01-01T${activity.start_time}:00.001Z`);
+    const end = new Date(`1970-01-01T${activity.end_time}:00.001Z`);
+
+    // Check if start time is before end time
+    if (start >= end) {
+      setInvalidTimeError(true);
+      return;
+    }
 
     const existingActivities = activities.filter(
       (a) =>
@@ -47,6 +56,7 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
         total_hours: "",
       });
       setOverlapError(false);
+      setInvalidTimeError(false);
     }
   };
 
@@ -132,7 +142,11 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
           There is an overlap with another activity on this day and time.
         </Typography>
       )}
-
+      {invalidTimeError && (
+        <Typography color="error">
+          Start time must be before end time
+        </Typography>
+      )}
       <br />
       <FormControl>
         <Button type="submit" variant="contained" color="primary">
