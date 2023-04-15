@@ -1,4 +1,6 @@
-import * as React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -39,7 +41,30 @@ const rows = [
   createData("Eating", 2.0, 3.0, 3.5, 2.5, 3.5, 3.0, 3.5, 21),
 ];
 
+const daysOfWeek = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
+
+
 export default function BasicTable() {
+    const dispatch = useDispatch();
+    const activities = useSelector((store) => store.activities);
+    const categories = useSelector((store) => store.categories);
+
+    useEffect(() => {
+        dispatch({ type: "FETCH_ACTIVITIES" });
+        dispatch({ type: "FETCH_CATEGORIES" });
+      }, []);
+
+      console.log('activities', activities);
+      console.log('categories', categories);
+    
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">

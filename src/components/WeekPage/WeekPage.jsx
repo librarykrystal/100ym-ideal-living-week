@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./weekpage.css";
 import { useDispatch, useSelector } from "react-redux";
 import TextField from "@mui/material/TextField";
 import Select from "@mui/material/Select";
@@ -13,6 +12,8 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import AddActivityForm from "../AddActivityForm/AddActivityForm";
 import ActivityModal from "../ActivityModal/ActivityModal";
+import "./weekpage.css";
+
 function WeekPage() {
   // const [activities, setActivities] = useState([]);
   const dispatch = useDispatch();
