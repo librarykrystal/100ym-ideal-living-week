@@ -6,6 +6,8 @@ import activities from "./activities.reducer";
 import categories from "./categories.reducer";
 import userList from "./userlist.reducer";
 import answers from "./answer.reducer"
+import priorities from "./priorities.reducer"
+
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -20,7 +22,8 @@ const rootReducer = combineReducers({
   activities,
   categories,
   userList,
-  answers
+  answers, 
+  priorities
 });
 
 export default rootReducer;
