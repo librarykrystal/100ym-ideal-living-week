@@ -11,7 +11,6 @@ router.put('/', (req, res) => {
   // only do PUT if authenticated:
   if (req.isAuthenticated()){
     let id = req.user.id;
-    // let introDone = req.body;
     const queryText = `UPDATE "user" SET "introComplete" = true WHERE id = $1;`;
     pool.query(queryText, [id]).then((result) => {
         res.send(result.rows);

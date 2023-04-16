@@ -24,11 +24,11 @@ function* fetchUser() {
   }
 }
 
-// WORKER SAGA for PUT (IntroComplete gets set to TRUE)
+// WORKER SAGA for PUT - IntroComplete TRUE
 function* introCompleteTrue(action) {
   console.log('introComplete SAGA GO');
   try {
-    yield axios.put(`/api/intro`, true);
+    yield axios.put(`/api/intro`);
     yield put({ type: 'FETCH_USER' });
   } catch (error) {
     console.log('SAGA ERROR setting introComplete to TRUE:', error);

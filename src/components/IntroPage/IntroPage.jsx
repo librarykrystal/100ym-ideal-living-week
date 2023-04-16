@@ -68,6 +68,7 @@ const postAndContinue = () => {
       type: 'POST_ANSWERS',
       payload: answers
     });
+    // set introComplete to TRUE so this user will not come back to this page:
     dispatch({
       type: 'INTRO_PAGE_DONE'
     });
