@@ -24,8 +24,20 @@ function* fetchUser() {
   }
 }
 
+// WORKER SAGA for PUT - IntroComplete TRUE
+function* introCompleteTrue(action) {
+  console.log('introComplete SAGA GO');
+  try {
+    yield axios.put(`/api/intro`);
+    yield put({ type: 'FETCH_USER' });
+  } catch (error) {
+    console.log('SAGA ERROR setting introComplete to TRUE:', error);
+  }
+}
+
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
+  yield takeLatest('INTRO_PAGE_DONE', introCompleteTrue);
 }
 
 export default userSaga;
