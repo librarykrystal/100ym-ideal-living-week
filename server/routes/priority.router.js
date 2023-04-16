@@ -1,6 +1,3 @@
-
-/// SITILL IN WORKS
-
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
@@ -38,9 +35,10 @@ router.get('/', (req, res) => {
 router.put('/', (req, res) => {
   console.log('this is req.body from router', req.body)
     const entry = req.body;
+    const user = req.user.id;
     const sqlParams = [ entry.category_id, entry.rank, entry.user_id]
-    const sqlText = `UPDATE "priority" SET "rank" = $2
-    WHERE "category_id" = $1 AND "user_id" = $3;`;
+    const sqlText = `UPDATE "priority" SET "category_id" = $1
+    WHERE "rank" = $2 AND "user_id" = $3;`;
     pool.query(sqlText, sqlParams )
         .then((result) => {
             res.sendStatus(200);

@@ -9,6 +9,18 @@ function* fetchPriorities() {
         console.log("get all priortiy error");
     }
 }
+function* postPriorities(action) {
+  console.log("post answers sagas action payload", action.payload)
+  try {
+    const allPriorities = action.payload;
+        for(let priority of allPriorities) {
+    yield axios.post('/api/priority', action.payload); 
+        }
+  } catch (error) {
+   console.log('Error with creating family:', error);
+  };
+};
+
 function* updatePriorities(action) {
     console.log("put priorities sagas action payload", action.payload)
     try {
@@ -24,5 +36,6 @@ function* updatePriorities(action) {
 function* prioritiesSaga() {
     yield takeEvery("FETCH_PRIORITIES", fetchPriorities);
     yield takeEvery("UPDATE_PRIORITIES", updatePriorities);
+    yield takeEvery("POST_PRIORITIES", postPriorities);
 };
 export default prioritiesSaga;
