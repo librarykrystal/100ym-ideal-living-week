@@ -13,6 +13,25 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import AddActivityForm from "../AddActivityForm/AddActivityForm";
 import ActivityModal from "../ActivityModal/ActivityModal";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+const theme = createTheme({
+  typography: {
+    fontFamily: ["Roboto Slab"],
+  },
+  palette: {
+    primary: {
+      main: "#475473",
+    },
+    secondary: {
+      main: "#1c4bd9",
+    },
+    info: {
+      main: "#bdbfbf",
+    },
+  },
+});
+
 function WeekPage() {
   // const [activities, setActivities] = useState([]);
   const dispatch = useDispatch();
@@ -55,76 +74,79 @@ function WeekPage() {
   ];
 
   return (
-    <div>
-      <center>
-        <Typography variant="h4" mt={0} mb={1} gutterBottom>
-          Weekly Planner
-        </Typography>
-      </center>
-      <AddActivityForm
-        onAddActivity={handleAddActivity}
-        activities={activities}
-        daysOfWeek={daysOfWeek}
-      />
+    <ThemeProvider theme={theme}>
+      <div>
+        <center>
+          <Typography variant="h4" mt={0} mb={1} gutterBottom>
+            Your Ideal Week
+          </Typography>
+        </center>
+        <center>
+          <AddActivityForm
+            onAddActivity={handleAddActivity}
+            activities={activities}
+            daysOfWeek={daysOfWeek}
+          />
+        </center>
+        <br />
+        <br />
+        <Stack direction="row" spacing={2}>
+          {daysOfWeek.map((day) => (
+            <Stack key={day} direction="row" spacing={2}>
+              <FormControl fullWidth>
+                <center>
+                  <Typography variant="h6">{day}</Typography>
+                </center>
+                <ul>
+                  {activities
+                    .filter((activity) => activity.day === day)
+                    .map((activity) => {
+                      const start = new Date(
+                        `1971-01-01T${activity.start_time}-06:00`
+                      );
 
-      <br />
-      <br />
-      <Stack direction="row" spacing={2}>
-        {daysOfWeek.map((day) => (
-          <Stack key={day} direction="row" spacing={2}>
-            <FormControl fullWidth>
-              <center>
-                <Typography variant="h6">{day}</Typography>
-              </center>
-              <ul>
-                {activities
-                  .filter((activity) => activity.day === day)
-                  .map((activity) => {
-                    const start = new Date(
-                      `1971-01-01T${activity.start_time}-06:00`
-                    );
+                      const end = new Date(
+                        `1970-01-01T${activity.end_time}-06:00`
+                      );
+                      const startTime = start.toLocaleString("en-US", {
+                        hour: "numeric",
+                        minute: "numeric",
+                        hour12: true,
+                      });
+                      const endTime = end.toLocaleString("en-US", {
+                        hour: "numeric",
+                        minute: "numeric",
+                        hour12: true,
+                      });
+                      return (
+                        <li
+                          key={activity.id}
+                          onClick={() => handleActivityClick(activity)}
+                        >
+                          <Typography>{activity.category_name}</Typography>
+                          <Typography>
+                            {startTime} - {endTime}
+                          </Typography>
+                          <div
+                            style={{ height: `${activity.total_hours * 20}px` }}
+                          ></div>
+                        </li>
+                      );
+                    })}
+                </ul>
 
-                    const end = new Date(
-                      `1970-01-01T${activity.end_time}-06:00`
-                    );
-                    const startTime = start.toLocaleString("en-US", {
-                      hour: "numeric",
-                      minute: "numeric",
-                      hour12: true,
-                    });
-                    const endTime = end.toLocaleString("en-US", {
-                      hour: "numeric",
-                      minute: "numeric",
-                      hour12: true,
-                    });
-                    return (
-                      <li
-                        key={activity.id}
-                        onClick={() => handleActivityClick(activity)}
-                      >
-                        <Typography>{activity.category_name}</Typography>
-                        <Typography>
-                          {startTime} - {endTime}
-                        </Typography>
-                        <div
-                          style={{ height: `${activity.total_hours * 20}px` }}
-                        ></div>
-                      </li>
-                    );
-                  })}
-              </ul>
-
-              <ActivityModal
-                activities={activities}
-                activity={selectedActivity}
-                open={modalOpen}
-                onClose={handleCloseModal}
-              />
-            </FormControl>
-          </Stack>
-        ))}
-      </Stack>
-    </div>
+                <ActivityModal
+                  activities={activities}
+                  activity={selectedActivity}
+                  open={modalOpen}
+                  onClose={handleCloseModal}
+                />
+              </FormControl>
+            </Stack>
+          ))}
+        </Stack>
+      </div>
+    </ThemeProvider>
   );
 }
 

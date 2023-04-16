@@ -6,6 +6,24 @@ import Button from "@mui/material/Button";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FormControl, MenuItem, Select, Typography } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+const theme = createTheme({
+  typography: {
+    fontFamily: ["Roboto Slab"],
+  },
+  palette: {
+    primary: {
+      main: "#475473",
+    },
+    secondary: {
+      main: "#1c4bd9",
+    },
+    info: {
+      main: "#bdbfbf",
+    },
+  },
+});
 
 const style = {
   position: "absolute",
@@ -104,74 +122,80 @@ const ActivityModal = ({ activities, activity, open, onClose }) => {
   };
 
   return (
-    <Modal
-      open={open}
-      onClose={onClose}
-      aria-labelledby="modal-title"
-      aria-describedby="modal-description"
-    >
-      {activity && (
-        <Box sx={style}>
-          <h2 id="modal-title">Edit Activity</h2>
-          <FormControl fullWidth>
-            <Typography>Select Category</Typography>
-            <Select
-              name="category_id"
-              value={formValues.category_id}
+    <ThemeProvider theme={theme}>
+      <Modal
+        open={open}
+        onClose={onClose}
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
+      >
+        {activity && (
+          <Box sx={style}>
+            <h2 id="modal-title">Edit Activity</h2>
+            <FormControl fullWidth>
+              <Typography>Select Category</Typography>
+              <Select
+                name="category_id"
+                value={formValues.category_id}
+                onChange={handleChange}
+              >
+                <MenuItem value={0}></MenuItem>
+                <MenuItem value={1}>Sleep</MenuItem>
+                <MenuItem value={2}>Self-Care</MenuItem>
+                <MenuItem value={3}>Family and Relationships</MenuItem>
+                <MenuItem value={4}>Personal Development</MenuItem>
+                <MenuItem value={5}>Nutrition</MenuItem>
+                <MenuItem value={6}>Leisure Time</MenuItem>
+                <MenuItem value={7}>Community Involvement</MenuItem>
+                <MenuItem value={8}>Creativity</MenuItem>
+                <MenuItem value={9}>Work</MenuItem>
+                <MenuItem value={10}>Measure What Matters</MenuItem>
+              </Select>
+            </FormControl>
+
+            <TextField
+              name="start_time"
+              type="time"
+              value={formValues.start_time}
               onChange={handleChange}
+              margin="normal"
+              variant="outlined"
+              fullWidth
+            />
+            <TextField
+              name="end_time"
+              type="time"
+              value={formValues.end_time}
+              onChange={handleChange}
+              margin="normal"
+              variant="outlined"
+              fullWidth
+            />
+            {overlapError && (
+              <Typography variant="body2">
+                There is an overlap with another activity on this day and time.
+              </Typography>
+            )}
+            {startTimeError && (
+              <Typography variant="body2">
+                Start time must come before end time.
+              </Typography>
+            )}
+
+            <Button onClick={handleUpdate} variant="contained" color="primary">
+              Update
+            </Button>
+            <Button
+              onClick={handleDelete}
+              variant="contained"
+              color="secondary"
             >
-              <MenuItem value={0}></MenuItem>
-              <MenuItem value={1}>Sleep</MenuItem>
-              <MenuItem value={2}>Self-Care</MenuItem>
-              <MenuItem value={3}>Family and Relationships</MenuItem>
-              <MenuItem value={4}>Personal Development</MenuItem>
-              <MenuItem value={5}>Nutrition</MenuItem>
-              <MenuItem value={6}>Leisure Time</MenuItem>
-              <MenuItem value={7}>Community Involvement</MenuItem>
-              <MenuItem value={8}>Creativity</MenuItem>
-              <MenuItem value={9}>Work</MenuItem>
-              <MenuItem value={10}>Measure What Matters</MenuItem>
-            </Select>
-          </FormControl>
-
-          <TextField
-            name="start_time"
-            type="time"
-            value={formValues.start_time}
-            onChange={handleChange}
-            margin="normal"
-            variant="outlined"
-            fullWidth
-          />
-          <TextField
-            name="end_time"
-            type="time"
-            value={formValues.end_time}
-            onChange={handleChange}
-            margin="normal"
-            variant="outlined"
-            fullWidth
-          />
-          {overlapError && (
-            <Typography variant="body2">
-              There is an overlap with another activity on this day and time.
-            </Typography>
-          )}
-          {startTimeError && (
-            <Typography variant="body2">
-              Start time must come before end time.
-            </Typography>
-          )}
-
-          <Button onClick={handleUpdate} variant="contained" color="primary">
-            Update
-          </Button>
-          <Button onClick={handleDelete} variant="contained" color="secondary">
-            Delete
-          </Button>
-        </Box>
-      )}
-    </Modal>
+              Delete
+            </Button>
+          </Box>
+        )}
+      </Modal>
+    </ThemeProvider>
   );
 };
 
