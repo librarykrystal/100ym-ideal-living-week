@@ -115,6 +115,7 @@ function WeekPage() {
               </ul>
 
               <ActivityModal
+                activities={activities}
                 activity={selectedActivity}
                 open={modalOpen}
                 onClose={handleCloseModal}

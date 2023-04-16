@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import "./weekpage.css";
+// gi
 import { useDispatch, useSelector } from "react-redux";
 import TextField from "@mui/material/TextField";
 import Select from "@mui/material/Select";
@@ -21,19 +21,38 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
     total_hours: "",
   });
   const [overlapError, setOverlapError] = useState(false);
-
+  const [invalidTimeError, setInvalidTimeError] = useState(false);
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const existingActivities = activities.filter(
-      (a) =>
+    const start = new Date(`1970-01-01T${activity.start_time}:00.001Z`);
+    const end = new Date(`1970-01-01T${activity.end_time}:00.001Z`);
+
+    // Check if start time is before end time
+    if (start >= end) {
+      setInvalidTimeError(true);
+      return;
+    }
+
+    const existingActivities = activities.filter((a) => {
+      const aStartTime = new Date(`1970-01-01T${a.start_time}.001Z`);
+      const aEndTime = new Date(`1970-01-01T${a.end_time}.001Z`);
+      const activityStartTime = new Date(
+        `1970-01-01T${activity.start_time}:00.001Z`
+      );
+      const activityEndTime = new Date(
+        `1970-01-01T${activity.end_time}:00.001Z`
+      );
+
+      return (
         a.day === activity.day &&
         a !== activity &&
-        ((a.start_time >= activity.start_time &&
-          a.start_time < activity.end_time) ||
-          (activity.start_time >= a.start_time &&
-            activity.start_time < a.end_time))
-    );
+        ((aStartTime >= activityStartTime && aStartTime < activityEndTime) ||
+          (activityStartTime >= aStartTime && activityStartTime < aEndTime) ||
+          (aEndTime > activityStartTime && aEndTime <= activityEndTime) ||
+          (activityEndTime > aStartTime && activityEndTime <= aEndTime))
+      );
+    });
 
     if (existingActivities.length > 0) {
       setOverlapError(true);
@@ -47,6 +66,7 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
         total_hours: "",
       });
       setOverlapError(false);
+      setInvalidTimeError(false);
     }
   };
 
@@ -132,7 +152,11 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
           There is an overlap with another activity on this day and time.
         </Typography>
       )}
-
+      {invalidTimeError && (
+        <Typography color="error">
+          Start time must be before end time
+        </Typography>
+      )}
       <br />
       <FormControl>
         <Button type="submit" variant="contained" color="primary">

@@ -7,10 +7,12 @@ import newActivitySaga from "./newActivity.saga";
 import fetchActivitiesSaga from "./fetchActivities.saga";
 import categoriesSaga from "./fetchCategories.saga";
 import userListSaga from "./userlist.saga";
-import answerSagas from "./answer.saga"
-import prioritiesSaga from "./priorities.saga"
+import answerSagas from "./answer.saga";
+import editActivitySaga from "./editActivity.saga";
+import deleteActivitySaga from "./deleteActivity.saga";
+import prioritiesSaga from "./priorities.saga";
 
-prioritiesSaga
+prioritiesSaga;
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
 // This is imported in index.js as rootSaga
@@ -29,6 +31,8 @@ export default function* rootSaga() {
     categoriesSaga(),
     userListSaga(),
     answerSagas(),
-    prioritiesSaga()
+    editActivitySaga(),
+    deleteActivitySaga(),
+    prioritiesSaga(),
   ]);
 }
