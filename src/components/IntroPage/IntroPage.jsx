@@ -68,9 +68,10 @@ const postAndContinue = () => {
       type: 'POST_ANSWERS',
       payload: answers
     });
-  
+    dispatch({
+      type: 'INTRO_PAGE_DONE'
+    });
 }
-
 
   return (
     <ThemeProvider theme={theme}>
