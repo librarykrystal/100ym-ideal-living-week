@@ -75,7 +75,7 @@ function PrioritiesPage() {
   const saveAnswers = () => {
     console.log('SAVE clicked');
     dispatch({
-        type: 'SET_PRIORITIES',
+        type: 'UPDATE_PRIORITIES',
         payload: rankedList
       });
   }

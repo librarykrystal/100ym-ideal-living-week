@@ -35,6 +35,21 @@ router.get('/', (req, res) => {
 //         res.sendStatus(500);
 //       })
 //   });
+router.put('/', (req, res) => {
+  console.log('this is req.body from router', req.body)
+    const entry = req.body;
+    const sqlParams = [ entry.category_id, entry.rank, entry.user_id]
+    const sqlText = `UPDATE "priority" SET "rank" = $2
+    WHERE "category_id" = $1 AND "user_id" = $3;`;
+    pool.query(sqlText, sqlParams )
+        .then((result) => {
+            res.sendStatus(200);
+        })
+        .catch((error) => {
+            console.log(`Error making database query ${sqlText}`, error);
+            res.sendStatus(500);
+        });
+  });
 
 
   module.exports = router;
