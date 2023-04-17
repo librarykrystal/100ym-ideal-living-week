@@ -24,8 +24,44 @@ function* fetchUser() {
   }
 }
 
+// WORKER SAGA for PUT - introComplete TRUE
+function* introCompleteTrue(action) {
+  console.log('introComplete SAGA GO');
+  try {
+    yield axios.put(`/api/intro`);
+    yield put({ type: 'FETCH_USER' });
+  } catch (error) {
+    console.log('SAGA ERROR setting introComplete to TRUE:', error);
+  }
+}
+
+// WORKER SAGA for PUT - questionsComplete TRUE
+function* questionsCompleteTrue(action) {
+  console.log('questionsComplete SAGA GO');
+  try {
+    yield axios.put(`/api/questionscomplete`);
+    yield put({ type: 'FETCH_USER' });
+  } catch (error) {
+    console.log('SAGA ERROR setting questionsComplete to TRUE:', error);
+  }
+}
+
+// WORKER SAGA for PUT - setupComplete TRUE
+function* setupCompleteTrue(action) {
+  console.log('setupComplete SAGA GO');
+  try {
+    yield axios.put(`/api/setupcomplete`);
+    yield put({ type: 'FETCH_USER' });
+  } catch (error) {
+    console.log('SAGA ERROR setting setupComplete to TRUE:', error);
+  }
+}
+
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
+  yield takeLatest('INTRO_PAGE_DONE', introCompleteTrue);
+  yield takeLatest('QUESTIONS_PAGE_DONE', questionsCompleteTrue);
+  yield takeLatest('SETUP_COMPLETE', setupCompleteTrue);
 }
 
 export default userSaga;

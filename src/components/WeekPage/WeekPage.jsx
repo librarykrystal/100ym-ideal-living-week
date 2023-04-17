@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
@@ -33,6 +34,8 @@ const theme = createTheme({
 
 function WeekPage() {
   // const [activities, setActivities] = useState([]);
+  const user = useSelector((store) => store.user);
+  const history = useHistory();
   const dispatch = useDispatch();
   const activities = useSelector((store) => store.activities);
   const [modalOpen, setModalOpen] = useState(false);
@@ -72,6 +75,15 @@ function WeekPage() {
     "Sunday",
   ];
 
+  // Handles DONE BtnClick- - - Sets setupComplete to TRUE, routes user to home
+  const doneHandler = () => {
+    console.log("DONE clicked");
+    dispatch({
+      type: "SETUP_COMPLETE",
+    });
+    history.push(`/user`);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -96,6 +108,20 @@ function WeekPage() {
               />
             </div>
           </center>
+          <br />
+          {/* DONE button — only shows when user is initially led through setup */}
+          {!user.setupComplete && (
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              size="large"
+              onClick={doneHandler}
+            >
+              DONE
+            </Button>
+          )}
+
           <br />
           <br />
           <Stack direction="row" spacing={0}>

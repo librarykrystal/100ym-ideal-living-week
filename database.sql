@@ -13,7 +13,8 @@ CREATE TABLE "user" (
     "email" VARCHAR (1000) NOT NULL,
     "admin" BOOLEAN DEFAULT false,
     "setupComplete" BOOLEAN DEFAULT false,
-    "introComplete" BOOLEAN DEFAULT false
+    "introComplete" BOOLEAN DEFAULT false,
+    "questionsComplete" BOOLEAN DEFAULT false
 );
 
 CREATE TABLE "category" (
