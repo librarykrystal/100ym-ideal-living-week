@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
     if(result.rows === 0) {
       // No results found, return category list
       const queryText2 = 'SELECT * FROM "category" ORDER BY "id";';
-      pool.query(queryText2 ).then((result) => {
+      pool.query(queryText ).then((result) => {
         console.log(result.rows);
         res.send(result.rows);
       }).catch((err) => {

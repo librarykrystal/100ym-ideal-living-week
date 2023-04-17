@@ -3,7 +3,7 @@ import axios from 'axios';
 function* fetchPriorities() {
     try {
         const priority = yield axios.get("/api/priority");
-        console.log("get all answers:", priority.data);
+        console.log("get all priorities:", priority.data);
         yield put({ type: "SET_PRIORITIES", payload: priority.data });
     } catch {
         console.log("get all priortiy error");
