@@ -24,7 +24,7 @@ function* fetchUser() {
   }
 }
 
-// WORKER SAGA for PUT - IntroComplete TRUE
+// WORKER SAGA for PUT - introComplete TRUE
 function* introCompleteTrue(action) {
   console.log('introComplete SAGA GO');
   try {
@@ -35,9 +35,21 @@ function* introCompleteTrue(action) {
   }
 }
 
+// WORKER SAGA for PUT - questionsComplete TRUE
+function* questionsCompleteTrue(action) {
+  console.log('questionsComplete SAGA GO');
+  try {
+    yield axios.put(`/api/questionscomplete`);
+    yield put({ type: 'FETCH_USER' });
+  } catch (error) {
+    console.log('SAGA ERROR setting questionsComplete to TRUE:', error);
+  }
+}
+
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
   yield takeLatest('INTRO_PAGE_DONE', introCompleteTrue);
+  yield takeLatest('QUESTIONS_PAGE_DONE', questionsCompleteTrue);
 }
 
 export default userSaga;
