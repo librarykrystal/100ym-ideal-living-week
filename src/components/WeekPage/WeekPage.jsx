@@ -16,6 +16,7 @@ import "./weekpage.css";
 
 function WeekPage() {
   // const [activities, setActivities] = useState([]);
+  const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const activities = useSelector((store) => store.activities);
   const [modalOpen, setModalOpen] = useState(false);
