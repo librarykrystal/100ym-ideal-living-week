@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./weekpage.css";
 import { useDispatch, useSelector } from "react-redux";
 import TextField from "@mui/material/TextField";
 import Select from "@mui/material/Select";
@@ -75,80 +74,104 @@ function WeekPage() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div>
-        <center>
-          <Typography variant="h4" mt={0} mb={1} gutterBottom>
-            Your Ideal Week
-          </Typography>
-        </center>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <div>
+          <center>
+            <Typography variant="h4" mt={0} mb={1} gutterBottom>
+              Your Ideal Week
+            </Typography>
+          </center>
 
-        <center>
-          <div>
-            <AddActivityForm
-              onAddActivity={handleAddActivity}
-              activities={activities}
-              daysOfWeek={daysOfWeek}
-            />
-          </div>
-        </center>
-        <br />
-        <br />
-        <Stack direction="row" spacing={2}>
-          {daysOfWeek.map((day) => (
-            <Stack key={day} direction="row" spacing={2}>
-              <FormControl fullWidth>
-                <center>
-                  <Typography variant="h6">{day}</Typography>
-                </center>
-                <ul>
-                  {activities
-                    .filter((activity) => activity.day === day)
-                    .map((activity) => {
-                      const start = new Date(
-                        `1971-01-01T${activity.start_time}-06:00`
-                      );
+          <center>
+            <div>
+              <AddActivityForm
+                onAddActivity={handleAddActivity}
+                activities={activities}
+                daysOfWeek={daysOfWeek}
+              />
+            </div>
+          </center>
+          <br />
+          <br />
+          <Stack direction="row" spacing={0}>
+            {daysOfWeek.map((day) => (
+              <Stack key={day} direction="row" spacing={0}>
+                <FormControl fullWidth>
+                  <center>
+                    <Typography variant="h6">{day}</Typography>
+                  </center>
+                  <center>
+                    <ul>
+                      {activities
+                        .filter((activity) => activity.day === day)
+                        .map((activity) => {
+                          const start = new Date(
+                            `1971-01-01T${activity.start_time}-06:00`
+                          );
 
-                      const end = new Date(
-                        `1970-01-01T${activity.end_time}-06:00`
-                      );
-                      const startTime = start.toLocaleString("en-US", {
-                        hour: "numeric",
-                        minute: "numeric",
-                        hour12: true,
-                      });
-                      const endTime = end.toLocaleString("en-US", {
-                        hour: "numeric",
-                        minute: "numeric",
-                        hour12: true,
-                      });
-                      return (
-                        <li
-                          key={activity.id}
-                          onClick={() => handleActivityClick(activity)}
-                        >
-                          <Typography>{activity.category_name}</Typography>
-                          <Typography>
-                            {startTime} - {endTime}
-                          </Typography>
-                          <div
-                            style={{ height: `${activity.total_hours * 20}px` }}
-                          ></div>
-                        </li>
-                      );
-                    })}
-                </ul>
+                          const end = new Date(
+                            `1970-01-01T${activity.end_time}-06:00`
+                          );
+                          const startTime = start.toLocaleString("en-US", {
+                            hour: "numeric",
+                            minute: "numeric",
+                            hour12: true,
+                          });
+                          const endTime = end.toLocaleString("en-US", {
+                            hour: "numeric",
+                            minute: "numeric",
+                            hour12: true,
+                          });
+                          return (
+                            <Box
+                              sx={{
+                                width: 105,
+                                padding: "2px 0px 2px 0px",
+                                m: 1.2,
+                                border: `1.5px solid hsl(225, ${
+                                  100 - activity.category_id * 10
+                                }%, 64%)`,
+                                boxShadow: 2,
+                                borderRadius: 1,
+                                backgroundColor: `hsl(225, ${
+                                  100 - activity.category_id * 10
+                                }%, 92%)`,
+                              }}
+                              key={activity.id}
+                              onClick={() => handleActivityClick(activity)}
+                            >
+                              <Typography>{activity.category_name}</Typography>
+                              <Typography sx={{ fontSize: 14 }}>
+                                {startTime} - {endTime}
+                              </Typography>
+                              <div
+                                style={{
+                                  height: `${activity.total_hours * 30}px`,
+                                }}
+                              ></div>
+                            </Box>
+                          );
+                        })}
+                    </ul>
+                  </center>
 
-                <ActivityModal
-                  activities={activities}
-                  activity={selectedActivity}
-                  open={modalOpen}
-                  onClose={handleCloseModal}
-                />
-              </FormControl>
-            </Stack>
-          ))}
-        </Stack>
-      </div>
+                  <ActivityModal
+                    activities={activities}
+                    activity={selectedActivity}
+                    open={modalOpen}
+                    onClose={handleCloseModal}
+                  />
+                </FormControl>
+              </Stack>
+            ))}
+          </Stack>
+        </div>
+      </Box>
     </ThemeProvider>
   );
 }

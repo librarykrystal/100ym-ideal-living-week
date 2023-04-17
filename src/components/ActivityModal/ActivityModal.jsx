@@ -44,10 +44,6 @@ const ActivityModal = ({ activities, activity, open, onClose }) => {
     category_id: "",
     day: "",
   });
-  const [modifiedFields, setModifiedFields] = useState({
-    start_time: false,
-    end_time: false,
-  });
 
   useEffect(() => {
     if (activity) {
@@ -67,17 +63,6 @@ const ActivityModal = ({ activities, activity, open, onClose }) => {
       ...prevValues,
       [name]: value,
     }));
-    if (name === "start_time" || name === "end_time") {
-      setModifiedFields((prevFields) => ({
-        ...prevFields,
-        [name]: true,
-      }));
-    } else {
-      setModifiedFields((prevFields) => ({
-        ...prevFields,
-        [name]: false,
-      }));
-    }
   };
 
   const handleDelete = () => {
@@ -95,18 +80,27 @@ const ActivityModal = ({ activities, activity, open, onClose }) => {
     }
 
     let total_hours = ((end - start) / (1000 * 60 * 60)).toFixed(2);
+    const existingActivities = activities.filter((a) => {
+      const aStartTime = new Date(`1970-01-01T${a.start_time}.001Z`);
+      const aEndTime = new Date(`1970-01-01T${a.end_time}.001Z`);
+      const activityStartTime = new Date(
+        `1970-01-01T${formValues.start_time}:00.001Z`
+      );
+      const activityEndTime = new Date(
+        `1970-01-01T${formValues.end_time}:00.001Z`
+      );
 
-    const overlappingActivities = activities.filter(
-      (a) =>
+      return (
         a.day === activity.day &&
         a !== activity &&
-        ((a.start_time >= formValues.start_time &&
-          a.start_time < formValues.end_time) ||
-          (formValues.start_time >= a.start_time &&
-            formValues.start_time < a.end_time))
-    );
+        ((aStartTime >= activityStartTime && aStartTime < activityEndTime) ||
+          (activityStartTime >= aStartTime && activityStartTime < aEndTime) ||
+          (aEndTime > activityStartTime && aEndTime <= activityEndTime) ||
+          (activityEndTime > aStartTime && activityEndTime <= aEndTime))
+      );
+    });
 
-    if (overlappingActivities.length > 0) {
+    if (existingActivities.length > 0) {
       setOverlapError(true);
     } else {
       const updatedActivity = {
