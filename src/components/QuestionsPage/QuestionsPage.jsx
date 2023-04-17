@@ -88,8 +88,12 @@ function QuestionsPage() {
   const saveAndContinue = () => {
     console.log("SAVE & CONTINUE clicked");
     dispatch({
-      type: "POST_ANSWERS",
+      type: "SET_ANSWERS",
       payload: answers,
+    });
+    // set questionsComplete to TRUE so user can access next steps:
+    dispatch({
+      type: 'QUESTIONS_PAGE_DONE'
     });
     history.push(`/priorities`);
   };
