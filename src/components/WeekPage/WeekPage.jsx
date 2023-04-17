@@ -79,6 +79,21 @@ function WeekPage() {
         daysOfWeek={daysOfWeek}
       />
 
+      <br/>
+      {/* DONE button — only shows when user is initially led through setup */}
+      {!user.setupComplete &&
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          size="large"
+          onClick={doneHandler}
+        >
+          DONE
+        </Button>
+      }
+
+
       <br />
       <br />
       <Stack direction="row" spacing={2}>
