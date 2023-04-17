@@ -79,7 +79,7 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
       <Typography variant="h5" gutterBottom>
         Add an Activity
       </Typography>
-      <Grid container spacing={1}>
+      <Grid container spacing={1} alignItems="center" justifyContent="center">
         <Grid item xs={12} md={2}>
           <FormControl fullWidth>
             <Typography>Select Category</Typography>

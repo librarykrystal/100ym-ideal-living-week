@@ -81,12 +81,15 @@ function WeekPage() {
             Your Ideal Week
           </Typography>
         </center>
+
         <center>
-          <AddActivityForm
-            onAddActivity={handleAddActivity}
-            activities={activities}
-            daysOfWeek={daysOfWeek}
-          />
+          <div>
+            <AddActivityForm
+              onAddActivity={handleAddActivity}
+              activities={activities}
+              daysOfWeek={daysOfWeek}
+            />
+          </div>
         </center>
         <br />
         <br />
