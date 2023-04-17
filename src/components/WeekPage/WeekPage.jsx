@@ -56,6 +56,16 @@ function WeekPage() {
     "Sunday",
   ];
 
+  // Handles DONE BtnClick- - - Sets setupComplete to TRUE, routes user to home
+ const doneHandler = () => {
+  console.log("DONE clicked");
+  dispatch({
+    type: 'SETUP_COMPLETE'
+  });
+  history.push(`/home`);
+};
+
+
   return (
     <div>
       <center>
