@@ -15,6 +15,8 @@ const priorityRouter = require('./routes/priority.router');
 const questionRouter = require('./routes/question.router');
 const idealWeekRouter = require('./routes/idealWeek.router');
 const userListRouter = require('./routes/userlist.router');
+const introCompleteRouter = require('./routes/introComplete.router');
+const questionsCompleteRouter = require('./routes/questionsComplete.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -35,6 +37,8 @@ app.use('/api/question', questionRouter);
 app.use('/api/priority', priorityRouter);
 app.use('/api/idealWeek', idealWeekRouter);
 app.use('/api/userlist', userListRouter);
+app.use('/api/intro', introCompleteRouter);
+app.use('/api/questionscomplete', questionsCompleteRouter);
 
 // Serve static files
 app.use(express.static('build'));

@@ -1,6 +1,30 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import {useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+// MUI 
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import "@fontsource/roboto-slab";
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+
+// Material UI Font Theming
+const theme = createTheme({
+  typography: {
+    fontFamily: [
+      'Roboto Slab',
+    ],
+  },
+  palette: {
+    primary: {
+      main: '#475473',
+    },
+    secondary: {
+      main: '#1c4bd9',
+    },
+  },
+});
 
 function LoginForm() {
   const [username, setUsername] = useState('');
@@ -10,7 +34,6 @@ function LoginForm() {
 
   const login = (event) => {
     event.preventDefault();
-
     if (username && password) {
       dispatch({
         type: 'LOGIN',
@@ -25,41 +48,51 @@ function LoginForm() {
   }; // end login
 
   return (
-    <form className="formPanel" onSubmit={login}>
-      <h2>Login</h2>
+    <ThemeProvider theme={theme}>
+    <Box className="formPanel">
+
+      <Typography variant="h5" mb={2}>Login</Typography>
+
       {errors.loginMessage && (
         <h3 className="alert" role="alert">
           {errors.loginMessage}
         </h3>
       )}
+
       <div>
-        <label htmlFor="username">
-          Username:
-          <input
-            type="text"
-            name="username"
+          <TextField
+            id="Username"
+            label="Username"
+            variant="standard"
             required
             value={username}
             onChange={(event) => setUsername(event.target.value)}
           />
-        </label>
       </div>
+
       <div>
-        <label htmlFor="password">
-          Password:
-          <input
+          <TextField
+            id="Password"
+            label="Password"
+            variant="standard"
             type="password"
-            name="password"
             required
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
-        </label>
       </div>
+      <br/>
+      
       <div>
-        <input className="btn" type="submit" name="submit" value="Log In" />
+        <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={login}>LOGIN
+          </Button>
       </div>
-    </form>
+    </Box>
+    </ThemeProvider>
   );
 }
 
