@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
@@ -17,6 +18,7 @@ import "./weekpage.css";
 function WeekPage() {
   // const [activities, setActivities] = useState([]);
   const user = useSelector((store) => store.user);
+  const history = useHistory();
   const dispatch = useDispatch();
   const activities = useSelector((store) => store.activities);
   const [modalOpen, setModalOpen] = useState(false);
@@ -62,7 +64,7 @@ function WeekPage() {
   dispatch({
     type: 'SETUP_COMPLETE'
   });
-  history.push(`/home`);
+  history.push(`/user`);
 };
 
 
