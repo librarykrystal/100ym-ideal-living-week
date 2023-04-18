@@ -3,12 +3,14 @@ import axios from 'axios';
 function* fetchPriorities() {
     try {
         const priority = yield axios.get("/api/priority");
+
         console.log("get all priorities:", priority.data);
         yield put({ type: "SET_PRIORITIES", payload: priority.data });
     } catch {
         console.log("get all priortiy error");
     }
 }
+
 function* postPriorities(action) {
   console.log("post answers sagas action payload", action.payload)
   try {
@@ -38,4 +40,6 @@ function* prioritiesSaga() {
     yield takeEvery("UPDATE_PRIORITIES", updatePriorities);
     yield takeEvery("POST_PRIORITIES", postPriorities);
 };
+
+
 export default prioritiesSaga;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "./weekpage.css";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
@@ -13,8 +13,12 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import AddActivityForm from "../AddActivityForm/AddActivityForm";
 import ActivityModal from "../ActivityModal/ActivityModal";
+import "./weekpage.css";
+
 function WeekPage() {
   // const [activities, setActivities] = useState([]);
+  const user = useSelector((store) => store.user);
+  const history = useHistory();
   const dispatch = useDispatch();
   const activities = useSelector((store) => store.activities);
   const [modalOpen, setModalOpen] = useState(false);
@@ -54,6 +58,16 @@ function WeekPage() {
     "Sunday",
   ];
 
+  // Handles DONE BtnClick- - - Sets setupComplete to TRUE, routes user to home
+ const doneHandler = () => {
+  console.log("DONE clicked");
+  dispatch({
+    type: 'SETUP_COMPLETE'
+  });
+  history.push(`/user`);
+};
+
+
   return (
     <div>
       <center>
@@ -66,6 +80,21 @@ function WeekPage() {
         activities={activities}
         daysOfWeek={daysOfWeek}
       />
+
+      <br/>
+      {/* DONE button — only shows when user is initially led through setup */}
+      {!user.setupComplete &&
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          size="large"
+          onClick={doneHandler}
+        >
+          DONE
+        </Button>
+      }
+
 
       <br />
       <br />

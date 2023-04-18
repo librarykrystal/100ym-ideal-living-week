@@ -1,4 +1,6 @@
-import * as React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -6,6 +8,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import prioritiesSaga from "../../redux/sagas/priorities.saga";
 
 function createData(
   Categories,
@@ -31,15 +34,45 @@ function createData(
   };
 }
 
-const rows = [
-  createData("Sleep", 8.0, 7.5, 8.5, 9.0, 8.0, 9.5, 9.0, 59.5),
-  createData("Wellness", 1.0, 2.0, 3.5, 4.5, 2.5, 3.5, 2.5, 19.5),
-  createData("Outdoor Time", 4.0, 2.5, 3.0, 1.5, 2.0, 2.5, 3.0, 18.5),
-  createData("Family Time", 3.0, 3.5, 4.0, 4.5, 5.0, 4.0, 5.0, 29),
-  createData("Eating", 2.0, 3.0, 3.5, 2.5, 3.5, 3.0, 3.5, 21),
-];
 
 export default function BasicTable() {
+  const dispatch = useDispatch();
+  const activities = useSelector((store) => store.activities);
+  const categories = useSelector((store) => store.categories);
+  const priorities = useSelector((store) => store.priorities);
+
+  useEffect(() => {
+    dispatch({ type: "FETCH_ACTIVITIES" });
+    dispatch({ type: "FETCH_CATEGORIES" });
+    dispatch({ type: "FETCH_PRIORITIES" });
+  }, []);
+
+  console.log("activities", activities);
+  console.log("categories", categories);
+  console.log("priorities", priorities);
+
+  const categoriesAlpha = categories.sort((a, b) =>
+    a.name.localeCompare(b.name)
+  );
+  console.log("categoriesSorted", categoriesAlpha);
+
+  // const categoriesPrioritized = priorities
+
+  const activitiesSorted = activities.sort((a, b) =>
+    a.start_time.localeCompare(b.start_time)
+  );
+
+  console.log("activitiesSorted", activitiesSorted);
+
+  const categoriesAlphaWthActvts = categoriesAlpha.map((category) => {
+    category.activities = activitiesSorted.filter(
+      ({ category_name }) => category_name === category.name
+    );
+    return category;
+  });
+
+  console.log("categoriesWithActivities", categoriesAlphaWthActvts);
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -57,22 +90,85 @@ export default function BasicTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {categoriesAlphaWthActvts.map(({ id, name, activities }) => (
             <TableRow
-              key={row.Categories}
+              key={id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.Categories}
+                {name}
               </TableCell>
-              <TableCell align="right">{row.Monday}</TableCell>
-              <TableCell align="right">{row.Tuesday}</TableCell>
-              <TableCell align="right">{row.Wednesday}</TableCell>
-              <TableCell align="right">{row.Thursday}</TableCell>
-              <TableCell align="right">{row.Friday}</TableCell>
-              <TableCell align="right">{row.Saturday}</TableCell>
-              <TableCell align="right">{row.Sunday}</TableCell>
-              <TableCell align="right">{row.Total}</TableCell>
+              <TableCell align="right">
+                {activities
+                  .filter((activity) => activity.day === "Monday")
+                  .map((activity) => parseFloat(activity.total_hours))
+                  .reduce(
+                    (accumulator, currentValue) => accumulator + currentValue,
+                    0
+                  )}
+              </TableCell>
+              <TableCell align="right">
+                {activities
+                  .filter((activity) => activity.day === "Tuesday")
+                  .map((activity) => parseFloat(activity.total_hours))
+                  .reduce(
+                    (accumulator, currentValue) => accumulator + currentValue,
+                    0
+                  )}
+              </TableCell>
+              <TableCell align="right">
+                {activities
+                  .filter((activity) => activity.day === "Wednesday")
+                  .map((activity) => parseFloat(activity.total_hours))
+                  .reduce(
+                    (accumulator, currentValue) => accumulator + currentValue,
+                    0
+                  )}
+              </TableCell>
+              <TableCell align="right">
+                {activities
+                  .filter((activity) => activity.day === "Thursday")
+                  .map((activity) => parseFloat(activity.total_hours))
+                  .reduce(
+                    (accumulator, currentValue) => accumulator + currentValue,
+                    0
+                  )}
+              </TableCell>
+              <TableCell align="right">
+                {activities
+                  .filter((activity) => activity.day === "Friday")
+                  .map((activity) => parseFloat(activity.total_hours))
+                  .reduce(
+                    (accumulator, currentValue) => accumulator + currentValue,
+                    0
+                  )}
+              </TableCell>
+              <TableCell align="right">
+                {activities
+                  .filter((activity) => activity.day === "Saturday")
+                  .map((activity) => parseFloat(activity.total_hours))
+                  .reduce(
+                    (accumulator, currentValue) => accumulator + currentValue,
+                    0
+                  )}
+              </TableCell>
+              <TableCell align="right">
+                {activities
+                  .filter((activity) => activity.day === "Sunday")
+                  .map((activity) => parseFloat(activity.total_hours))
+                  .reduce(
+                    (accumulator, currentValue) => accumulator + currentValue,
+                    0
+                  )}
+              </TableCell>
+              <TableCell align="right">
+                {activities
+                  .map((activity) => parseFloat(activity.total_hours))
+                  .reduce(
+                    (accumulator, currentValue) => accumulator + currentValue,
+                    0
+                  )}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
