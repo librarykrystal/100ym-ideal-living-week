@@ -46,6 +46,18 @@ function* questionsCompleteTrue(action) {
   }
 }
 
+// WORKER SAGA for PUT - prioritiesComplete TRUE
+function* prioritiesCompleteTrue(action) {
+  console.log('prioritiesComplete SAGA GO');
+  try {
+    yield axios.put(`/api/prioritiescomplete`);
+    yield put({ type: 'FETCH_USER' });
+  } catch (error) {
+    console.log('SAGA ERROR setting prioritiesComplete to TRUE:', error);
+  }
+ }
+ 
+
 // WORKER SAGA for PUT - setupComplete TRUE
 function* setupCompleteTrue(action) {
   console.log('setupComplete SAGA GO');
@@ -61,6 +73,7 @@ function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
   yield takeLatest('INTRO_PAGE_DONE', introCompleteTrue);
   yield takeLatest('QUESTIONS_PAGE_DONE', questionsCompleteTrue);
+  yield takeLatest('PRIORITIES_PAGE_DONE', prioritiesCompleteTrue);
   yield takeLatest('SETUP_COMPLETE', setupCompleteTrue);
 }
 
