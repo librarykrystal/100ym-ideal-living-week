@@ -29,7 +29,7 @@ function* updateAnswers(action) {
     yield axios.put('/api/answer', action.payload); 
     yield put({ type: 'FETCH_ANSWERS' });
   } catch (error) {
-   console.log('Error with creating family:', error);
+   console.log('Error with creating answers:', error);
     // yield put({ type: 'UPDATE_ANSWERS' });
   };
 };
