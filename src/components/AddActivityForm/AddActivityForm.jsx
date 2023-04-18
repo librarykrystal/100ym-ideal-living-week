@@ -20,7 +20,7 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
   }, []);
 
   const [activity, setActivity] = useState({
-    category_id: 0,
+    category_id: "",
     day: "",
     start_time: "",
     end_time: "",
@@ -67,7 +67,7 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
     } else {
       onAddActivity({ ...activity });
       setActivity({
-        category_id: 0,
+        category_id: "",
         day: "",
         start_time: "",
         end_time: "",
@@ -89,23 +89,24 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
       </Typography>
       <Grid container spacing={1} alignItems="center" justifyContent="center">
         <Grid item xs={12} md={2}>
-          {/* <FormControl>
-            <InputLabel id="category">Category</InputLabel>
+          <FormControl fullWidth>
+            <Typography>Category</Typography>
             <Select
+              sx={{ width: "100%" }}
+              name="category_id"
               labelId="category"
               id="category"
               value={activity.category_id}
-              label="Category"
               onChange={handleChange}
             >
               {priorities.map((pri, index) => (
                 <MenuItem key={index} value={pri.id}>
-                  {pri.rank}
+                  {pri.name}
                 </MenuItem>
               ))}
             </Select>
-          </FormControl> */}
-          <FormControl fullWidth>
+          </FormControl>
+          {/* <FormControl fullWidth>
             <Typography>Select Category</Typography>
             <Select
               name="category_id"
@@ -125,7 +126,7 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
               <MenuItem value={9}>Work</MenuItem>
               <MenuItem value={10}>Measure What Matters</MenuItem>
             </Select>
-          </FormControl>
+          </FormControl> */}
         </Grid>
         <Grid item xs={12} md={2}>
           <FormControl fullWidth>
