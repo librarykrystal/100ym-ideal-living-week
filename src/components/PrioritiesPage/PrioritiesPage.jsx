@@ -157,14 +157,33 @@ function PrioritiesPage() {
         <br/><br/>
 
         {/* SAVE button */}
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          size="large"
-          onClick={saveAnswers}>SAVE
-        </Button>
-      <br/><br/>
+        {user.prioritiesComplete &&
+          <>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              size="large"
+              onClick={saveAnswers}>SAVE
+            </Button>
+            <br/><br/>
+          </>
+        }
+
+        {/* SAVE & CONTINUE button - - - shows only on user's first setup visit to this page */}
+        {!user.prioritiesComplete &&
+         <>
+           <Button
+             type="submit"
+             variant="contained"
+             color="primary"
+             size="large"
+             onClick={saveAndContinue}>SAVE and CONTINUE
+           </Button>
+           <br/><br/>
+         </>
+       }
+
 
     </center>
   </div>
