@@ -9,10 +9,10 @@ router.get('/', (req, res) => {
   `;
   pool.query(queryText, [req.user.id] ).then((result) => {
     console.log(result.rows);
-    if(result.rows === 0) {
+    if(result.rows.length === 0) {
       // No results found, return category list
       const queryText2 = 'SELECT * FROM "category" ORDER BY "id";';
-      pool.query(queryText ).then((result) => {
+      pool.query(queryText2 ).then((result) => {
         console.log(result.rows);
         res.send(result.rows);
       }).catch((err) => {
