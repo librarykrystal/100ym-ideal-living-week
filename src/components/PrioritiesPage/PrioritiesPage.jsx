@@ -34,6 +34,7 @@ const theme = createTheme({
 
 function PrioritiesPage() {
 
+  const user = useSelector((store) => store.user);
   const categories = useSelector(store => store.categories);
     // Dispatch to GET the list of unordered categories happens in app.jsx
   const history = useHistory();
