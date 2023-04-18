@@ -8,32 +8,52 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+import "@fontsource/roboto-slab";
 import prioritiesSaga from "../../redux/sagas/priorities.saga";
 
-function createData(
-  Categories,
-  Monday,
-  Tuesday,
-  Wednesday,
-  Thursday,
-  Friday,
-  Saturday,
-  Sunday,
-  Total
-) {
-  return {
-    Categories,
-    Monday,
-    Tuesday,
-    Wednesday,
-    Thursday,
-    Friday,
-    Saturday,
-    Sunday,
-    Total,
-  };
-}
+// Material UI Font Theming
+const theme = createTheme({
+  typography: {
+    fontFamily: ["Roboto Slab"],
+  },
+  palette: {
+    primary: {
+      main: "#475473",
+    },
+    secondary: {
+      main: "#1c4bd9",
+    },
+    info: {
+      main: "#bdbfbf",
+    },
+  },
+});
 
+// function createData(
+//   Categories,
+//   Monday,
+//   Tuesday,
+//   Wednesday,
+//   Thursday,
+//   Friday,
+//   Saturday,
+//   Sunday,
+//   Total
+// ) {
+//   return {
+//     Categories,
+//     Monday,
+//     Tuesday,
+//     Wednesday,
+//     Thursday,
+//     Friday,
+//     Saturday,
+//     Sunday,
+//     Total,
+//   };
+// }
 
 export default function BasicTable() {
   const dispatch = useDispatch();
@@ -74,105 +94,115 @@ export default function BasicTable() {
   console.log("categoriesWithActivities", categoriesAlphaWthActvts);
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell align="right">Categories</TableCell>
-            <TableCell align="right">Monday</TableCell>
-            <TableCell align="right">Tuesday</TableCell>
-            <TableCell align="right">Wednesday</TableCell>
-            <TableCell align="right">Thursday</TableCell>
-            <TableCell align="right">Friday</TableCell>
-            <TableCell align="right">Saturday</TableCell>
-            <TableCell align="right">Sunday</TableCell>
-            <TableCell align="right">Total</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {categoriesAlphaWthActvts.map(({ id, name, activities }) => (
-            <TableRow
-              key={id}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {name}
-              </TableCell>
-              <TableCell align="right">
-                {activities
-                  .filter((activity) => activity.day === "Monday")
-                  .map((activity) => parseFloat(activity.total_hours))
-                  .reduce(
-                    (accumulator, currentValue) => accumulator + currentValue,
-                    0
-                  )}
-              </TableCell>
-              <TableCell align="right">
-                {activities
-                  .filter((activity) => activity.day === "Tuesday")
-                  .map((activity) => parseFloat(activity.total_hours))
-                  .reduce(
-                    (accumulator, currentValue) => accumulator + currentValue,
-                    0
-                  )}
-              </TableCell>
-              <TableCell align="right">
-                {activities
-                  .filter((activity) => activity.day === "Wednesday")
-                  .map((activity) => parseFloat(activity.total_hours))
-                  .reduce(
-                    (accumulator, currentValue) => accumulator + currentValue,
-                    0
-                  )}
-              </TableCell>
-              <TableCell align="right">
-                {activities
-                  .filter((activity) => activity.day === "Thursday")
-                  .map((activity) => parseFloat(activity.total_hours))
-                  .reduce(
-                    (accumulator, currentValue) => accumulator + currentValue,
-                    0
-                  )}
-              </TableCell>
-              <TableCell align="right">
-                {activities
-                  .filter((activity) => activity.day === "Friday")
-                  .map((activity) => parseFloat(activity.total_hours))
-                  .reduce(
-                    (accumulator, currentValue) => accumulator + currentValue,
-                    0
-                  )}
-              </TableCell>
-              <TableCell align="right">
-                {activities
-                  .filter((activity) => activity.day === "Saturday")
-                  .map((activity) => parseFloat(activity.total_hours))
-                  .reduce(
-                    (accumulator, currentValue) => accumulator + currentValue,
-                    0
-                  )}
-              </TableCell>
-              <TableCell align="right">
-                {activities
-                  .filter((activity) => activity.day === "Sunday")
-                  .map((activity) => parseFloat(activity.total_hours))
-                  .reduce(
-                    (accumulator, currentValue) => accumulator + currentValue,
-                    0
-                  )}
-              </TableCell>
-              <TableCell align="right">
-                {activities
-                  .map((activity) => parseFloat(activity.total_hours))
-                  .reduce(
-                    (accumulator, currentValue) => accumulator + currentValue,
-                    0
-                  )}
-              </TableCell>
+    <ThemeProvider theme={theme}>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Categories</TableCell>
+              <TableCell align="right">Monday</TableCell>
+              <TableCell align="right">Tuesday</TableCell>
+              <TableCell align="right">Wednesday</TableCell>
+              <TableCell align="right">Thursday</TableCell>
+              <TableCell align="right">Friday</TableCell>
+              <TableCell align="right">Saturday</TableCell>
+              <TableCell align="right">Sunday</TableCell>
+              <TableCell align="right">Total</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {categoriesAlphaWthActvts.map(({ id, name, activities }) => (
+              <TableRow
+                key={id}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {name}
+                </TableCell>
+                <TableCell align="right">
+                  {activities
+                    .filter((activity) => activity.day === "Monday")
+                    .map((activity) => parseFloat(activity.total_hours))
+                    .reduce(
+                      (accumulator, currentValue) => accumulator + currentValue,
+                      0
+                    )
+                    .toFixed(2)}
+                </TableCell>
+                <TableCell align="right">
+                  {activities
+                    .filter((activity) => activity.day === "Tuesday")
+                    .map((activity) => parseFloat(activity.total_hours))
+                    .reduce(
+                      (accumulator, currentValue) => accumulator + currentValue,
+                      0
+                    )
+                    .toFixed(2)}
+                </TableCell>
+                <TableCell align="right">
+                  {activities
+                    .filter((activity) => activity.day === "Wednesday")
+                    .map((activity) => parseFloat(activity.total_hours))
+                    .reduce(
+                      (accumulator, currentValue) => accumulator + currentValue,
+                      0
+                    )
+                    .toFixed(2)}
+                </TableCell>
+                <TableCell align="right">
+                  {activities
+                    .filter((activity) => activity.day === "Thursday")
+                    .map((activity) => parseFloat(activity.total_hours))
+                    .reduce(
+                      (accumulator, currentValue) => accumulator + currentValue,
+                      0
+                    )
+                    .toFixed(2)}
+                </TableCell>
+                <TableCell align="right">
+                  {activities
+                    .filter((activity) => activity.day === "Friday")
+                    .map((activity) => parseFloat(activity.total_hours))
+                    .reduce(
+                      (accumulator, currentValue) => accumulator + currentValue,
+                      0
+                    )
+                    .toFixed(2)}
+                </TableCell>
+                <TableCell align="right">
+                  {activities
+                    .filter((activity) => activity.day === "Saturday")
+                    .map((activity) => parseFloat(activity.total_hours))
+                    .reduce(
+                      (accumulator, currentValue) => accumulator + currentValue,
+                      0
+                    )
+                    .toFixed(2)}
+                </TableCell>
+                <TableCell align="right">
+                  {activities
+                    .filter((activity) => activity.day === "Sunday")
+                    .map((activity) => parseFloat(activity.total_hours))
+                    .reduce(
+                      (accumulator, currentValue) => accumulator + currentValue,
+                      0
+                    )
+                    .toFixed(2)}
+                </TableCell>
+                <TableCell align="right">
+                  {activities
+                    .map((activity) => parseFloat(activity.total_hours))
+                    .reduce(
+                      (accumulator, currentValue) => accumulator + currentValue,
+                      0
+                    )
+                    .toFixed(2)}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </ThemeProvider>
   );
 }
