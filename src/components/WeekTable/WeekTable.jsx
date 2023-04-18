@@ -126,7 +126,8 @@ export default function BasicTable() {
                     .reduce(
                       (accumulator, currentValue) => accumulator + currentValue,
                       0
-                    )}
+                    )
+                    .toFixed(2)}
                 </TableCell>
                 <TableCell align="right">
                   {activities
@@ -135,7 +136,8 @@ export default function BasicTable() {
                     .reduce(
                       (accumulator, currentValue) => accumulator + currentValue,
                       0
-                    )}
+                    )
+                    .toFixed(2)}
                 </TableCell>
                 <TableCell align="right">
                   {activities
@@ -144,7 +146,8 @@ export default function BasicTable() {
                     .reduce(
                       (accumulator, currentValue) => accumulator + currentValue,
                       0
-                    )}
+                    )
+                    .toFixed(2)}
                 </TableCell>
                 <TableCell align="right">
                   {activities
@@ -153,7 +156,8 @@ export default function BasicTable() {
                     .reduce(
                       (accumulator, currentValue) => accumulator + currentValue,
                       0
-                    )}
+                    )
+                    .toFixed(2)}
                 </TableCell>
                 <TableCell align="right">
                   {activities
@@ -162,7 +166,8 @@ export default function BasicTable() {
                     .reduce(
                       (accumulator, currentValue) => accumulator + currentValue,
                       0
-                    )}
+                    )
+                    .toFixed(2)}
                 </TableCell>
                 <TableCell align="right">
                   {activities
@@ -171,7 +176,8 @@ export default function BasicTable() {
                     .reduce(
                       (accumulator, currentValue) => accumulator + currentValue,
                       0
-                    )}
+                    )
+                    .toFixed(2)}
                 </TableCell>
                 <TableCell align="right">
                   {activities
@@ -180,7 +186,8 @@ export default function BasicTable() {
                     .reduce(
                       (accumulator, currentValue) => accumulator + currentValue,
                       0
-                    )}
+                    )
+                    .toFixed(2)}
                 </TableCell>
                 <TableCell align="right">
                   {activities
@@ -188,7 +195,8 @@ export default function BasicTable() {
                     .reduce(
                       (accumulator, currentValue) => accumulator + currentValue,
                       0
-                    )}
+                    )
+                    .toFixed(2)}
                 </TableCell>
               </TableRow>
             ))}
