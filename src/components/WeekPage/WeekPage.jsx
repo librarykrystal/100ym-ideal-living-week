@@ -100,13 +100,13 @@ function WeekPage() {
           </center>
 
           <center>
-            <div>
-              <AddActivityForm
-                onAddActivity={handleAddActivity}
-                activities={activities}
-                daysOfWeek={daysOfWeek}
-              />
-            </div>
+            {/* <div> */}
+            <AddActivityForm
+              onAddActivity={handleAddActivity}
+              activities={activities}
+              daysOfWeek={daysOfWeek}
+            />
+            {/* </div> */}
           </center>
           <br />
           {/* DONE button — only shows when user is initially led through setup */}
@@ -124,9 +124,9 @@ function WeekPage() {
 
           <br />
           <br />
-          <Stack direction="row" spacing={0}>
+          <Stack direction="row" spacing={2}>
             {daysOfWeek.map((day) => (
-              <Stack key={day} direction="row" spacing={0}>
+              <Stack key={day} direction="row" spacing={2}>
                 <FormControl fullWidth>
                   <center>
                     <Typography variant="h6">{day}</Typography>

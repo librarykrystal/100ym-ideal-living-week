@@ -87,12 +87,12 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
       <Typography variant="h5" gutterBottom>
         Add an Activity
       </Typography>
-      <Grid container spacing={1} alignItems="center" justifyContent="center">
+      <Grid container spacing={1} justifyContent="center">
         <Grid item xs={12} md={2}>
           <FormControl fullWidth>
-            <Typography>Category</Typography>
+            <Typography>Priority</Typography>
             <Select
-              sx={{ width: "100%" }}
+              //   sx={{ width: "100%" }}
               name="category_id"
               labelId="category"
               id="category"
