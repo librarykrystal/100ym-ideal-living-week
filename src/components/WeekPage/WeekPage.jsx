@@ -13,7 +13,24 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import AddActivityForm from "../AddActivityForm/AddActivityForm";
 import ActivityModal from "../ActivityModal/ActivityModal";
-import "./weekpage.css";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+const theme = createTheme({
+  typography: {
+    fontFamily: ["Roboto Slab"],
+  },
+  palette: {
+    primary: {
+      main: "#475473",
+    },
+    secondary: {
+      main: "#1c4bd9",
+    },
+    info: {
+      main: "#bdbfbf",
+    },
+  },
+});
 
 function WeekPage() {
   // const [activities, setActivities] = useState([]);
@@ -59,98 +76,127 @@ function WeekPage() {
   ];
 
   // Handles DONE BtnClick- - - Sets setupComplete to TRUE, routes user to home
- const doneHandler = () => {
-  console.log("DONE clicked");
-  dispatch({
-    type: 'SETUP_COMPLETE'
-  });
-  history.push(`/user`);
-};
-
+  const doneHandler = () => {
+    console.log("DONE clicked");
+    dispatch({
+      type: "SETUP_COMPLETE",
+    });
+    history.push(`/user`);
+  };
 
   return (
-    <div>
-      <center>
-        <Typography variant="h4" mt={0} mb={1} gutterBottom>
-          Weekly Planner
-        </Typography>
-      </center>
-      <AddActivityForm
-        onAddActivity={handleAddActivity}
-        activities={activities}
-        daysOfWeek={daysOfWeek}
-      />
+    <ThemeProvider theme={theme}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <div>
+          <center>
+            <Typography variant="h4" mt={0} mb={1} gutterBottom>
+              Your Ideal Week
+            </Typography>
+          </center>
 
-      <br/>
-      {/* DONE button — only shows when user is initially led through setup */}
-      {!user.setupComplete &&
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          size="large"
-          onClick={doneHandler}
-        >
-          DONE
-        </Button>
-      }
-
-
-      <br />
-      <br />
-      <Stack direction="row" spacing={2}>
-        {daysOfWeek.map((day) => (
-          <Stack key={day} direction="row" spacing={2}>
-            <FormControl fullWidth>
-              <center>
-                <Typography variant="h6">{day}</Typography>
-              </center>
-              <ul>
-                {activities
-                  .filter((activity) => activity.day === day)
-                  .map((activity) => {
-                    const start = new Date(
-                      `1971-01-01T${activity.start_time}-06:00`
-                    );
-
-                    const end = new Date(
-                      `1970-01-01T${activity.end_time}-06:00`
-                    );
-                    const startTime = start.toLocaleString("en-US", {
-                      hour: "numeric",
-                      minute: "numeric",
-                      hour12: true,
-                    });
-                    const endTime = end.toLocaleString("en-US", {
-                      hour: "numeric",
-                      minute: "numeric",
-                      hour12: true,
-                    });
-                    return (
-                      <li
-                        key={activity.id}
-                        onClick={() => handleActivityClick(activity)}
-                      >
-                        <Typography>{activity.category_name}</Typography>
-                        <Typography>
-                          {startTime} - {endTime}
-                        </Typography>
-                      </li>
-                    );
-                  })}
-              </ul>
-
-              <ActivityModal
+          <center>
+            <div>
+              <AddActivityForm
+                onAddActivity={handleAddActivity}
                 activities={activities}
-                activity={selectedActivity}
-                open={modalOpen}
-                onClose={handleCloseModal}
+                daysOfWeek={daysOfWeek}
               />
-            </FormControl>
+            </div>
+          </center>
+          <br />
+          {/* DONE button — only shows when user is initially led through setup */}
+          {!user.setupComplete && (
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              size="large"
+              onClick={doneHandler}
+            >
+              DONE
+            </Button>
+          )}
+
+          <br />
+          <br />
+          <Stack direction="row" spacing={0}>
+            {daysOfWeek.map((day) => (
+              <Stack key={day} direction="row" spacing={0}>
+                <FormControl fullWidth>
+                  <center>
+                    <Typography variant="h6">{day}</Typography>
+                  </center>
+                  <center>
+                    {activities
+                      .filter((activity) => activity.day === day)
+                      .map((activity) => {
+                        const start = new Date(
+                          `1971-01-01T${activity.start_time}-06:00`
+                        );
+
+                        const end = new Date(
+                          `1970-01-01T${activity.end_time}-06:00`
+                        );
+                        const startTime = start.toLocaleString("en-US", {
+                          hour: "numeric",
+                          minute: "numeric",
+                          hour12: true,
+                        });
+                        const endTime = end.toLocaleString("en-US", {
+                          hour: "numeric",
+                          minute: "numeric",
+                          hour12: true,
+                        });
+                        return (
+                          <Box
+                            sx={{
+                              width: 105,
+                              padding: "2px 0px 2px 0px",
+                              m: 1.2,
+                              border: `1.5px solid hsl(225, ${
+                                100 - activity.category_id * 10
+                              }%, 64%)`,
+                              boxShadow: 2,
+                              borderRadius: 1,
+                              backgroundColor: `hsl(225, ${
+                                100 - activity.category_id * 10
+                              }%, 92%)`,
+                            }}
+                            key={activity.id}
+                            onClick={() => handleActivityClick(activity)}
+                          >
+                            <Typography>{activity.category_name}</Typography>
+                            <Typography sx={{ fontSize: 14 }}>
+                              {startTime} - {endTime}
+                            </Typography>
+                            <div
+                              style={{
+                                height: `${activity.total_hours * 30}px`,
+                              }}
+                            ></div>
+                          </Box>
+                        );
+                      })}
+                  </center>
+
+                  <ActivityModal
+                    activities={activities}
+                    activity={selectedActivity}
+                    open={modalOpen}
+                    onClose={handleCloseModal}
+                  />
+                </FormControl>
+              </Stack>
+            ))}
           </Stack>
-        ))}
-      </Stack>
-    </div>
+        </div>
+      </Box>
+    </ThemeProvider>
   );
 }
 
