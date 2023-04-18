@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-// gi
+
 import { useDispatch, useSelector } from "react-redux";
 import TextField from "@mui/material/TextField";
 import Select from "@mui/material/Select";
@@ -13,6 +13,12 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 
 function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
+  const priorities = useSelector((store) => store.priorities);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({ type: "FETCH_PRIORITIES" });
+  }, []);
+
   const [activity, setActivity] = useState({
     category_id: 0,
     day: "",
@@ -20,8 +26,10 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
     end_time: "",
     total_hours: "",
   });
+
   const [overlapError, setOverlapError] = useState(false);
   const [invalidTimeError, setInvalidTimeError] = useState(false);
+  console.log(priorities);
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -81,6 +89,22 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
       </Typography>
       <Grid container spacing={1} alignItems="center" justifyContent="center">
         <Grid item xs={12} md={2}>
+          {/* <FormControl>
+            <InputLabel id="category">Category</InputLabel>
+            <Select
+              labelId="category"
+              id="category"
+              value={activity.category_id}
+              label="Category"
+              onChange={handleChange}
+            >
+              {priorities.map((pri, index) => (
+                <MenuItem key={index} value={pri.id}>
+                  {pri.rank}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl> */}
           <FormControl fullWidth>
             <Typography>Select Category</Typography>
             <Select
