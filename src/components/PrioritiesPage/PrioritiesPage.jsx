@@ -81,6 +81,20 @@ function PrioritiesPage() {
       });
   }
 
+  // Handles SAVE & CONTINUE - - - only used first time user completes prioritization
+  const saveAndContinue = () => {
+    console.log('SAVE clicked');
+    dispatch({
+      type: 'SET_PRIORITIES',
+      payload: rankedList
+    });
+    dispatch({
+      type: 'PRIORITIES_PAGE_DONE'
+    });
+    history.push(`/week`);
+  }
+
+
   return (
     <ThemeProvider theme={theme}>
     <div>
