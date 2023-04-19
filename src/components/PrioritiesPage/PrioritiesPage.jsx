@@ -34,6 +34,7 @@ const theme = createTheme({
 
 function PrioritiesPage() {
 
+  const user = useSelector((store) => store.user);
   const priorities = useSelector(store => store.priorities);
     // Dispatch to GET the list of unordered categories happens in app.jsx
   const history = useHistory();
@@ -54,7 +55,7 @@ function PrioritiesPage() {
     // Update state array
     setItemList(updatedList);
   };
-
+  
   // Handles SAVE - - - submits ranked priorities to database
   const saveAnswers = () => {
     // bundling of ranked user input for dispatch:
@@ -87,6 +88,32 @@ function PrioritiesPage() {
   useEffect(() => {
     setItemList(priorities);
   }, [priorities])
+
+  // Handles SAVE & CONTINUE - - - only used first time user completes prioritization
+  const saveAndContinue = () => {
+    console.log('SAVE clicked');
+    const rankedList = [
+      {rank: 1, category_id: parseInt(`${itemList[0].id}`)},
+      {rank: 2, category_id: parseInt(`${itemList[1].id}`)},
+      {rank: 3, category_id: parseInt(`${itemList[2].id}`)},
+      {rank: 4, category_id: parseInt(`${itemList[3].id}`)},
+      {rank: 5, category_id: parseInt(`${itemList[4].id}`)},
+      {rank: 6, category_id: parseInt(`${itemList[5].id}`)},
+      {rank: 7, category_id: parseInt(`${itemList[6].id}`)},
+      {rank: 8, category_id: parseInt(`${itemList[7].id}`)},
+      {rank: 9, category_id: parseInt(`${itemList[8].id}`)},
+      {rank: 10, category_id: parseInt(`${itemList[9].id}`)}
+    ]
+    dispatch({
+      type: 'UPDATE_PRIORITIES',
+      payload: rankedList
+    });
+    dispatch({
+      type: 'PRIORITIES_PAGE_DONE'
+    });
+    history.push(`/week`);
+  }
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -150,14 +177,33 @@ function PrioritiesPage() {
         <br/><br/>
 
         {/* SAVE button */}
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          size="large"
-          onClick={saveAnswers}>SAVE
-        </Button>
-      <br/><br/>
+        {user.prioritiesComplete &&
+          <>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              size="large"
+              onClick={saveAnswers}>SAVE
+            </Button>
+            <br/><br/>
+          </>
+        }
+
+        {/* SAVE & CONTINUE button - - - shows only on user's first setup visit to this page */}
+        {!user.prioritiesComplete &&
+         <>
+           <Button
+             type="submit"
+             variant="contained"
+             color="primary"
+             size="large"
+             onClick={saveAndContinue}>SAVE and CONTINUE
+           </Button>
+           <br/><br/>
+         </>
+       }
+
 
     </center>
   </div>
