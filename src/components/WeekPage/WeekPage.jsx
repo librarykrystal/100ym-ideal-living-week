@@ -100,6 +100,15 @@ function WeekPage() {
           </center>
 
           <center>
+            <Typography variant="body1" mt={0} mb={1} gutterBottom>
+              It's essential to be intentional and purposeful in all that you do
+              to live a fulfilling life. If you can't prioritize and plan your
+              activities on paper, how can you expect to live them out in
+              reality? Take your time and design your Ideal Living Week.
+            </Typography>
+          </center>
+
+          <center>
             {/* <div> */}
             <AddActivityForm
               onAddActivity={handleAddActivity}
