@@ -178,12 +178,12 @@ function WeekPage() {
                             padding: "2px 0px 2px 0px",
                             m: 1.2,
                             border: `1.5px solid hsl(225, ${
-                              100 - activity.category_id * 10
+                              100 - activity.rank * 10
                             }%, 64%)`,
                             boxShadow: 2,
                             borderRadius: 1,
                             backgroundColor: `hsl(225, ${
-                              100 - activity.category_id * 10
+                              100 - activity.rank * 10
                             }%, 92%)`,
                           }}
                           key={activity.id}
