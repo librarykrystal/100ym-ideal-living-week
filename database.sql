@@ -14,7 +14,8 @@ CREATE TABLE "user" (
     "admin" BOOLEAN DEFAULT false,
     "setupComplete" BOOLEAN DEFAULT false,
     "introComplete" BOOLEAN DEFAULT false,
-    "questionsComplete" BOOLEAN DEFAULT false
+    "questionsComplete" BOOLEAN DEFAULT false,
+    "prioritiesComplete" BOOLEAN DEFAULT false
 );
 
 CREATE TABLE "category" (
