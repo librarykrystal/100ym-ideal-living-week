@@ -88,7 +88,7 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
         Add an Activity
       </Typography>
       <Grid container spacing={1} justifyContent="center">
-        <Grid item xs={12} md={2}>
+        <Grid item xs={12} md={3}>
           <FormControl fullWidth>
             <Typography>Priority</Typography>
             <Select
@@ -106,29 +106,8 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
               ))}
             </Select>
           </FormControl>
-          {/* <FormControl fullWidth>
-            <Typography>Select Category</Typography>
-            <Select
-              name="category_id"
-              value={activity.category_id}
-              onChange={handleChange}
-              // className={classes.input}
-            >
-              <MenuItem value={0}></MenuItem>
-              <MenuItem value={1}>Sleep</MenuItem>
-              <MenuItem value={2}>Self-Care</MenuItem>
-              <MenuItem value={3}>Family and Relationships</MenuItem>
-              <MenuItem value={4}>Personal Development</MenuItem>
-              <MenuItem value={5}>Nutrition</MenuItem>
-              <MenuItem value={6}>Leisure Time</MenuItem>
-              <MenuItem value={7}>Community Involvement</MenuItem>
-              <MenuItem value={8}>Creativity</MenuItem>
-              <MenuItem value={9}>Work</MenuItem>
-              <MenuItem value={10}>Measure What Matters</MenuItem>
-            </Select>
-          </FormControl> */}
         </Grid>
-        <Grid item xs={12} md={2}>
+        <Grid item xs={12} md={3}>
           <FormControl fullWidth>
             <Typography>Select Day</Typography>
             <Select
@@ -147,7 +126,7 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={12} md={2}>
+        <Grid item xs={12} md={3}>
           <FormControl fullWidth>
             <Typography>Start Time</Typography>
             <TextField
@@ -159,7 +138,7 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
             />
           </FormControl>
         </Grid>
-        <Grid item xs={12} md={2}>
+        <Grid item xs={12} md={3}>
           <FormControl fullWidth>
             <Typography>End Time</Typography>
             <TextField
