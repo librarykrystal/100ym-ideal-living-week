@@ -105,7 +105,7 @@ function PrioritiesPage() {
       {rank: 10, category_id: parseInt(`${itemList[9].id}`)}
     ]
     dispatch({
-      type: 'SET_PRIORITIES',
+      type: 'UPDATE_PRIORITIES',
       payload: rankedList
     });
     dispatch({
