@@ -114,6 +114,7 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
               name="day"
               value={activity.day}
               onChange={handleChange}
+              required
               // label="Select Day"
               // className={classes.input}
             >
@@ -134,6 +135,7 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
               name="start_time"
               value={activity.start_time}
               onChange={handleChange}
+              required
               // className={classes.input}
             />
           </FormControl>
@@ -146,6 +148,7 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
               name="end_time"
               value={activity.end_time}
               onChange={handleChange}
+              required
               // className={classes.input}
             />
           </FormControl>
