@@ -31,67 +31,26 @@ const theme = createTheme({
   },
 });
 
-// function createData(
-//   Categories,
-//   Monday,
-//   Tuesday,
-//   Wednesday,
-//   Thursday,
-//   Friday,
-//   Saturday,
-//   Sunday,
-//   Total
-// ) {
-//   return {
-//     Categories,
-//     Monday,
-//     Tuesday,
-//     Wednesday,
-//     Thursday,
-//     Friday,
-//     Saturday,
-//     Sunday,
-//     Total,
-//   };
-// }
-
 export default function BasicTable() {
   const dispatch = useDispatch();
   const activities = useSelector((store) => store.activities);
-  const categories = useSelector((store) => store.categories);
   const priorities = useSelector((store) => store.priorities);
 
   useEffect(() => {
     dispatch({ type: "FETCH_ACTIVITIES" });
-    dispatch({ type: "FETCH_CATEGORIES" });
     dispatch({ type: "FETCH_PRIORITIES" });
   }, []);
-
-  console.log("activities", activities);
-  console.log("categories", categories);
-  console.log("priorities", priorities);
-
-  const categoriesAlpha = categories.sort((a, b) =>
-    a.name.localeCompare(b.name)
-  );
-  console.log("categoriesSorted", categoriesAlpha);
-
-  // const categoriesPrioritized = priorities
 
   const activitiesSorted = activities.sort((a, b) =>
     a.start_time.localeCompare(b.start_time)
   );
 
-  console.log("activitiesSorted", activitiesSorted);
-
-  const categoriesAlphaWthActvts = categoriesAlpha.map((category) => {
+  const prioritiesWthActvts = priorities.map((category) => {
     category.activities = activitiesSorted.filter(
-      ({ category_name }) => category_name === category.name
+      ({ category_id }) => category_id === category.id
     );
     return category;
   });
-
-  console.log("categoriesWithActivities", categoriesAlphaWthActvts);
 
   return (
     <ThemeProvider theme={theme}>
@@ -99,7 +58,7 @@ export default function BasicTable() {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Categories</TableCell>
+              <TableCell>Priorities</TableCell>
               <TableCell align="right">Monday</TableCell>
               <TableCell align="right">Tuesday</TableCell>
               <TableCell align="right">Wednesday</TableCell>
@@ -111,7 +70,7 @@ export default function BasicTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {categoriesAlphaWthActvts.map(({ id, name, activities }) => (
+            {prioritiesWthActvts.map(({ id, name, activities }) => (
               <TableRow
                 key={id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
