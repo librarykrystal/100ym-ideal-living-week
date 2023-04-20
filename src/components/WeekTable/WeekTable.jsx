@@ -58,15 +58,15 @@ export default function BasicTable() {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Priorities</TableCell>
-              <TableCell align="right">Monday</TableCell>
-              <TableCell align="right">Tuesday</TableCell>
-              <TableCell align="right">Wednesday</TableCell>
-              <TableCell align="right">Thursday</TableCell>
-              <TableCell align="right">Friday</TableCell>
-              <TableCell align="right">Saturday</TableCell>
-              <TableCell align="right">Sunday</TableCell>
-              <TableCell align="right">Total</TableCell>
+              <TableCell sx={{ fontWeight: 700 }}>Priorities</TableCell>
+              <TableCell align="right" sx={{ fontWeight: 700 }}>Monday</TableCell>
+              <TableCell align="right" sx={{ fontWeight: 700 }}>Tuesday</TableCell>
+              <TableCell align="right" sx={{ fontWeight: 700 }}>Wednesday</TableCell>
+              <TableCell align="right" sx={{ fontWeight: 700 }}>Thursday</TableCell>
+              <TableCell align="right" sx={{ fontWeight: 700 }}>Friday</TableCell>
+              <TableCell align="right" sx={{ fontWeight: 700 }}>Saturday</TableCell>
+              <TableCell align="right" sx={{ fontWeight: 700 }}>Sunday</TableCell>
+              <TableCell align="right" sx={{ fontWeight: 700 }}>Total</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
