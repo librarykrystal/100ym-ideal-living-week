@@ -11,7 +11,6 @@ import Paper from "@mui/material/Paper";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import "@fontsource/roboto-slab";
-import prioritiesSaga from "../../redux/sagas/priorities.saga";
 
 // Material UI Font Theming
 const theme = createTheme({
