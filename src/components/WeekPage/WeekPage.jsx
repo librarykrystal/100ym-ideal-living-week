@@ -109,7 +109,7 @@ function WeekPage() {
               reality? Take your time and design your Ideal Living Week.
             </Typography>
           </center>
-
+          <br />
           <center>
             {/* <div> */}
             <AddActivityForm
@@ -179,18 +179,18 @@ function WeekPage() {
                             m: 1.2,
                             border: `1.5px solid hsl(225, ${
                               100 - activity.rank * 10
-                            }%, 64%)`,
+                            }%, 50%)`,
                             boxShadow: 2,
                             borderRadius: 1,
                             backgroundColor: `hsl(225, ${
                               100 - activity.rank * 10
-                            }%, 92%)`,
+                            }%, 85%)`,
                           }}
                           key={activity.id}
                           onClick={() => handleActivityClick(activity)}
                         >
                           <Typography>{activity.category_name}</Typography>
-                          <Typography sx={{ fontSize: 14 }}>
+                          <Typography sx={{ fontSize: 12 }}>
                             {startTime} - {endTime}
                           </Typography>
                           <div
