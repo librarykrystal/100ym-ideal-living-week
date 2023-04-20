@@ -109,11 +109,11 @@ function QuestionsPage() {
             alignItems: "center",
           }}
         >
-          <Typography variant="h4" mt={0} mb={1} gutterBottom>
-            QUESTIONS PAGE
+          <Typography variant="h4" sx={{ fontWeight: 700 }} mt={0} mb={2} gutterBottom>
+            ON PURPOSE, WITH PURPOSE.
           </Typography>
           <center>
-            <Typography variant="body1" mb={9} gutterBottom>
+            <Typography variant="body1" mb={7} gutterBottom>
               Take a moment to pause, collect your thoughts, and engage in these
               reflective questions. Remember, your Ideal Living Week is a
               flexible concept, and you can always make adjustments and modify

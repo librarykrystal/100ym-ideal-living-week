@@ -96,13 +96,13 @@ function WeekPage() {
       >
         <div>
           <center>
-            <Typography variant="h4" mt={0} mb={1} gutterBottom>
-              Your Ideal Week
+            <Typography variant="h4" sx={{ fontWeight: 700 }} mt={2} mb={2} gutterBottom>
+              YOUR IDEAL WEEK
             </Typography>
           </center>
 
           <center>
-            <Typography variant="body1" mt={0} mb={1} gutterBottom>
+            <Typography variant="body1" mt={0} px={10} mb={3} gutterBottom>
               It's essential to be intentional and purposeful in all that you do
               to live a fulfilling life. If you can't prioritize and plan your
               activities on paper, how can you expect to live them out in
