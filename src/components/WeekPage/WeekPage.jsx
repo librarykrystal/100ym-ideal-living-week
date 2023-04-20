@@ -109,7 +109,7 @@ function WeekPage() {
               reality? Take your time and design your Ideal Living Week.
             </Typography>
           </center>
-
+          <br />
           <center>
             {/* <div> */}
             <AddActivityForm

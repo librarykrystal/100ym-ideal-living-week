@@ -66,13 +66,13 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
       setOverlapError(true);
     } else {
       onAddActivity({ ...activity });
-      setActivity({
-        category_id: "",
+      setActivity((prevActivity) => ({
+        ...prevActivity,
         day: "",
-        start_time: "",
-        end_time: "",
+        ...prevActivity,
+        ...prevActivity,
         total_hours: "",
-      });
+      }));
       setOverlapError(false);
       setInvalidTimeError(false);
     }
