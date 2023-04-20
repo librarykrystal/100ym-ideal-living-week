@@ -64,7 +64,7 @@ function WeekPage() {
 
   // Makes each view load scrolled to top
   useLayoutEffect(() => {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
   }, []);
 
   const daysOfWeek = [
@@ -93,10 +93,17 @@ function WeekPage() {
           display: "flex",
           justifyContent: "center",
         }}
+        px={10}
       >
         <div>
           <center>
-            <Typography variant="h4" sx={{ fontWeight: 700 }} mt={2} mb={2} gutterBottom>
+            <Typography
+              variant="h4"
+              sx={{ fontWeight: 700 }}
+              mt={2}
+              mb={2}
+              gutterBottom
+            >
               YOUR IDEAL WEEK
             </Typography>
           </center>
