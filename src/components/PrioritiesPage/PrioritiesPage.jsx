@@ -119,8 +119,10 @@ function PrioritiesPage() {
     <ThemeProvider theme={theme}>
     <div>
       <center>
-        <Typography variant="h4" mt={5} mb={1} gutterBottom>PRIORITIES</Typography>
-        <Typography variant="body1" mb={4} gutterBottom>Drag and drop the categories below to prioritize them, highest priority to lowest.</Typography>
+        <Typography variant="h4" sx={{ fontWeight: 700 }} mt={6} mb={2} gutterBottom>
+          PRIORITIZE FOR WELL-BEING.
+        </Typography>
+        <Typography variant="body1" mb={6} gutterBottom>Drag and drop the categories below to prioritize them, highest priority to lowest.</Typography>
         
         <div className="priority-container">
           <DragDropContext onDragEnd={handleDrop}>
