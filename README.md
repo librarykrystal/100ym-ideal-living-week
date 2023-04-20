@@ -1,6 +1,12 @@
 
 # Ideal Living Week Starting Repo
-This version uses React, Redux, Express, Passport, and PostgreSQL (a full list of dependencies can be found in `package.json`).
+
+Our client came to us with a task. His clients had been using an excel spreadsheet
+to organize their time, however he felt was time to unify his platform, and expand
+on his process, so he asked us to develop the Ideal Week living app - where users reflect
+on their priorities and plan their time accordingly.
+
+This version uses React, Redux, Express, Passport, Material UI, and PostgreSQL (a full list of dependencies can be found in `package.json`).
 
 ## Prerequisites
 
@@ -20,7 +26,10 @@ CREATE TABLE "user" (
     "username" VARCHAR (80) UNIQUE NOT NULL,
     "password" VARCHAR (1000) NOT NULL,
     "email" VARCHAR (1000) NOT NULL,
-    "admin" BOOLEAN DEFAULT false
+    "admin" BOOLEAN DEFAULT false,
+    "setupComplete" BOOLEAN DEFAULT false,
+    "introComplete" BOOLEAN DEFAULT false,
+    "questionsComplete" BOOLEAN DEFAULT false
 );
 ```
 
@@ -88,16 +97,21 @@ Directory Structure:
 This code is also heavily commented. We recommend reading through the comments, getting a lay of the land, and becoming comfortable with how the code works before you start making too many changes. If you're wondering where to start, consider reading through component file comments in the following order:
 
 - src/components
+  - ActivityModal/ActivityModal
+  - AdminPage/AdminPage
   - App/App
   - Footer/Footer
-  - Nav/Nav
-  - AboutPage/AboutPage
-  - InfoPage/InfoPage
-  - UserPage/UserPage
+  - IntroPage/IntroPage
+  - LandingPage/LandingPage
   - LoginPage/LoginPage
-  - RegisterPage/RegisterPage
-  - LogOutButton/LogOutButton
+  - Nav/Nav
   - ProtectedRoute/ProtectedRoute
+  - PrioritiesPage/PrioritiesPage
+  - QuestionsPage/QuestionsPage
+  - RegisterPage/RegisterPage
+  - UserPage/UserPage
+  - WeekPage/WeekPage
+  - WeekTable/WeekTable
 
 ## Deployment
 
@@ -109,6 +123,15 @@ This code is also heavily commented. We recommend reading through the comments, 
 1. Add an environment variable for `SERVER_SESSION_SECRET` with a nice random string for security
 1. In the deploy section, select manual deploy
 
-## Update Documentation
+## Authors
 
-Customize this ReadMe and the code comments in this project to read less like a starter repo and more like a project. Here is an example: https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
+* **Ashlen Goff** - *Initial work* - [ashlensage](https://github.com/ashlensage)
+* **David Trelles** - *Initial work* - [DavidTrelles](https://github.com/DavidTrelles)
+* **Krystal Frost** - *Initial work* - [librarykrystal](https://github.com/ashlensage)
+* **Zakaria Abdulahi** - *Initial work* - [zaklahi](https://github.com/zaklahi)
+
+## Acknowledgments
+
+* Instructors and support staff at Prime Digital Academy, especially Casie Siekman and Chris Black
+* Our classmates in the Lydian Cohort
+* Our client Mick White
