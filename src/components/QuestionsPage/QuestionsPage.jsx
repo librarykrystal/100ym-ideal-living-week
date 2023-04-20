@@ -54,7 +54,7 @@ function QuestionsPage() {
 
   // Makes each view load scrolled to top
   useLayoutEffect(() => {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
   }, []);
 
   // Handles filtering to show only questions from the user-selected category
@@ -114,11 +114,17 @@ function QuestionsPage() {
             alignItems: "center",
           }}
         >
-          <Typography variant="h4" sx={{ fontWeight: 700 }} mt={0} mb={2} gutterBottom>
+          <Typography
+            variant="h4"
+            sx={{ fontWeight: 700 }}
+            mt={0}
+            mb={2}
+            gutterBottom
+          >
             ON PURPOSE, WITH PURPOSE.
           </Typography>
           <center>
-            <Typography variant="body1" mb={7} gutterBottom>
+            <Typography variant="body1" px={10} mb={7} gutterBottom>
               Take a moment to pause, collect your thoughts, and engage in these
               reflective questions. Remember, your Ideal Living Week is a
               flexible concept, and you can always make adjustments and modify
@@ -159,7 +165,9 @@ function QuestionsPage() {
                       return (
                         <div key={item.id}>
                           <div className="qAndAContainer">
-                            <p>{item.question_text}</p>
+                            <Typography sx={{ width: 500 }} mt={2} mb={2}>
+                              {item.question_text}
+                            </Typography>
                             <TextField
                               id="answer"
                               label="Your Response"
