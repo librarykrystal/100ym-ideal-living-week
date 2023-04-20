@@ -52,6 +52,11 @@ function QuestionsPage() {
     dispatch({ type: "FETCH_ANSWERS" });
   }, []);
 
+  // Makes each view load scrolled to top
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  }, []);
+
   // Handles filtering to show only questions from the user-selected category
   const categoryFilterHandler = (item) => {
     if (!categoryFilter) {

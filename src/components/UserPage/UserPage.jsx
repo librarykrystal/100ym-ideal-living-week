@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import WeekTable from "../WeekTable/WeekTable";
 import { useSelector } from "react-redux";
 
@@ -25,9 +25,15 @@ const theme = createTheme({
 });
 
 
-//Route needed: GET to ideal-week
 function UserPage() {
+
   const user = useSelector((store) => store.user);
+
+  // Makes each view load scrolled to top
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <div className="container">

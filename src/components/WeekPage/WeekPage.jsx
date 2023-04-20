@@ -1,16 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import TextField from "@mui/material/TextField";
-import Select from "@mui/material/Select";
+
 import Typography from "@mui/material/Typography";
-import MenuItem from "@mui/material/MenuItem";
-import InputLabel from "@mui/material/InputLabel";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
 import AddActivityForm from "../AddActivityForm/AddActivityForm";
 import ActivityModal from "../ActivityModal/ActivityModal";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -65,6 +60,11 @@ function WeekPage() {
   useEffect(() => {
     dispatch({ type: "FETCH_ACTIVITIES" });
     dispatch({ type: "FETCH_PRIORITIES" });
+  }, []);
+
+  // Makes each view load scrolled to top
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
   }, []);
 
   const daysOfWeek = [
@@ -177,14 +177,14 @@ function WeekPage() {
                             width: 105,
                             padding: "2px 0px 2px 0px",
                             m: 1.2,
-                            border: `1.5px solid hsl(225, ${
+                            border: `2px solid hsl(225, ${
                               100 - activity.rank * 10
-                            }%, 50%)`,
+                            }%, ${60 + activity.rank * 2}%)`,
                             boxShadow: 2,
                             borderRadius: 1,
                             backgroundColor: `hsl(225, ${
                               100 - activity.rank * 10
-                            }%, 85%)`,
+                            }%, ${70 + activity.rank * 3}%)`,
                           }}
                           key={activity.id}
                           onClick={() => handleActivityClick(activity)}
