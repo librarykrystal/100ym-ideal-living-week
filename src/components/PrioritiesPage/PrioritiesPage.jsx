@@ -151,10 +151,10 @@ function PrioritiesPage() {
                             alignItems: 'center',
                             justifyContent: 'center',
                             m: 1.2,
-                            border: `3.5px solid hsl(225, ${80-index*10}%, 64%)`,
+                            border: `2px solid hsl(225, ${100-index*10}%, ${60+index*2}%)`,
                             boxShadow: 2,
                             borderRadius: 1,
-                            backgroundColor: `hsl(225, ${80-index*10}%, 92%)`,
+                            backgroundColor: `hsl(225, ${100-index*10}%, ${70+index*3}%)`,
                             '&:hover': {
                               opacity: [0.8, 0.7, 0.6],
                             },
