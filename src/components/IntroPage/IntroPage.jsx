@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -60,6 +60,11 @@ function IntroPage() {
     29: "",
     30: "",
   };
+
+  // Makes each view load scrolled to top
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  }, []);
 
   const postAndContinue = () => {
     console.log("SAVE & CONTINUE clicked");

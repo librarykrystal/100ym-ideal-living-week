@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-// import "./styles.css";
+
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -88,6 +88,11 @@ function PrioritiesPage() {
   useEffect(() => {
     setItemList(priorities);
   }, [priorities])
+
+  // Makes each view load scrolled to top
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  }, []);
 
   // Handles SAVE & CONTINUE - - - only used first time user completes prioritization
   const saveAndContinue = () => {
