@@ -39,17 +39,13 @@ function Nav() {
         {/* If a user is logged in, show these links */}
         {user.id && (
           <>
-            <Link className="navLink" to="/user">
-              <Typography>Home</Typography>
-            </Link>
-
-            {/* <Link className="navLink" to="/info">
-              <Typography>Info</Typography>
-            </Link> */}
-
             {/* These links only show up once setupComplete for user is TRUE in DB */}
             {user.setupComplete &&
               <>
+                <Link className="navLink" to="/user">
+                  <Typography>Home</Typography>
+                </Link>
+
                 <Link className="navLink" to="/week">
                   <Typography>Week</Typography>
                 </Link>
@@ -80,9 +76,6 @@ function Nav() {
           </>
         )}
 
-        {/* <Link className="navLink" to="/about">
-          <Typography>About</Typography>
-        </Link> */}
       </div>
     </div>
     </ThemeProvider>

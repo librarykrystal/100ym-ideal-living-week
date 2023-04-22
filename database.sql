@@ -14,7 +14,8 @@ CREATE TABLE "user" (
     "admin" BOOLEAN DEFAULT false,
     "setupComplete" BOOLEAN DEFAULT false,
     "introComplete" BOOLEAN DEFAULT false,
-    "questionsComplete" BOOLEAN DEFAULT false
+    "questionsComplete" BOOLEAN DEFAULT false,
+    "prioritiesComplete" BOOLEAN DEFAULT false
 );
 
 CREATE TABLE "category" (
@@ -87,6 +88,8 @@ CREATE TABLE "priority" (
     "category_id" INT REFERENCES "category",
     "rank" INT
 );
+
+ALTER TABLE "priority" ADD CONSTRAINT "priority_unique" UNIQUE("user_id", "category_id");
 
 CREATE TABLE "ideal_week" (
     "id" SERIAL PRIMARY KEY,

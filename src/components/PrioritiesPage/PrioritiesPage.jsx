@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-// import "./styles.css";
+
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -34,6 +34,7 @@ const theme = createTheme({
 
 function PrioritiesPage() {
 
+  const user = useSelector((store) => store.user);
   const priorities = useSelector(store => store.priorities);
     // Dispatch to GET the list of unordered categories happens in app.jsx
   const history = useHistory();
@@ -54,7 +55,7 @@ function PrioritiesPage() {
     // Update state array
     setItemList(updatedList);
   };
-
+  
   // Handles SAVE - - - submits ranked priorities to database
   const saveAnswers = () => {
     // bundling of ranked user input for dispatch:
@@ -88,12 +89,45 @@ function PrioritiesPage() {
     setItemList(priorities);
   }, [priorities])
 
+  // Makes each view load scrolled to top
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  }, []);
+
+  // Handles SAVE & CONTINUE - - - only used first time user completes prioritization
+  const saveAndContinue = () => {
+    console.log('SAVE clicked');
+    const rankedList = [
+      {rank: 1, category_id: parseInt(`${itemList[0].id}`)},
+      {rank: 2, category_id: parseInt(`${itemList[1].id}`)},
+      {rank: 3, category_id: parseInt(`${itemList[2].id}`)},
+      {rank: 4, category_id: parseInt(`${itemList[3].id}`)},
+      {rank: 5, category_id: parseInt(`${itemList[4].id}`)},
+      {rank: 6, category_id: parseInt(`${itemList[5].id}`)},
+      {rank: 7, category_id: parseInt(`${itemList[6].id}`)},
+      {rank: 8, category_id: parseInt(`${itemList[7].id}`)},
+      {rank: 9, category_id: parseInt(`${itemList[8].id}`)},
+      {rank: 10, category_id: parseInt(`${itemList[9].id}`)}
+    ]
+    dispatch({
+      type: 'UPDATE_PRIORITIES',
+      payload: rankedList
+    });
+    dispatch({
+      type: 'PRIORITIES_PAGE_DONE'
+    });
+    history.push(`/week`);
+  }
+
+
   return (
     <ThemeProvider theme={theme}>
     <div>
       <center>
-        <Typography variant="h4" mt={5} mb={1} gutterBottom>PRIORITIES</Typography>
-        <Typography variant="body1" mb={4} gutterBottom>Drag and drop the categories below to prioritize them, highest priority to lowest.</Typography>
+        <Typography variant="h4" sx={{ fontWeight: 700 }} mt={6} mb={2} gutterBottom>
+          PRIORITIZE FOR WELL-BEING.
+        </Typography>
+        <Typography variant="body1" mb={6} gutterBottom>Drag and drop the categories below to prioritize them, highest priority to lowest.</Typography>
         
         <div className="priority-container">
           <DragDropContext onDragEnd={handleDrop}>
@@ -124,10 +158,10 @@ function PrioritiesPage() {
                             alignItems: 'center',
                             justifyContent: 'center',
                             m: 1.2,
-                            border: `3.5px solid hsl(225, ${80-index*10}%, 64%)`,
+                            border: `2px solid hsl(225, ${100-index*10}%, ${60+index*2}%)`,
                             boxShadow: 2,
                             borderRadius: 1,
-                            backgroundColor: `hsl(225, ${80-index*10}%, 92%)`,
+                            backgroundColor: `hsl(225, ${100-index*10}%, ${70+index*3}%)`,
                             '&:hover': {
                               opacity: [0.8, 0.7, 0.6],
                             },
@@ -150,14 +184,33 @@ function PrioritiesPage() {
         <br/><br/>
 
         {/* SAVE button */}
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          size="large"
-          onClick={saveAnswers}>SAVE
-        </Button>
-      <br/><br/>
+        {user.prioritiesComplete &&
+          <>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              size="large"
+              onClick={saveAnswers}>SAVE
+            </Button>
+            <br/><br/>
+          </>
+        }
+
+        {/* SAVE & CONTINUE button - - - shows only on user's first setup visit to this page */}
+        {!user.prioritiesComplete &&
+         <>
+           <Button
+             type="submit"
+             variant="contained"
+             color="primary"
+             size="large"
+             onClick={saveAndContinue}>SAVE and CONTINUE
+           </Button>
+           <br/><br/>
+         </>
+       }
+
 
     </center>
   </div>

@@ -17,6 +17,7 @@ const idealWeekRouter = require('./routes/idealWeek.router');
 const userListRouter = require('./routes/userlist.router');
 const introCompleteRouter = require('./routes/introComplete.router');
 const questionsCompleteRouter = require('./routes/questionsComplete.router');
+const prioritiesCompleteRouter = require('./routes/prioritiesComplete.router');
 const setupCompleteRouter = require('./routes/setupComplete.router');
 
 // Body parser middleware
@@ -40,6 +41,7 @@ app.use('/api/idealWeek', idealWeekRouter);
 app.use('/api/userlist', userListRouter);
 app.use('/api/intro', introCompleteRouter);
 app.use('/api/questionscomplete', questionsCompleteRouter);
+app.use('/api/prioritiescomplete', prioritiesCompleteRouter);
 app.use('/api/setupcomplete', setupCompleteRouter);
 
 // Serve static files

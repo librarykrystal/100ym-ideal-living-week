@@ -1,9 +1,5 @@
-# Ideal Living Week Starting Repo
-Our client came to us with a task. His clients had been using an excel spreadsheet
-to organize their time, however he felt was time to unify his platform, and expand
-on his process, so he asked us to develop the Ideal Week living app - where users reflect
-on their priorities and plan their time accordingly.
 
+# Ideal Living Week Starting Repo
 This version uses React, Redux, Express, Passport, and PostgreSQL (a full list of dependencies can be found in `package.json`).
 
 ## Prerequisites
@@ -24,10 +20,7 @@ CREATE TABLE "user" (
     "username" VARCHAR (80) UNIQUE NOT NULL,
     "password" VARCHAR (1000) NOT NULL,
     "email" VARCHAR (1000) NOT NULL,
-    "admin" BOOLEAN DEFAULT false,
-    "setupComplete" BOOLEAN DEFAULT false,
-    "introComplete" BOOLEAN DEFAULT false,
-    "questionsComplete" BOOLEAN DEFAULT false
+    "admin" BOOLEAN DEFAULT false
 );
 ```
 
@@ -95,23 +88,16 @@ Directory Structure:
 This code is also heavily commented. We recommend reading through the comments, getting a lay of the land, and becoming comfortable with how the code works before you start making too many changes. If you're wondering where to start, consider reading through component file comments in the following order:
 
 - src/components
-  - ActivityModal/ActivityModal
-  - AdminPage/AdminPage
   - App/App
   - Footer/Footer
-  - IntroPage/IntroPage
-  - LandingPage/LandingPage
-  - LoginPage/LoginPage
   - Nav/Nav
-  - ProtectedRoute/ProtectedRoute
-  - PrioritiesPage/PrioritiesPage
-  - QuestionsPage/QuestionsPage
-  - RegisterPage/RegisterPage
+  - AboutPage/AboutPage
+  - InfoPage/InfoPage
   - UserPage/UserPage
-  - WeekPage/WeekPage
-  - WeekTable/WeekTable
-
-
+  - LoginPage/LoginPage
+  - RegisterPage/RegisterPage
+  - LogOutButton/LogOutButton
+  - ProtectedRoute/ProtectedRoute
 
 ## Deployment
 

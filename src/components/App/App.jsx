@@ -13,7 +13,6 @@ import Footer from '../Footer/Footer';
 
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
-import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
 import IntroPage from '../IntroPage/IntroPage';
 import LandingPage from '../LandingPage/LandingPage';
@@ -44,11 +43,6 @@ function App() {
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
           <Redirect exact from="/" to="/home" />
 
-          <Route exact path="/about">
-            {/* NOT PROTECTED: shows AboutPage at all times (logged in or not) */}
-            <AboutPage />
-          </Route>
-
           {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/user will show the UserPage if the user is logged in.
             If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
@@ -78,21 +72,13 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute exact path="/questions">
-            {/* logged in shows QuestionsPage (OR IntroPage) else shows LoginPage */}
-            {!user.introComplete ?
-              <Redirect to="/intro" />  // If introComplete is falsy, redirect to IntroPage
-              :
-              <QuestionsPage />  // else, go to QuestionsPage
-            }
+            {/* logged in shows QuestionsPage else shows LoginPage */}
+            <QuestionsPage />
           </ProtectedRoute>
 
           <ProtectedRoute exact path="/priorities">
             {/* logged in shows PrioritiesPage (OR IntroPage) else shows LoginPage */}
-            {!user.introComplete ?
-              <Redirect to="/intro" />  // If introComplete is falsy, redirect to IntroPage
-              :
-              <PrioritiesPage />  // else, go to PrioritiesPage
-            }
+            <PrioritiesPage />
           </ProtectedRoute>
 
           <ProtectedRoute exact path="/admin">

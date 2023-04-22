@@ -3,10 +3,13 @@ const pool = require("../modules/pool");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  const query = `SELECT "ideal_week".*, "category"."name" AS "category_name"
+  const query = `SELECT "ideal_week".*, "category"."name" AS "category_name", "priority".rank AS "rank"
+
                    FROM "ideal_week"
+                   JOIN "priority" ON "ideal_week"."category_id"= "priority"."category_id"
                    JOIN "category" ON "ideal_week"."category_id" = "category"."id"
-                   WHERE "ideal_week"."user_id" = $1 ORDER BY "start_time" ASC`;
+                   WHERE "ideal_week"."user_id" = $1 AND "priority"."user_id" = $1
+                    ORDER BY "start_time" ASC;`;
   const sqlParams = [req.user.id];
 
   pool

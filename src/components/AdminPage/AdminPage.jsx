@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import "@fontsource/roboto-slab";
-import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 
 // Material UI Font Theming
@@ -37,6 +35,11 @@ function AdminPage() {
   // Dispatch (on page load) to GET all the users
   useEffect(() => {
     dispatch({ type: 'FETCH_USERLIST' });
+  }, []);
+
+  // Makes each view load scrolled to top
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
   }, []);
 
   return (

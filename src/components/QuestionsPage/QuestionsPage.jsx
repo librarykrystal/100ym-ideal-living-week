@@ -2,7 +2,7 @@ import React, { useEffect, useState, useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import "@fontsource/roboto-slab";
 import InputLabel from "@mui/material/InputLabel";
@@ -16,19 +16,17 @@ import Box from "@mui/material/Box";
 // Material UI Font Theming
 const theme = createTheme({
   typography: {
-    fontFamily: [
-      'Roboto Slab',
-    ],
+    fontFamily: ["Roboto Slab"],
   },
   palette: {
     primary: {
-      main: '#475473',
+      main: "#475473",
     },
     secondary: {
-      main: '#1c4bd9',
+      main: "#1c4bd9",
     },
     info: {
-      main: '#bdbfbf',
+      main: "#bdbfbf",
     },
   },
 });
@@ -52,6 +50,11 @@ function QuestionsPage() {
   useEffect(() => {
     dispatch({ type: "FETCH_QUESTIONS" });
     dispatch({ type: "FETCH_ANSWERS" });
+  }, []);
+
+  // Makes each view load scrolled to top
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
   }, []);
 
   // Handles filtering to show only questions from the user-selected category
@@ -95,7 +98,7 @@ function QuestionsPage() {
     });
     // set questionsComplete to TRUE:
     dispatch({
-      type: 'QUESTIONS_PAGE_DONE'
+      type: "QUESTIONS_PAGE_DONE",
     });
     history.push(`/priorities`);
   };
@@ -105,96 +108,111 @@ function QuestionsPage() {
       <div className="container">
         <Box
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-            <Typography variant="h4" mt={0} mb={1} gutterBottom>
-              QUESTIONS PAGE
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Typography
+            variant="h4"
+            sx={{ fontWeight: 700 }}
+            mt={0}
+            mb={2}
+            gutterBottom
+          >
+            ON PURPOSE, WITH PURPOSE.
+          </Typography>
+          <center>
+            <Typography variant="body1" px={10} mb={7} gutterBottom>
+              Take a moment to pause, collect your thoughts, and engage in these
+              reflective questions. Remember, your Ideal Living Week is a
+              flexible concept, and you can always make adjustments and modify
+              your answers as you progress in your journey towards a more
+              intentional life - a life on purpose with Purpose.
             </Typography>
-            <Typography variant="body1" mb={9} gutterBottom>
-              Intro goes here, if there is one.
-            </Typography>
-          
-            {/* DROPDOWN input for FILTERING by CATEGORY — temporarily hardcoded */}
-            <FormControl>
-              <InputLabel id="category">Category</InputLabel>
-              <Select
-                sx={{ width: "300px" }}
-                labelId="category"
-                id="category"
-                value={categoryFilter}
-                label="Category"
-                onChange={(e) => setCategoryFilter(e.target.value)}
-              >
-                {categories.map((cat, index) => (
-                  <MenuItem key={index} value={cat.id}>
-                    {cat.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <br />
-            <br />
+          </center>
 
-            {/* Loop through questions, showing those which match category */}
-            {/* <div className="questionsTrioContainer"> */}
-              <Box>
-              {questions.length > 0 && (
-                <div>
-                  {categoryFilter ? (
-                    <div>
-                      {questions.filter(categoryFilterHandler).map((item) => {
-                        return (
-                          <div key={item.id}>
-                            <div className="qAndAContainer">
-                              <p>{item.question_text}</p>
-                              <TextField
-                                id="answer"
-                                label="Your Response"
-                                sx={{ width: 500 }}
-                                multiline
-                                rows={3}
-                                variant="outlined"
-                                value={answers[`${item.id}`]}
-                                onChange={(e) =>
-                                  handleAnswerChange(item.id, e.target.value)
-                                }
-                              />
-                            </div>
-                            <br/>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  ) : (
-                    <Typography variant="body1" gutterBottom>
-                      Please select a category to view questions.
-                    </Typography>
-                  )}
-                </div>
-              )}
-              </Box>
-            {/* </div> */}
-            <br />
-            <br />
-
-            {/* SAVE button */}
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              size="large"
-              onClick={saveAnswers}
+          {/* DROPDOWN input for FILTERING by CATEGORY — temporarily hardcoded */}
+          <FormControl>
+            <InputLabel id="category">Category</InputLabel>
+            <Select
+              sx={{ width: "300px" }}
+              labelId="category"
+              id="category"
+              value={categoryFilter}
+              label="Category"
+              onChange={(e) => setCategoryFilter(e.target.value)}
             >
-              SAVE PROGRESS
-            </Button>
-            <br />
-            <br />
+              {categories.map((cat, index) => (
+                <MenuItem key={index} value={cat.id}>
+                  {cat.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <br />
+          <br />
 
-            {/* SAVE & CONTINUE button — only shows when user is first led through setup */}
-            {!user.questionsComplete &&
+          {/* Loop through questions, showing those which match category */}
+          {/* <div className="questionsTrioContainer"> */}
+          <Box>
+            {questions.length > 0 && (
+              <div>
+                {categoryFilter ? (
+                  <div>
+                    {questions.filter(categoryFilterHandler).map((item) => {
+                      return (
+                        <div key={item.id}>
+                          <div className="qAndAContainer">
+                            <Typography sx={{ width: 500 }} mt={2} mb={2}>
+                              {item.question_text}
+                            </Typography>
+                            <TextField
+                              id="answer"
+                              label="Your Response"
+                              sx={{ width: 500 }}
+                              multiline
+                              rows={3}
+                              variant="outlined"
+                              value={answers[`${item.id}`]}
+                              onChange={(e) =>
+                                handleAnswerChange(item.id, e.target.value)
+                              }
+                            />
+                          </div>
+                          <br />
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <Typography variant="body1" gutterBottom>
+                    Please select a category to view questions.
+                  </Typography>
+                )}
+              </div>
+            )}
+          </Box>
+          {/* </div> */}
+          <br />
+          <br />
+
+          {/* SAVE button */}
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={saveAnswers}
+          >
+            SAVE PROGRESS
+          </Button>
+          <br />
+          <br />
+
+          {/* SAVE & CONTINUE button — only shows when user is first led through setup */}
+          {!user.questionsComplete && (
             <Button
               type="submit"
               variant="contained"
@@ -204,8 +222,7 @@ function QuestionsPage() {
             >
               SAVE and CONTINUE
             </Button>
-            }
-            
+          )}
         </Box>
       </div>
     </ThemeProvider>

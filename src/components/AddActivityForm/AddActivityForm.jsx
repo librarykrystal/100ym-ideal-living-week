@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-// gi
+
 import { useDispatch, useSelector } from "react-redux";
 import TextField from "@mui/material/TextField";
 import Select from "@mui/material/Select";
@@ -13,15 +13,23 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 
 function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
+  const priorities = useSelector((store) => store.priorities);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({ type: "FETCH_PRIORITIES" });
+  }, []);
+
   const [activity, setActivity] = useState({
-    category_id: 0,
+    category_id: "",
     day: "",
     start_time: "",
     end_time: "",
     total_hours: "",
   });
+
   const [overlapError, setOverlapError] = useState(false);
   const [invalidTimeError, setInvalidTimeError] = useState(false);
+  console.log(priorities);
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -34,27 +42,37 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
       return;
     }
 
-    const existingActivities = activities.filter(
-      (a) =>
+    const existingActivities = activities.filter((a) => {
+      const aStartTime = new Date(`1970-01-01T${a.start_time}.001Z`);
+      const aEndTime = new Date(`1970-01-01T${a.end_time}.001Z`);
+      const activityStartTime = new Date(
+        `1970-01-01T${activity.start_time}:00.001Z`
+      );
+      const activityEndTime = new Date(
+        `1970-01-01T${activity.end_time}:00.001Z`
+      );
+
+      return (
         a.day === activity.day &&
         a !== activity &&
-        ((a.start_time >= activity.start_time &&
-          a.start_time < activity.end_time) ||
-          (activity.start_time >= a.start_time &&
-            activity.start_time < a.end_time))
-    );
+        ((aStartTime >= activityStartTime && aStartTime < activityEndTime) ||
+          (activityStartTime >= aStartTime && activityStartTime < aEndTime) ||
+          (aEndTime > activityStartTime && aEndTime <= activityEndTime) ||
+          (activityEndTime > aStartTime && activityEndTime <= aEndTime))
+      );
+    });
 
     if (existingActivities.length > 0) {
       setOverlapError(true);
     } else {
       onAddActivity({ ...activity });
-      setActivity({
-        category_id: 0,
+      setActivity((prevActivity) => ({
+        ...prevActivity,
         day: "",
-        start_time: "",
-        end_time: "",
+        ...prevActivity,
+        ...prevActivity,
         total_hours: "",
-      });
+      }));
       setOverlapError(false);
       setInvalidTimeError(false);
     }
@@ -69,37 +87,34 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
       <Typography variant="h5" gutterBottom>
         Add an Activity
       </Typography>
-      <Grid container spacing={1}>
-        <Grid item xs={12} md={2}>
+      <Grid container spacing={1} justifyContent="center">
+        <Grid item xs={12} md={3}>
           <FormControl fullWidth>
-            <Typography>Select Category</Typography>
+            <Typography>Priority</Typography>
             <Select
+              //   sx={{ width: "100%" }}
               name="category_id"
+              labelId="category"
+              id="category"
               value={activity.category_id}
               onChange={handleChange}
-              // className={classes.input}
             >
-              <MenuItem value={0}></MenuItem>
-              <MenuItem value={1}>Sleep</MenuItem>
-              <MenuItem value={2}>Self-Care</MenuItem>
-              <MenuItem value={3}>Family and Relationships</MenuItem>
-              <MenuItem value={4}>Personal Development</MenuItem>
-              <MenuItem value={5}>Nutrition</MenuItem>
-              <MenuItem value={6}>Leisure Time</MenuItem>
-              <MenuItem value={7}>Community Involvement</MenuItem>
-              <MenuItem value={8}>Creativity</MenuItem>
-              <MenuItem value={9}>Work</MenuItem>
-              <MenuItem value={10}>Measure What Matters</MenuItem>
+              {priorities.map((pri, index) => (
+                <MenuItem key={index} value={pri.id}>
+                  {pri.name}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={12} md={2}>
+        <Grid item xs={12} md={3}>
           <FormControl fullWidth>
             <Typography>Select Day</Typography>
             <Select
               name="day"
               value={activity.day}
               onChange={handleChange}
+              required
               // label="Select Day"
               // className={classes.input}
             >
@@ -112,7 +127,7 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={12} md={2}>
+        <Grid item xs={12} md={3}>
           <FormControl fullWidth>
             <Typography>Start Time</Typography>
             <TextField
@@ -120,11 +135,12 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
               name="start_time"
               value={activity.start_time}
               onChange={handleChange}
+              required
               // className={classes.input}
             />
           </FormControl>
         </Grid>
-        <Grid item xs={12} md={2}>
+        <Grid item xs={12} md={3}>
           <FormControl fullWidth>
             <Typography>End Time</Typography>
             <TextField
@@ -132,6 +148,7 @@ function AddActivityForm({ onAddActivity, activities, daysOfWeek }) {
               name="end_time"
               value={activity.end_time}
               onChange={handleChange}
+              required
               // className={classes.input}
             />
           </FormControl>
