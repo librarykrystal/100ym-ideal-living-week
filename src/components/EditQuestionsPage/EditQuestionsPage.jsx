@@ -2,6 +2,8 @@ import React, { useEffect, useState, useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
+import EditQuestionsModal from '../EditQuestionsModal/EditQuestionsModal';
+
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import "@fontsource/roboto-slab";
@@ -87,6 +89,7 @@ function EditQuestionsPage() {
     setSelectedQuestion(question);
     setModalOpen(true);
   };
+
   const handleCloseModal = () => {
     setSelectedquestion({});
     setModalOpen(false);
@@ -119,6 +122,12 @@ function EditQuestionsPage() {
             EDIT QUESTIONS
           </Typography>
 
+          {categoryFilter ?
+            <Typography mb={4}>Click any question to edit it.</Typography>
+          :
+            <Typography mb={4}>Please select a category to view questions.</Typography>
+          }
+
           {/* DROPDOWN input for FILTERING by CATEGORY */}
           <FormControl>
             <InputLabel id="category">Category</InputLabel>
@@ -147,15 +156,15 @@ function EditQuestionsPage() {
               <div>
                 {categoryFilter ? (
                   <div>
-                    {questions.filter(categoryFilterHandler).map((item) => {
+                    {questions.filter(categoryFilterHandler).map((question) => {
                       return (
-                        <div key={item.id}>
-                          <div className="qAndAContainer">
+                        <div key={question.id}>
+                          {/* <div className="qAndAContainer"> */}
                             <Box
                               onClick={() => handleQuestionClick(question)}
                             >
                               <Typography sx={{ width: 500 }} mt={2} mb={2}>
-                                {item.question_text}
+                                {question.question_text}
                               </Typography>
                             </Box>
                             {/* <TextField
@@ -170,7 +179,7 @@ function EditQuestionsPage() {
                                 handleAnswerChange(item.id, e.target.value)
                               }
                             /> */}
-                          </div>
+                          {/* </div> */}
                           <br />
                         </div>
                       );
@@ -178,11 +187,11 @@ function EditQuestionsPage() {
                   </div>
                 ) : (
                   <Typography variant="body1" gutterBottom>
-                    Please select a category to view questions.
+                    {/* Please select a category to view questions. */}
                   </Typography>
                 )}
               </div>
-            )}
+             )}
           </Box>
           {/* </div> */}
           <br />
@@ -212,7 +221,7 @@ function EditQuestionsPage() {
 
         </Box>
 
-        <EditModal
+        <EditQuestionsModal
           question={selectedQuestion}
           open={modalOpen}
           onClose={handleCloseModal}
