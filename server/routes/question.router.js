@@ -33,4 +33,24 @@ router.get('/', (req, res) => {
       })
   });
 
+
+  router.put("/", (req, res) => {
+    const id = req.body.id;
+    const question_text = req.body.question_text;
+    const sqlText = `UPDATE "question" SET "question_text" = $1, WHERE id = $2
+                       `;
+    const sqlParams = [question_text, id];
+    pool
+      .query(sqlText, sqlParams)
+      .then((result) => {
+        console.log(`Edited question in database`, result.rows[0].id);
+        res.sendStatus(201);
+      })
+      .catch((error) => {
+        console.log(`Error making put ${sqlText}`, error);
+        res.sendStatus(500);
+      });
+  });
+
+  
   module.exports = router;
