@@ -83,13 +83,19 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute exact path="/admin">
-            {/* logged in shows AdminPage else shows LoginPage */}
-            <AdminPage />
+            {!user.admin ?
+              <Redirect to="/user" />  // If the user is not admin, redirect to /user
+              :
+              <AdminPage />  // Otherwise, show the admin page
+            }
           </ProtectedRoute>
 
           <ProtectedRoute exact path="/editquestions">
-            {/* logged in shows AdminPage else shows LoginPage */}
-            <EditQuestionsPage />
+            {!user.admin ?
+              <Redirect to="/user" />  // If the user is not admin, redirect to /user
+              :
+              <EditQuestionsPage />  // Otherwise, show the edit questions page
+            }
           </ProtectedRoute>
 
           <Route exact path="/login">
