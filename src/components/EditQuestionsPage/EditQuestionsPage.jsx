@@ -68,7 +68,7 @@ function EditQuestionsPage() {
   const handleAnswerChange = (id, value) => {
     const key = `${id}`;
     dispatch({
-      type: "UPDATE_SINGLE_QUESTION",
+      type: "UPDATE_QUESTIONS",
       payload: {
         key,
         value,
@@ -91,7 +91,7 @@ function EditQuestionsPage() {
   };
 
   const handleCloseModal = () => {
-    setSelectedquestion({});
+    setSelectedQuestion({});
     setModalOpen(false);
   };
 

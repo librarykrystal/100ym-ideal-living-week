@@ -40,6 +40,7 @@ const EditQuestionsModal = ({ question, open, onClose }) => {
   const [formValues, setFormValues] = useState({
     question_text: "",
   });
+
   useEffect(() => {
     if (question) {
       setFormValues({
@@ -61,9 +62,9 @@ const EditQuestionsModal = ({ question, open, onClose }) => {
       ...formValues,
       id: question.id,
     };
-    dispatch({ type: "UPDATE_QUESTION", payload: updatedQuestion });
+    dispatch({ type: "UPDATE_QUESTIONS", payload: updatedQuestion });
+    console.log('updatedQuestion:', updatedQuestion);
     onClose();
-    setOverlapError(false);
   };
 
   return (

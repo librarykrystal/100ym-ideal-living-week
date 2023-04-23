@@ -4,7 +4,7 @@ import { takeEvery, put } from "redux-saga/effects";
 function* editQuestions(action) {
   try {
     console.log("in editQuestions");
-    yield axios.put("/api/questions/", action.payload);
+    yield axios.put("/api/question", action.payload);
     yield put({ type: "FETCH_QUESTIONS" });
     console.log(action.payload);
   } catch (error) {
