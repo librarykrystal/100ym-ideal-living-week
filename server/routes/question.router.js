@@ -37,8 +37,7 @@ router.get('/', (req, res) => {
   router.put("/", (req, res) => {
     const id = req.body.id;
     const question_text = req.body.question_text;
-    const sqlText = `UPDATE "question" SET "question_text" = $1, WHERE id = $2
-                       `;
+    const sqlText = `UPDATE "question" SET "question_text" = $1 WHERE id = $2;`
     const sqlParams = [question_text, id];
     pool
       .query(sqlText, sqlParams)
@@ -52,5 +51,5 @@ router.get('/', (req, res) => {
       });
   });
 
-  
+
   module.exports = router;
