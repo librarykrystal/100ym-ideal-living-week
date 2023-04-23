@@ -22,6 +22,7 @@ import WeekPage from '../WeekPage/WeekPage';
 import QuestionsPage from '../QuestionsPage/QuestionsPage';
 import PrioritiesPage from '../PrioritiesPage/PrioritiesPage';
 import AdminPage from '../AdminPage/AdminPage';
+import EditQuestionsPage from '../EditQuestionsPage/EditQuestionsPage';
 import './App.css';
 
 
@@ -84,6 +85,11 @@ function App() {
           <ProtectedRoute exact path="/admin">
             {/* logged in shows AdminPage else shows LoginPage */}
             <AdminPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/editquestions">
+            {/* logged in shows AdminPage else shows LoginPage */}
+            <EditQuestionsPage />
           </ProtectedRoute>
 
           <Route exact path="/login">
