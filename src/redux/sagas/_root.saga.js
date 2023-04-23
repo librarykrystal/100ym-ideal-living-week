@@ -11,6 +11,7 @@ import answerSagas from "./answer.saga";
 import editActivitySaga from "./editActivity.saga";
 import deleteActivitySaga from "./deleteActivity.saga";
 import prioritiesSaga from "./priorities.saga";
+import editQuestionsSaga from "./editQuestions.saga";
 
 prioritiesSaga;
 
@@ -28,5 +29,6 @@ export default function* rootSaga() {
     editActivitySaga(),
     deleteActivitySaga(),
     prioritiesSaga(),
+    editQuestionsSaga(),
   ]);
 }
