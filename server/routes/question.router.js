@@ -41,7 +41,6 @@ router.put("/", (req, res) => {
     pool
       .query(sqlText, sqlParams)
       .then((result) => {
-        console.log(`Edited question in database`, result.rows[0].id);
         res.sendStatus(201);
       })
       .catch((error) => {

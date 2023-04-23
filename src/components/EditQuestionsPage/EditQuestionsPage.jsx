@@ -76,15 +76,6 @@ function EditQuestionsPage() {
     });
   };
 
-  // Handles SAVE CHANGES - - - submits ALL answers/changes to database at once
-  // const saveAnswers = () => {
-  //   console.log("SAVE clicked");
-  //   dispatch({
-  //     type: "SET_QUESTIONS",
-  //     payload: questions,
-  //   });
-  // };
-
   const handleQuestionClick = (question) => {
     setSelectedQuestion(question);
     setModalOpen(true);

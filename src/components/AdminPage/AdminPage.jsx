@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import "@fontsource/roboto-slab";
 import Box from '@mui/material/Box';
 import Button from "@mui/material/Button";
+import Stack from '@mui/material/Stack';
 
 // Material UI Font Theming
 const theme = createTheme({
@@ -20,10 +21,7 @@ const theme = createTheme({
       main: '#475473',
     },
     secondary: {
-      main: '#1c4bd9',
-    },
-    info: {
-      main: '#bdbfbf',
+      main: '#979b9b',
     },
   },
 });
@@ -55,8 +53,16 @@ function AdminPage() {
   return (
     <ThemeProvider theme={theme}>
     <div className="container">
+      <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+      >
       <div>
-        <Typography variant="h4" mt={0} mb={5} gutterBottom>ADMIN PAGE</Typography>
+        <Typography variant="h4" mt={0} mb={4} sx={{ fontWeight: 700 }} gutterBottom>ADMIN PAGE</Typography>
       </div>
       {user.admin &&
       <>
@@ -82,11 +88,15 @@ function AdminPage() {
             {userList.map(person => {
               return(
               <div key={person.id}>
-                <Typography variant="body1" mt={0} mb={0} gutterBottom>{person.username} — {person.email}</Typography>
+                <Stack spacing={2} direction="row" sx={{ mb: 1, mt: 1 }} alignItems="center">
+                <Typography variant="body1" mt={0} mb={0} gutterBottom>{person.username}</Typography>
+                <Typography variant="body1" color="secondary" mt={0} mb={0} gutterBottom>{person.email}</Typography>
+                </Stack>
               </div>
             )})}
           </>
         }
+      </Box>
       </Box>
     </div>
     </ThemeProvider>
