@@ -98,3 +98,5 @@ CREATE TABLE "ideal_week" (
     "category_id" INT REFERENCES "category",
     "total_hours" numeric
 );
+
+ALTER TABLE "priority" ADD CONSTRAINT "priority_unique" UNIQUE("user_id", "category_id");
