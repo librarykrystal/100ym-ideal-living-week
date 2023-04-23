@@ -38,8 +38,9 @@ function EditQuestionsPage() {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  // this is be assigned the user-selected category from drop-down and used to filter questions:
   const [categoryFilter, setCategoryFilter] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedQuestion, setSelectedQuestion] = useState({});
 
   // Dispatch (on page load) to GET all the questions
   // (Categories are fetched in app.jsx)
@@ -74,12 +75,21 @@ function EditQuestionsPage() {
   };
 
   // Handles SAVE CHANGES - - - submits ALL answers/changes to database at once
-  const saveAnswers = () => {
-    console.log("SAVE clicked");
-    dispatch({
-      type: "SET_QUESTIONS",
-      payload: questions,
-    });
+  // const saveAnswers = () => {
+  //   console.log("SAVE clicked");
+  //   dispatch({
+  //     type: "SET_QUESTIONS",
+  //     payload: questions,
+  //   });
+  // };
+
+  const handleQuestionClick = (question) => {
+    setSelectedQuestion(question);
+    setModalOpen(true);
+  };
+  const handleCloseModal = () => {
+    setSelectedquestion({});
+    setModalOpen(false);
   };
 
   // Handles BACK button click
@@ -141,10 +151,14 @@ function EditQuestionsPage() {
                       return (
                         <div key={item.id}>
                           <div className="qAndAContainer">
-                            <Typography sx={{ width: 500 }} mt={2} mb={2}>
-                              {item.question_text}
-                            </Typography>
-                            <TextField
+                            <Box
+                              onClick={() => handleQuestionClick(question)}
+                            >
+                              <Typography sx={{ width: 500 }} mt={2} mb={2}>
+                                {item.question_text}
+                              </Typography>
+                            </Box>
+                            {/* <TextField
                               id="answer"
                               label="Question Text"
                               sx={{ width: 500 }}
@@ -155,7 +169,7 @@ function EditQuestionsPage() {
                               onChange={(e) =>
                                 handleAnswerChange(item.id, e.target.value)
                               }
-                            />
+                            /> */}
                           </div>
                           <br />
                         </div>
@@ -175,7 +189,7 @@ function EditQuestionsPage() {
           <br />
 
           {/* SAVE button */}
-          <Button
+          {/* <Button
             type="submit"
             variant="contained"
             color="primary"
@@ -185,7 +199,7 @@ function EditQuestionsPage() {
             SAVE CHANGES
           </Button>
           <br />
-          <br />
+          <br /> */}
 
           <Button
             variant="contained"
@@ -197,6 +211,12 @@ function EditQuestionsPage() {
           </Button>
 
         </Box>
+
+        <EditModal
+          question={selectedQuestion}
+          open={modalOpen}
+          onClose={handleCloseModal}
+        />
       </div>
     </ThemeProvider>
   );
