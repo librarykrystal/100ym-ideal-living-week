@@ -32,7 +32,11 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
-  p: 2,
+  p: 4,
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
 };
 
 const ActivityModal = ({ activities, activity, open, onClose }) => {
@@ -125,7 +129,14 @@ const ActivityModal = ({ activities, activity, open, onClose }) => {
       >
         {activity && (
           <Box sx={style}>
-            <h2 id="modal-title">Edit Activity</h2>
+            <Typography
+            variant="h5"
+            sx={{ fontWeight: 700 }}
+            mb={3}
+            gutterBottom
+          >
+            EDIT ACTIVITY
+          </Typography>
             <FormControl fullWidth>
               <Typography>Select Category</Typography>
               <Select
@@ -175,17 +186,23 @@ const ActivityModal = ({ activities, activity, open, onClose }) => {
                 Start time must come before end time.
               </Typography>
             )}
-
-            <Button onClick={handleUpdate} variant="contained" color="primary">
-              Update
-            </Button>
-            <Button
-              onClick={handleDelete}
-              variant="contained"
-              color="secondary"
-            >
-              Delete
-            </Button>
+            <Box sx={{mt: '10px'}}>
+              <Button
+                onClick={handleUpdate}
+                variant="contained"
+                color="primary"
+                sx={{mx: '10px'}}
+              >
+                Update
+              </Button>
+              <Button
+                onClick={handleDelete}
+                variant="contained"
+                color="secondary"
+              >
+                Delete
+              </Button>
+            </Box>
           </Box>
         )}
       </Modal>

@@ -32,7 +32,11 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
-  p: 2,
+  p: 4,
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
 };
 
 const EditQuestionsModal = ({ question, open, onClose }) => {
@@ -75,9 +79,16 @@ const EditQuestionsModal = ({ question, open, onClose }) => {
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
       >
+
         {question && (
           <Box sx={style}>
-            <h2 id="modal-title">Edit Question</h2>
+            <Typography
+            variant="h5"
+            sx={{ fontWeight: 700 }}
+            gutterBottom
+          >
+            EDIT QUESTION
+          </Typography>
             <TextField
               name="question_text"
               type="text"
@@ -85,6 +96,9 @@ const EditQuestionsModal = ({ question, open, onClose }) => {
               onChange={handleChange}
               margin="normal"
               variant="outlined"
+              multiline
+              rows={4}
+              sx={{mb: '15px'}}
               fullWidth
             />
             <Button onClick={handleUpdate} variant="contained" color="primary">
